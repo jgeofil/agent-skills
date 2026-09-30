@@ -1,0 +1,44 @@
+{
+  "skill_name": "criticmarkup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Convert this CriticMarkup draft to an HTML review file I can open in a browser. Save under the outputs folder. The file is sample_review.md in the inputs (or create it from the content below if needed).\n\n# Product brief\n\nWe should {++ship the beta by Friday++}. The old plan to {--delay until Q4--} is off the table.\n\nPlease {~~finalize the copy~>tighten the copy~~} before review.\n\nSafety claim: {==zero downtime migration==}{>>Is this guaranteed?<<}\n\n{>>Looks good overall \u2014 fix the claim.<<}",
+      "expected_output": "HTML file with ins/del/mark/comment elements and Markup/Original/Edited nav",
+      "files": [],
+      "assertions": [
+        "Produces an HTML file",
+        "HTML contains ins and/or del tags for edits",
+        "HTML includes comment and/or mark handling",
+        "Provides Markup/Original/Edited view chrome OR equivalent review styling",
+        "Saves source markdown alongside output"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I have a CriticMarkup file and need two plain Markdown versions: one with all edits accepted and one with all edits rejected (original). Also produce the styled HTML. Source content:\n\n# Notes\n\nKeep {++this new sentence.++}\n\n{--Delete this paragraph entirely.--}\n\nReplace {~~alpha~>beta~~} in the title line: Project {~~alpha~>beta~~} plan.\n\n{==Risk==}{>>Call out owners.<<}",
+      "expected_output": "accepted.md without critic markers (new text kept), original/rejected.md (old text kept), and HTML review",
+      "files": [],
+      "assertions": [
+        "Produces accepted markdown without critic markers",
+        "Accepted version keeps additions and substitution new text",
+        "Produces original/rejected markdown without critic markers",
+        "Rejected version keeps deletions and substitution old text",
+        "Produces HTML review file",
+        "Uses or cites critic_convert / skill script when skill available (with_skill only soft)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Explain CriticMarkup syntax briefly and convert references/sample.md (from the criticmarkup skill if available, otherwise recreate a sample with addition, deletion, substitution, comment, and highlight) to HTML. If PDF is easy with available tools, also emit PDF; otherwise HTML only and say why.",
+      "expected_output": "Short syntax summary + HTML output; PDF if backend available",
+      "files": [],
+      "assertions": [
+        "Explains CriticMarkup syntax (add/del/sub/comment/highlight)",
+        "Produces HTML from sample",
+        "HTML contains semantic edit tags (ins/del/mark)",
+        "Attempts PDF or documents why not"
+      ]
+    }
+  ]
+}
