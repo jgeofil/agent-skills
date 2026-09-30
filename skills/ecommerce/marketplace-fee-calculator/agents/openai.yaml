@@ -1,0 +1,4 @@
+interface:
+  display_name: "Marketplace Fee Calculator"
+  short_description: "Calculate seller fees, profits, and margins across marketplaces"
+  default_prompt: "Use $marketplace-fee-calculator to calculate eBay seller fees and net profit for a listing."
