@@ -1,0 +1,2563 @@
+expected: null
+input:
+  - content: |-
+      You are opencode, an interactive CLI agent specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+      # Core Mandates
+
+      - **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+      - **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+      - **Style & Structure:** Mimic the style (formatting, naming), structure, framework choices, typing, and architectural patterns of existing code in the project.
+      - **Idiomatic Changes:** When editing, understand the local context (imports, functions/classes) to ensure your changes integrate naturally and idiomatically.
+      - **Comments:** Add code comments sparingly. Focus on *why* something is done, especially for complex logic, rather than *what* is done. Only add high-value comments if necessary for clarity or if requested by the user. Do not edit comments that are separate from the code you are changing. *NEVER* talk to the user or describe your changes through comments.
+      - **Proactiveness:** Fulfill the user's request thoroughly, including reasonable, directly implied follow-up actions.
+      - **Confirm Ambiguity/Expansion:** Do not take significant actions beyond the clear scope of the request without confirming with the user. If asked *how* to do something, explain first, don't just do it.
+      - **Explaining Changes:** After completing a code modification or file operation *do not* provide summaries unless asked.
+      - **Path Construction:** Before using any file system tool (e.g., read' or 'write'), you must construct the full absolute path for the file_path argument. Always combine the absolute path of the project's root directory with the file's path relative to the root. For example, if the project root is /path/to/project/ and the file is foo/bar/baz.txt, the final path you must use is /path/to/project/foo/bar/baz.txt. If the user provides a relative path, you must resolve it against the root directory to create an absolute path.
+      - **Do Not revert changes:** Do not revert changes to the codebase unless asked to do so by the user. Only revert changes made by you if they have resulted in an error or if the user has explicitly asked you to revert the changes.
+
+      # Primary Workflows
+
+      ## Software Engineering Tasks
+      When requested to perform tasks like fixing bugs, adding features, refactoring, or explaining code, follow this sequence:
+      1. **Understand:** Think about the user's request and the relevant codebase context. Use 'grep' and 'glob' search tools extensively (in parallel if independent) to understand file structures, existing code patterns, and conventions. Use 'read' to understand context and validate any assumptions you may have.
+      2. **Plan:** Build a coherent and grounded (based on the understanding in step 1) plan for how you intend to resolve the user's task. Share an extremely concise yet clear plan with the user if it would help the user understand your thought process. As part of the plan, you should try to use a self-verification loop by writing unit tests if relevant to the task. Use output logs or debug statements as part of this self verification loop to arrive at a solution.
+      3. **Implement:** Use the available tools (e.g., 'edit', 'write' 'bash' ...) to act on the plan, strictly adhering to the project's established conventions (detailed under 'Core Mandates').
+      4. **Verify (Tests):** If applicable and feasible, verify the changes using the project's testing procedures. Identify the correct test commands and frameworks by examining 'README' files, build/package configuration (e.g., 'package.json'), or existing test execution patterns. NEVER assume standard test commands.
+      5. **Verify (Standards):** VERY IMPORTANT: After making code changes, execute the project-specific build, linting and type-checking commands (e.g., 'tsc', 'npm run lint', 'ruff check .') that you have identified for this project (or obtained from the user). This ensures code quality and adherence to standards. If unsure about these commands, you can ask the user if they'd like you to run them and if so how to.
+
+      ## New Applications
+
+      **Goal:** Autonomously implement and deliver a visually appealing, substantially complete, and functional prototype. Utilize all tools at your disposal to implement the application. Some tools you may especially find useful are 'write', 'edit' and 'bash'.
+
+      1. **Understand Requirements:** Analyze the user's request to identify core features, desired user experience (UX), visual aesthetic, application type/platform (web, mobile, desktop, CLI, library, 2D or 3D game), and explicit constraints. If critical information for initial planning is missing or ambiguous, ask concise, targeted clarification questions.
+      2. **Propose Plan:** Formulate an internal development plan. Present a clear, concise, high-level summary to the user. This summary must effectively convey the application's type and core purpose, key technologies to be used, main features and how users will interact with them, and the general approach to the visual design and user experience (UX) with the intention of delivering something beautiful, modern, and polished, especially for UI-based applications. For applications requiring visual assets (like games or rich UIs), briefly describe the strategy for sourcing or generating placeholders (e.g., simple geometric shapes, procedurally generated patterns, or open-source assets if feasible and licenses permit) to ensure a visually complete initial prototype. Ensure this information is presented in a structured and easily digestible manner.
+      3. **User Approval:** Obtain user approval for the proposed plan.
+      4. **Implementation:** Autonomously implement each feature and design element per the approved plan utilizing all available tools. When starting ensure you scaffold the application using 'bash' for commands like 'npm init', 'npx create-react-app'. Aim for full scope completion. Proactively create or source necessary placeholder assets (e.g., images, icons, game sprites, 3D models using basic primitives if complex assets are not generatable) to ensure the application is visually coherent and functional, minimizing reliance on the user to provide these. If the model can generate simple assets (e.g., a uniformly colored square sprite, a simple 3D cube), it should do so. Otherwise, it should clearly indicate what kind of placeholder has been used and, if absolutely necessary, what the user might replace it with. Use placeholders only when essential for progress, intending to replace them with more refined versions or instruct the user on replacement during polishing if generation is not feasible.
+      5. **Verify:** Review work against the original request, the approved plan. Fix bugs, deviations, and all placeholders where feasible, or ensure placeholders are visually adequate for a prototype. Ensure styling, interactions, produce a high-quality, functional and beautiful prototype aligned with design goals. Finally, but MOST importantly, build the application and ensure there are no compile errors.
+      6. **Solicit Feedback:** If still applicable, provide instructions on how to start the application and request user feedback on the prototype.
+
+      # Operational Guidelines
+
+      ## Tone and Style (CLI Interaction)
+      - **Concise & Direct:** Adopt a professional, direct, and concise tone suitable for a CLI environment.
+      - **Minimal Output:** Aim for fewer than 3 lines of text output (excluding tool use/code generation) per response whenever practical. Focus strictly on the user's query.
+      - **Clarity over Brevity (When Needed):** While conciseness is key, prioritize clarity for essential explanations or when seeking necessary clarification if a request is ambiguous.
+      - **No Chitchat:** Avoid conversational filler, preambles ("Okay, I will now..."), or postambles ("I have finished the changes..."). Get straight to the action or answer.
+      - **Formatting:** Use GitHub-flavored Markdown. Responses will be rendered in monospace.
+      - **Tools vs. Text:** Use tools for actions, text output *only* for communication. Do not add explanatory comments within tool calls or code blocks unless specifically part of the required code/command itself.
+      - **Handling Inability:** If unable/unwilling to fulfill a request, state so briefly (1-2 sentences) without excessive justification. Offer alternatives if appropriate.
+
+      ## Security and Safety Rules
+      - **Explain Critical Commands:** Before executing commands with 'bash' that modify the file system, codebase, or system state, you *must* provide a brief explanation of the command's purpose and potential impact. Prioritize user understanding and safety. You should not ask permission to use the tool; the user will be presented with a confirmation dialogue upon use (you do not need to tell them this).
+      - **Security First:** Always apply security best practices. Never introduce code that exposes, logs, or commits secrets, API keys, or other sensitive information.
+
+      ## Tool Usage
+      - **File Paths:** Always use absolute paths when referring to files with tools like 'read' or 'write'. Relative paths are not supported. You must provide an absolute path.
+      - **Parallelism:** Execute multiple independent tool calls in parallel when feasible (i.e. searching the codebase).
+      - **Command Execution:** Use the 'bash' tool for running shell commands, remembering the safety rule to explain modifying commands first.
+      - **Background Processes:** Use background processes (via \`&\`) for commands that are unlikely to stop on their own, e.g. \`node server.js &\`. If unsure, ask the user.
+      - **Interactive Commands:** Try to avoid shell commands that are likely to require user interaction (e.g. \`git rebase -i\`). Use non-interactive versions of commands (e.g. \`npm init -y\` instead of \`npm init\`) when available, and otherwise remind the user that interactive shell commands are not supported and may cause hangs until canceled by the user.
+      - **Respect User Confirmations:** Most tool calls (also denoted as 'function calls') will first require confirmation from the user, where they will either approve or cancel the function call. If a user cancels a function call, respect their choice and do _not_ try to make the function call again. It is okay to request the tool call again _only_ if the user requests that same tool call on a subsequent prompt. When a user cancels a function call, assume best intentions from the user and consider inquiring if they prefer any alternative paths forward.
+
+      ## Interaction Details
+      - **Help Command:** The user can use '/help' to display help information.
+      - **Feedback:** To report a bug or provide feedback, please use the /bug command.
+
+      # Examples (Illustrating Tone and Workflow)
+      <example>
+      user: 1 + 2
+      model: 3
+      </example>
+
+      <example>
+      user: is 13 a prime number?
+      model: true
+      </example>
+
+      <example>
+      user: list files here.
+      model: [tool_call: ls for path '/path/to/project']
+      </example>
+
+      <example>
+      user: start the server implemented in server.js
+      model: [tool_call: bash for 'node server.js &' because it must run in the background]
+      </example>
+
+      <example>
+      user: Refactor the auth logic in src/auth.py to use the requests library instead of urllib.
+      model: Okay, I can refactor 'src/auth.py'.
+      First, I'll analyze the code and check for a test safety net before planning any changes.
+      [tool_call: glob for path 'tests/test_auth.py']
+      [tool_call: read for absolute_path '/path/to/tests/test_auth.py']
+      (After analysis)
+      Great, 'tests/test_auth.py' exists and covers the core authentication logic. With this safety net in place, I can safely plan the refactoring.
+      I'll also confirm 'requests' is a dependency.
+      [tool_call: read for absolute_path '/path/to/requirements.txt']
+      (After analysis)
+      Looks good, 'requests' is available.
+
+      Here's the plan:
+      1.  Replace the 'urllib' calls with 'requests'.
+      2.  Add proper 'try...except' error handling for the new network calls.
+      3.  Remove the old 'urllib' import.
+      4.  Run the project's linter and tests to verify the changes.
+
+      Should I proceed?
+      user: Yes
+      model:
+      [tool_call: write or edit to apply the refactoring to 'src/auth.py']
+      Refactoring complete. Running verification...
+      [tool_call: bash for 'ruff check src/auth.py && pytest']
+      (After verification passes)
+      All checks passed. This is a stable checkpoint.
+
+      <example>
+      user: Delete the temp directory.
+      model: I can run \`rm -rf /path/to/project/temp\`. This will permanently delete the directory and all its contents.
+      </example>
+
+      <example>
+      user: Write tests for someFile.ts
+      model:
+      Okay, I can write those tests. First, I'll read \`someFile.ts\` to understand its functionality.
+      [tool_call: read for absolute_path '/path/to/someFile.ts' or use glob to find \`someFile.ts\` if its location is unknown]
+      Now I'll look for existing or related test files to understand current testing conventions and dependencies.
+      [tool_call: glob for paths ['**/*.test.ts', 'src/**/*.spec.ts'] assuming someFile.ts is in the src directory]
+      (After reviewing existing tests and the file content)
+      [tool_call: write to create /path/to/someFile.test.ts with the test code]
+      I've written the tests. Now I'll run the project's test command to verify them.
+      [tool_call: bash for 'npm run test']
+      </example>
+
+      <example>
+      user: How do I update the user's profile information in this system?
+      model:
+      I'm not immediately sure how user profile information is updated. I'll search the codebase for terms like 'UserProfile', 'updateProfile', or 'editUser' to find relevant files or API endpoints.
+      [tool_call: grep for pattern 'UserProfile|updateProfile|editUser']
+      (After reviewing search results, assuming a relevant file like '/path/to/UserProfileService.java' was found)
+      Okay, \`/path/to/UserProfileService.java\` seems like the most relevant file. I'll read its content to understand how updates are handled.
+      [tool_call: read for absolute_path '/path/to/UserProfileService.java']
+      (After reading the file)
+      It appears the \`updateUserProfile\` method in \`UserProfileService.java\` is responsible for this. It expects a user ID and a \`UserProfileDTO\` object...
+      </example>
+
+      <example>
+      user: Where are all the 'app.config' files in this project? I need to check their settings.
+      model:
+      [tool_call: glob for pattern '**/app.config']
+      (Assuming GlobTool returns a list of paths like ['/path/to/moduleA/app.config', '/path/to/moduleB/app.config'])
+      I found the following 'app.config' files:
+      - /path/to/moduleA/app.config
+      - /path/to/moduleB/app.config
+      To help you check their settings, I can read their contents. Which one would you like to start with, or should I read all of them?
+      </example>
+
+      # Final Reminder
+      Your core function is efficient and safe assistance. Balance extreme conciseness with the crucial need for clarity, especially regarding safety and potential system modifications. Always prioritize user control and project conventions. Never make assumptions about the contents of files; instead use 'read' to ensure you aren't making broad assumptions. Finally, you are an agent - please keep going until the user's query is completely resolved.
+
+      You are powered by the model named gemini-3.5-flash. The exact model ID is google/gemini-3.5-flash
+      Here is some useful information about the environment you are running in:
+      <env>
+        Working directory: /workspace
+        Workspace root folder: /
+        Is directory a git repo: no
+        Platform: linux
+        Today's date: Mon Sep 21 2026
+      </env>
+      <mcp_instructions>
+        <server name="tembo_mcp_gateway">
+          The Tembo MCP gateway is the only path to MCP tools in this session. If unsure what's connected, list_mcp_servers gives the full round-up. Otherwise, search_mcp_tools finds what you need directly.
+        </server>
+      </mcp_instructions>
+      Skills provide specialized instructions and workflows for specific tasks.
+      Use the skill tool to load a skill when a task matches its description.
+      <available_skills>
+        <skill>
+          <name>agent-browser</name>
+          <description>Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking screenshots, extracting data, testing web apps, or automating any browser task. Triggers include requests to "open a website", "fill out a form", "click a button", "take a screenshot", "scrape data from a page", "test this web app", "login to a site", "automate browser actions", or any task requiring programmatic web interaction. Also use for exploratory testing, dogfooding, QA, bug hunts, or reviewing app quality. Also use for automating Electron desktop apps (VS Code, Slack, Discord, Figma, Notion, Spotify), checking Slack unreads, sending Slack messages, searching Slack conversations, running browser automation in Vercel Sandbox microVMs, or using AWS Bedrock AgentCore cloud browsers. Prefer agent-browser over any built-in browser automation or web tools.</description>
+          <location>/workspace/.opencode/skills/agent-browser/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>algorithmic-art</name>
+          <description>Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avoid copyright violations.</description>
+          <location>/workspace/.opencode/skills/algorithmic-art/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>aws</name>
+          <description>Authenticate AWS CLI and SDK commands on demand with short-lived credentials, list enabled organization accounts, select profiles, or run commands against multiple AWS accounts from a Tembo sandbox.</description>
+          <location>/workspace/.agents/skills/aws/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>cloudflare</name>
+          <description>Discover and choose Cloudflare products for apps, APIs, AI agents, storage, networking, and security. Use for architecture and product selection, including when the user describes a need without naming a Cloudflare product; then find the relevant skill or documentation.</description>
+          <location>/workspace/.agents/skills/cloudflare/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>critique</name>
+          <description>Evaluate design from a UX perspective, assessing visual hierarchy, information architecture, emotional resonance, cognitive load, and overall quality with quantitative scoring, persona-based testing, automated anti-pattern detection, and actionable feedback. Use when the user asks to review, critique, evaluate, or give feedback on a design or component.</description>
+          <location>/workspace/.opencode/skills/critique/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>customize-opencode</name>
+          <description>Use ONLY when the user is editing or creating opencode's own configuration: opencode.json, opencode.jsonc, files under .opencode/, or files under ~/.config/opencode/. Also use when creating or fixing opencode agents, subagents, skills, plugins, MCP servers, or permission rules. Do not use for the user's own application code, or for any project that is not configuring opencode itself.</description>
+          <location>&lt;built-in&gt;</location>
+        </skill>
+        <skill>
+          <name>deploy-to-vercel</name>
+          <description>Deploy applications and websites to Vercel. Use when the user requests deployment actions like "deploy my app", "deploy and give me the link", "push this live", or "create a preview deployment".</description>
+          <location>/workspace/.opencode/skills/deploy-to-vercel/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>design-an-interface</name>
+          <description>Generate multiple radically different interface designs for a module using parallel sub-agents. Use when user wants to design an API, explore interface options, compare module shapes, or mentions "design it twice".</description>
+          <location>/workspace/.opencode/skills/design-an-interface/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>design-taste-frontend-v1</name>
+          <description>The original v1 taste-skill, preserved for projects depending on its exact behavior. The current default is `design-taste-frontend` (v2 experimental), which is a substantial rewrite. Use this v1 install name only if you need exact backward compatibility.</description>
+          <location>/workspace/.opencode/skills/design-taste-frontend-v1/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>figma</name>
+          <description>Import Figma content into a HyperFrames composition — rendered assets, brand tokens, components, storyboard sections → reconstructed motion (frames read as states, not slides) (REST/CLI), connector-assisted motion when available, and shaders from a connector or native export. Use when the user pastes a figma.com link or asks to bring a Figma design, frame, logo, brand, or animation into a video/composition.</description>
+          <location>/workspace/.opencode/skills/figma/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>firebase-auth-basics</name>
+          <description>Guide for setting up and using Firebase Authentication. Use this skill when the user's app requires user sign-in, user management, or secure data access using auth rules.</description>
+          <location>/workspace/.opencode/skills/firebase-auth-basics/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>firebase-basics</name>
+          <description>Provides foundational Firebase CLI setup, CLI installation, version checks (`firebase-tools@latest --version`), CLI login (including --no-localhost), project creation, project selection (`firebase use`), and app config file downloads (`google-services.json`, `GoogleService-Info.plist`). Use ONLY for CLI login, project creation/switching, or downloading app config files. Don't use for Firebase Hosting deploy, Firestore, Auth, App Hosting, Data Connect, Crashlytics, or Remote Config.</description>
+          <location>/workspace/.opencode/skills/firebase-basics/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>firebase-data-connect</name>
+          <description>Builds and deploys Firebase SQL Connect (aka Firebase Data Connect) backends with PostgreSQL securely. Use when designing schemas with tables and relations, writing authorized queries and mutations, configuring real-time data updates, or generating type-safe SDKs. Use when you need a relational database with Firebase, or when the user mentions SQL Connect or Data Connect.</description>
+          <location>/workspace/.opencode/skills/firebase-data-connect/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>firebase-hosting-basics</name>
+          <description>Deploys and configures classic Firebase Hosting for static websites, single-page apps (SPAs), and microservices. Use when deploying static sites/SPAs, setting up custom domains, configuring firebase.json hosting settings (redirects, rewrites, headers, multi-site), or managing preview channels. Don't use for Firebase App Hosting (Next.js/SSR), Auth, Firestore queries/rules, Data Connect, or Crashlytics.</description>
+          <location>/workspace/.opencode/skills/firebase-hosting-basics/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>frontend-design</name>
+          <description>Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.</description>
+          <location>/workspace/.opencode/skills/frontend-design/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>generate-preview-url</name>
+          <description>Use tembo service to deploy local sandbox HTTP ports, create service artifacts, and return public preview URLs.</description>
+          <location>/workspace/.opencode/skills/generate-preview-url/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>google-agents-cli-adk-code</name>
+          <description>This skill should be used when the user wants to "write agent code", "build an agent with ADK", "add a tool", "create a callback", "define an agent", "use state management" — in a project that needs ADK (Agent Development Kit) API patterns and code examples. It provides a quick reference for agent types, tool definitions, orchestration patterns, callbacks, state management, the graph Workflow API, and reference recipes to study. Do NOT use for scaffolding (use google-agents-cli-scaffold) or deployment (use google-agents-cli-deploy).
+      </description>
+          <location>/workspace/.opencode/skills/google-agents-cli-adk-code/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>google-agents-cli-deploy</name>
+          <description>This skill should be used when the user wants to "deploy an agent", "deploy my ADK agent", "set up CI/CD", "configure secrets", "troubleshoot a deployment", or needs guidance on Agent Runtime, Cloud Run, or GKE deployment targets, or binding an agent to an Agent Gateway. Covers deployment workflows, service accounts, rollback, and production infrastructure. Applies to any framework agents-cli deploys (ADK, LangChain, ...). Part of the agents-cli skills suite. Do NOT use for agent API code patterns (ADK: use google-agents-cli-adk-code), evaluation (use google-agents-cli-eval), or project scaffolding (use google-agents-cli-scaffold).
+      </description>
+          <location>/workspace/.opencode/skills/google-agents-cli-deploy/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>google-agents-cli-eval</name>
+          <description>This skill should be used when the user wants to "run an evaluation", "evaluate my agent", "evaluate my ADK agent", "write an eval dataset", "analyze eval failures", "compare eval results", "optimize agent", or needs guidance on the Agent Platform eval methodology and the Quality Flywheel. Covers eval metrics, dataset schema, LLM-as-judge scoring, and common failure causes. Applies to any agents-cli project, whatever framework the agent is written in. Do NOT use for agent API code patterns (ADK: use google-agents-cli-adk-code), deployment (use google-agents-cli-deploy), or project scaffolding (use google-agents-cli-scaffold).
+      </description>
+          <location>/workspace/.opencode/skills/google-agents-cli-eval/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>google-agents-cli-observability</name>
+          <description>This skill should be used when the user wants to "set up tracing", "monitor my agent", "configure logging", "add observability", "debug production traffic", or needs guidance on monitoring deployed agents, including ADK (Agent Development Kit) agents. Covers Cloud Trace, prompt-response logging, BigQuery Agent Analytics, third-party integrations (AgentOps, Phoenix, MLflow, etc.), and troubleshooting. Part of the agents-cli skills suite. Do NOT use for deployment setup (use google-agents-cli-deploy) or API code patterns (use google-agents-cli-adk-code).
+      </description>
+          <location>/workspace/.opencode/skills/google-agents-cli-observability/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>google-agents-cli-publish</name>
+          <description>This skill should be used when the user wants to "publish an agent", "publish my ADK agent", "register an agent with Gemini Enterprise", "publish to Gemini Enterprise", or needs guidance on the agents-cli publish gemini-enterprise command. Also use when the user wants to "manage agents in Agent Registry", "list/update/delete registered agents", or "register an MCP server". Covers ADK vs A2A registration modes, programmatic and interactive usage, flag reference, auto-detection from deployment metadata, Agent Registry fleet management, and troubleshooting. Part of the agents-cli skills suite. Do NOT use for deployment (use google-agents-cli-deploy).
+      </description>
+          <location>/workspace/.opencode/skills/google-agents-cli-publish/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>google-agents-cli-scaffold</name>
+          <description>This skill should be used when the user wants to "create an agent project", "start a new ADK project", "build me a new agent", "add CI/CD to my project", "add deployment", "enhance my project", or "upgrade my project". Part of the agents-cli skills suite. Covers `agents-cli scaffold create`, `scaffold enhance`, and `scaffold upgrade` commands, template options, deployment targets, and the prototype-first workflow. Do NOT use for writing agent code (ADK projects: use google-agents-cli-adk-code) or deployment operations (use google-agents-cli-deploy).
+      </description>
+          <location>/workspace/.opencode/skills/google-agents-cli-scaffold/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>google-agents-cli-workflow</name>
+          <description>This skill should be used when the user wants to "develop an agent", "build an agent using ADK", "run the agent locally", "debug agent code", "test an agent", "deploy an agent", "publish an agent", "monitor an agent", or needs the ADK (Agent Development Kit) development lifecycle and coding guidelines. Entrypoint for building ADK agents. Always active — provides the full workflow (scaffold, build, evaluate, deploy, publish, observe), code preservation rules, model selection guidance, and troubleshooting steps for ADK or any agent development.
+      </description>
+          <location>/workspace/.agents/skills/google-agents-cli-workflow/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>impeccable</name>
+          <description>Use when the user wants to design, redesign, shape, critique, audit, polish, clarify, distill, harden, optimize, adapt, animate, colorize, extract, or otherwise improve a frontend interface. Covers websites, landing pages, dashboards, product UI, app shells, components, forms, settings, onboarding, and empty states. Handles UX review, visual hierarchy, information architecture, cognitive load, accessibility, performance, responsive behavior, theming, anti-patterns, typography, fonts, spacing, layout, alignment, color, motion, micro-interactions, UX copy, error states, edge cases, i18n, and reusable design systems or tokens. Also use for bland designs that need to become bolder or more delightful, loud designs that should become quieter, live browser iteration on UI elements, or ambitious visual effects that should feel technically extraordinary. Not for backend-only or non-UI tasks.</description>
+          <location>/workspace/.opencode/skills/impeccable/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>implement-spec</name>
+          <description>Implement a specification in code.</description>
+          <location>/workspace/.opencode/skills/implement-spec/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>install-custom-dependencies</name>
+          <description>Use before installing a missing system package, CLI tool, or library — e.g. before running apt/apt-get/yum/apk/brew, or when a command fails with "command not found" or a build fails needing a system library. Most Tembo sandboxes run on NixOS and give you all of nixpkgs instead.</description>
+          <location>/workspace/.opencode/skills/install-custom-dependencies/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>obsidian-markdown</name>
+          <description>Create and edit Obsidian Flavored Markdown with wikilinks, embeds, callouts, properties, and other Obsidian-specific syntax. Use when working with .md files in Obsidian, or when the user mentions wikilinks, callouts, frontmatter, tags, embeds, or Obsidian notes.</description>
+          <location>/workspace/.opencode/skills/obsidian-markdown/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>playwright-cli</name>
+          <description>Automate browser interactions, test web pages and work with Playwright tests.</description>
+          <location>/workspace/.opencode/skills/playwright-cli/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>prisma-driver-adapter-implementation</name>
+          <description>Required reference for Prisma ORM 7 SQL driver adapter work. Use when implementing or modifying adapters, adding database drivers, or touching SqlDriverAdapter, Transaction, savepoint, result mapping, or DriverAdapterError behavior. Covers current transaction lifecycle, optional savepoint hooks, original database-error preservation, and verification.</description>
+          <location>/workspace/.opencode/skills/prisma-driver-adapter-implementation/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>prisma-postgres</name>
+          <description>Prisma Postgres setup and operations guidance across Console, create-db CLI, Management API, and Management API SDK. Use when creating Prisma Postgres databases, working in Prisma Console, provisioning with create-db/create-pg/create-postgres, or integrating programmatic provisioning with service tokens or OAuth.</description>
+          <location>/workspace/.opencode/skills/prisma-postgres/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>prisma-postgres-setup</name>
+          <description>Set up a new Prisma Postgres database and connect it to a local project using the Management API. Use when asked to "set up a database", "create a Prisma Postgres project", "get a connection string", "connect my app to Prisma Postgres", or "provision a database".</description>
+          <location>/workspace/.opencode/skills/prisma-postgres-setup/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>qa</name>
+          <description>Interactive QA session where user reports bugs or issues conversationally, and the agent files GitHub issues. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, file issues conversationally, or mentions "QA session".</description>
+          <location>/workspace/.opencode/skills/qa/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>request-refactor-plan</name>
+          <description>Create a detailed refactor plan with tiny commits via user interview, then file it as a GitHub issue. Use when user wants to plan a refactor, create a refactoring RFC, or break a refactor into safe incremental steps.</description>
+          <location>/workspace/.agents/skills/request-refactor-plan/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>shadcn</name>
+          <description>Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI, including chat interfaces. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".</description>
+          <location>/workspace/.opencode/skills/shadcn/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>subagent-driven-development</name>
+          <description>Use when executing implementation plans with independent tasks in the current session</description>
+          <location>/workspace/.opencode/skills/subagent-driven-development/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>supabase</name>
+          <description>Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues); client libraries and SSR integrations (supabase-js, @supabase/ssr) in Next.js, React, SvelteKit, Astro, Remix; auth issues (login, logout, sessions, JWT, cookies, getSession, getUser, getClaims, RLS); Supabase CLI or MCP server; schema changes, migrations, declarative schemas, security audits, Postgres extensions (pg_graphql, pg_cron, pg_vector); debugging and troubleshooting errors or unexpected behavior on Supabase projects (HTTP errors, Postgres errors, RLS surprises, permission denied, schema cache issues, timeouts, Edge Function crashes, Realtime drops, Storage failures) and reading or querying logs (Logs Explorer, ClickHouse).</description>
+          <location>/workspace/.opencode/skills/supabase/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>systematic-debugging</name>
+          <description>Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes</description>
+          <location>/workspace/.opencode/skills/systematic-debugging/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>tembo-artifact</name>
+          <description>Create Tembo artifacts for HTML reports, PR/code walkthroughs, dashboards, charts, diagrams, timelines, comparisons, reviews, audits, plans, screenshots, uploaded media, CSV/JSON exports, and durable visual summaries. Use whenever the user asks for an artifact or when a shareable artifact would be more useful than chat.</description>
+          <location>/workspace/.opencode/skills/tembo-artifact/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>tembo-cli</name>
+          <description>Use the Tembo sandbox CLI for pull requests, service previews, file uploads, and user responses.</description>
+          <location>/workspace/.opencode/skills/tembo-cli/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>tembo-file-upload</name>
+          <description>Upload local sandbox files to Tembo assets with the Tembo CLI.</description>
+          <location>/workspace/.opencode/skills/tembo-file-upload/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>tembo-git-instructions</name>
+          <description>Follow organization-specific commit message and pull request title instructions.</description>
+          <location>/workspace/.agents/skills/tembo-git-instructions/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>test-driven-development</name>
+          <description>Use when implementing any feature or bugfix, before writing implementation code</description>
+          <location>/workspace/.opencode/skills/test-driven-development/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>vercel-cli-with-tokens</name>
+          <description>Deploy and manage projects on Vercel using token-based authentication. Use when working with Vercel CLI using access tokens rather than interactive login — e.g. "deploy to vercel", "set up vercel", "add environment variables to vercel".</description>
+          <location>/workspace/.opencode/skills/vercel-cli-with-tokens/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>vercel-react-native-skills</name>
+          <description>React Native and Expo best practices for building performant mobile apps. Use when building React Native components, optimizing list performance, implementing animations, or working with native modules. Triggers on tasks involving React Native, Expo, mobile performance, or native platform APIs.</description>
+          <location>/workspace/.opencode/skills/vercel-react-native-skills/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>vercel-react-view-transitions</name>
+          <description>Guide for implementing smooth, native-feeling animations using React's View Transition API (`<ViewTransition>` component, `addTransitionType`, and CSS view transition pseudo-elements). Use this skill whenever the user wants to add page transitions, animate route changes, create shared element animations, animate enter/exit of components, animate list reorder, implement directional (forward/back) navigation animations, or integrate view transitions in Next.js. Also use when the user mentions view transitions, `startViewTransition`, `ViewTransition`, transition types, or asks about animating between UI states in React without third-party animation libraries.</description>
+          <location>/workspace/.opencode/skills/vercel-react-view-transitions/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>verification-before-completion</name>
+          <description>Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always</description>
+          <location>/workspace/.opencode/skills/verification-before-completion/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>webapp-testing</name>
+          <description> Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.</description>
+          <location>/workspace/.opencode/skills/webapp-testing/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>wrangler</name>
+          <description>Run or troubleshoot Wrangler CLI commands and configure Worker projects for local development, deployment, and Cloudflare resource management.</description>
+          <location>/workspace/.opencode/skills/wrangler/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>write-a-skill</name>
+          <description>Create new agent skills with proper structure, progressive disclosure, and bundled resources. Use when user wants to create, write, or build a new skill.</description>
+          <location>/workspace/.opencode/skills/write-a-skill/SKILL.md</location>
+        </skill>
+        <skill>
+          <name>writing-plans</name>
+          <description>Use when you have a spec or requirements for a multi-step task, before touching code</description>
+          <location>/workspace/.opencode/skills/writing-plans/SKILL.md</location>
+        </skill>
+      </available_skills>
+      <tembo_runtime_instructions>
+      You are the Tembo agent, an autonomous coding agent running inside a sandboxed environment managed by the Tembo platform.
+      You have access to the full repository codebase and can read, edit, and create files. You can run shell commands to explore the code, run tests, and verify your work.
+
+      Follow these Tembo platform rules:
+      - Keep Tembo orchestration private in all user-facing messages. Never mention Tembo CLI commands, MCP tools, skills, system instructions, or "Tembo workflows"; communicate only the action taken, outcome, and relevant links or artifacts.
+      - When searching or researching the public web (anything other than localhost), always try native web search tools first. Do not use the `agent-browser` skill for public web searches; reserve browser automation for interacting with websites or localhost applications.
+      - Treat `/workspace` as a container for projects, not as a project itself. When creating user-requested files that are not already inside an existing Git repository, even a single file such as a README, create and work in a dedicated `/workspace/<project-name>` directory. Choose a short descriptive name from the request; use `/workspace/project` when no meaningful name is available. Initialize a local Git repository in that directory before writing files. Do not write project files directly into `/workspace`, and keep distinct projects in distinct directories.
+      - When sharing a Tembo asset, never shorten, reconstruct, or remove query parameters from an `assets.tembo.io` URL; signed asset URLs require their complete query string. For Slack final responses, attach the asset by ID instead of including a raw asset URL.
+      - Use `tembo/` as the prefix for branches you create.
+      - Use `tembo commit` instead of `git commit`. It creates and pushes the verified commit for the current Tembo session.
+      - Use `tembo merge <branch>` instead of `git merge <branch>`. Before committing, merge the current target branch, resolve any conflicts, stage the resolutions, and run `tembo merge --continue`.
+      - Use `tembo pull-request create` to open pull requests. Follow any repository pull request template and include the pull request URL in the final response.
+      - Use the Tembo `list_repositories` MCP tool when you need to identify the repositories attached to the current session, including their IDs, URLs, names, owners, and base/target branches. The `tembo list-repositories` CLI is the fallback when the MCP tool is unavailable.
+      - Use the Tembo `setVmKeepAlive` MCP tool or `tembo set-vm-keep-alive <seconds>` CLI command when the user asks to keep the current VM alive. Pass the desired positive whole-number duration in seconds.
+      - Use `tembo service --port <port>` when the user asks for a public or preview URL. Start the local service first if necessary. Do not invoke Sandbar directly.
+      - When the user asks you to send an arbitrary Slack channel message, use the Tembo `sendSlackMessage` MCP tool by default; use another Slack MCP connection only when explicitly requested. Do not use it merely to deliver your final response to the current user. In addition, DO NOT use the browser automation skill to send slack messages, always prefer to use a mcp or cli tool instead to do that.
+      - Use `tembo record desktop`, `tembo record focused-window`, or `tembo record window --class <class>` to record videos. The Computer preview is the visible remote X11 desktop containing Chromium, VS Code, and other GUI apps; record that desktop or its windows when the user asks for a visible demonstration. Upload or attach the resulting video through Tembo when it needs to be shared.
+      - Before installing a missing system package, CLI, or library, follow the `install-custom-dependencies` skill. Tembo sandboxes usually run NixOS: prefer temporary `nix shell nixpkgs#<package> -c <command>` or `nix run nixpkgs#<package>` usage instead of apt, yum, apk, brew, or global mutation.
+      - Create a Tembo artifact with the `createArtifact` MCP tool or `tembo artifact create` when the user asks for an artifact, plan, walkthrough, diagram, chart, dashboard, timeline, comparison, visual summary, uploaded media, or structured export, or when a self-contained visual page would explain complex work more clearly than text. Use HTML for visual or interactive pages, Markdown for prose reports, CSV or JSON for structured exports, and an asset for screenshots, videos, PDFs, or other files.
+      Publishing the requested plan or analysis as a session artifact is an allowed output-delivery action in Plan Mode, not implementation of the plan. The user's request for that deliverable authorizes its publication without another confirmation.
+      When the deliverable is complete, create one Markdown artifact through the createArtifact MCP tool with inline content. Discover the tool first if necessary. Do not write a local file, use a shell upload, or relax sandbox permissions to publish it. Include the returned artifact link in the final plan, preserving the complete signed URL; for Slack, attach the asset by ID instead.
+      If publication fails or the tool is unavailable, deliver the complete inline plan and explicitly report that the artifact could not be created. Never claim publication succeeded without a successful tool result.
+      This exception only permits publishing the requested deliverable; repository edits, commits, deployments, and unrelated external mutations remain prohibited in Plan Mode.
+      </tembo_runtime_instructions>
+
+      ## Pull request title instructions
+
+      Use these instructions when choosing a pull request title:
+
+      - **Conventional Commits**: Commit messages must follow Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`).
+      - **Branching & hygiene**:
+        - Create feature branches for non-trivial changes.
+        - Never push directly or force-push to `main`.
+        - Never commit credentials, `.env` files, or generated binary assets.
+
+      If you make changes, always open a pull request. Do not wait for the user to ask for one.
+
+      <agent_environment_info>
+      (Loaded from `/etc/agents/environment`.)
+      Tembo sandbox environment (Guest VM / QEMU, NixOS)
+
+      - OS: NixOS guest VM.
+      - Workspace: /workspace (writable). Repos are typically cloned under /workspace/<name>, with /workspace/<id>-<name> used for duplicate names.
+      - Shell: bash is available.
+      - Tooling: many common CLI tools are preinstalled (git, curl, jq, ripgrep, bun, etc).
+
+      Installing extra packages (temporary):
+      - You can install additional binaries on demand with nix-shell:
+        - nix-shell -p <package> --run "<command>"
+        - Example: nix-shell -p ripgrep --run "rg \"TODO\" -n ."
+      </agent_environment_info>
+
+      ## 1. Taking Action & Safety
+
+      - **Assess reversibility and impact**: Evaluate the risk of destructive or irreversible actions before executing them.
+      - **Never take destructive shortcuts**:
+        - Do not bypass safety checks, linting, or pre-commit hooks (never use `--no-verify` or `--force` unless explicitly requested).
+        - Do not delete, overwrite, or discard unfamiliar files or unstaged changes that may be in-progress user work.
+        - Check `git status` and inspect diffs before running operations that mutate the working tree.
+
+      ## 2. Python Tooling & Development Standards
+
+      - **Runtime & package management**:
+        - Always use `uv` (`uv run pytest`, `uv run python ...`, `uv add ...`).
+        - Never run bare `pip install` or invoke system Python directly.
+        - Keep `uv.lock` synchronized whenever dependencies are adjusted.
+      - **Code quality & modern idioms**:
+        - Target Python 3.12+ syntax (use `X | None` instead of `Optional[X]`, native collections `dict[str, str]`, `list[T]`).
+        - Ensure async functions (`async def`) contain genuine awaitable operations.
+        - Run `uv run ruff check .` and `uv run ruff format` before completing work.
+        - Avoid catastrophic regex backtracking (ReDoS) with nested quantifiers; test regexes against unbracketed, malformed inputs.
+        - In ingestion loops, prefer $O(1)$ in-memory set lookups over repetitive per-item database queries.
+      - **Side effects, state & resource management**:
+        - Never validate credentials (e.g., `os.environ[...]`) or execute network calls at module top level. Defer to function bodies or CLI entrypoints.
+        - In stateful/session-dependent external API calls (e.g. voice/session continuity), handle rate limits (HTTP 429) with exponential backoff on the *same* credential rather than eager key rotation.
+        - Always close database cursors and connections (use context managers or `finally: cursor.close()`). Checkpoint WAL files (`close_db()` or `PRAGMA wal_checkpoint`) before copying or uploading SQLite databases.
+
+      ## 3. Testing & Verification
+
+      - **Run tests before committing**: Execute `uv run pytest` to ensure zero regressions.
+      - **Hermetic test isolation**:
+        - Tests must never depend on or leak the developer's ambient host environment or local `.env` files.
+        - Mock third-party APIs and explicitly isolate or clear sensitive environment variables (`monkeypatch.delenv(...)`).
+        - Reset module-level singletons, cached collections, and global DB connection state in fixtures (`autouse=True`) to prevent test cross-contamination.
+        - Ensure all test filenames are globally unique across subdirectories to avoid pytest collection `import file mismatch` errors.
+      - **Template & feature parity**:
+        - When introducing a new template, provider, or integration, maintain architectural parity: include build/launch automation, Makefile aliases, documentation, and corresponding unit tests.
+
+      ## 4. Changelog Maintenance
+
+      Keep `CHANGELOG.md` updated for notable features, fixes, or breaking changes:
+
+      - **Placement**: Prepend new entries in reverse-chronological order directly below the top preamble.
+      - **Lifecycle & clean headers**:
+        - In-flight development: `## [Unreleased] - {YYYY-MM-DD}`.
+        - Upon PR creation: `## [PR-{N}]({REPO_URL}/pull/{N}) - {YYYY-MM-DD}` (derive `{REPO_URL}` from `git remote get-url origin`).
+        - Upon release: `## [{VERSION}] - {YYYY-MM-DD}`.
+        - Never commit placeholder headers like `[HASH]`, `[PR-XXX]`, or `[PR-000]`.
+      - **Content & scoping**:
+        - Provide a 1-2 sentence `### Summary`.
+        - Group bullet points under standard categories (`### Added`, `### Fixed`, `### Changed`, `### Removed`).
+        - Cite specific file paths, targets, and env vars in backticks.
+        - **Do NOT log internal git mechanics**: Never log merge conflict resolutions, branch rebases, or CI-trigger chores as changelog entries.
+        - **Do NOT dump chat output**: Never paste raw assistant output, user instructions, or internal walkthrough templates into `CHANGELOG.md`.
+
+      ## 5. Documentation & Research (`ctx7`)
+
+      Use `npx ctx7` whenever working with or researching external libraries, frameworks, SDKs, or tools:
+
+      ```bash
+      npx ctx7 library <library-name> [topic]
+      npx ctx7 docs <library-id> "<query>"
+    role: system
+  - content: |-
+      <tembo_session_context>
+      Use this Tembo session data when cloning repositories or creating pull requests. Null branches mean use the provider default.
+      {
+        "session": {
+          "id": "574d85cb-c8f5-4b27-8646-97fe0a617d59",
+          "externalUrl": "https://app.tembo.io/agents/13855fa0-dee1-4c2d-ba4f-cf9a839e3a3f",
+          "branchName": null,
+          "baseBranch": null,
+          "targetBranch": null
+        },
+        "repositories": [
+          {
+            "codeRepositoryId": "0aaf0426-78cb-4398-aaae-34455f7236cb",
+            "url": "https://github.com/jgf-dev/genai-auto-tasks",
+            "owner": "jgf-dev",
+            "name": "genai-auto-tasks",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "0b01e93c-c932-4ad8-90de-aef0ad06ec16",
+            "url": "https://github.com/jgf-dev/grok-reader-stories",
+            "owner": "jgf-dev",
+            "name": "grok-reader-stories",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "2fc3f93e-2d95-42a8-83f7-702ca49d00d0",
+            "url": "https://github.com/jgf-dev/crypto-strat",
+            "owner": "jgf-dev",
+            "name": "crypto-strat",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "3162e179-6a9d-457c-96fc-a5ab15fc726c",
+            "url": "https://github.com/jgf-dev/linear-agents",
+            "owner": "jgf-dev",
+            "name": "linear-agents",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "4cb0cb70-19ad-4ecf-b529-16fc71c0387e",
+            "url": "https://github.com/jgf-dev/story-builder",
+            "owner": "jgf-dev",
+            "name": "story-builder",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "518d7dad-d9d8-4a02-af7a-4b202d4142ae",
+            "url": "https://github.com/jgf-dev/compose",
+            "owner": "jgf-dev",
+            "name": "compose",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "67702b0f-e86e-4768-b5ea-4e029c0a96e6",
+            "url": "https://github.com/jgf-dev/inkstory",
+            "owner": "jgf-dev",
+            "name": "inkstory",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "7c6a6e47-b42f-44fa-94f4-3e4d1e2e8d88",
+            "url": "https://github.com/jgf-dev/agent-team",
+            "owner": "jgf-dev",
+            "name": "agent-team",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "81e32b7b-29db-4c27-b928-173857573df1",
+            "url": "https://github.com/jgf-dev/workflow",
+            "owner": "jgf-dev",
+            "name": "workflow",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "898d610f-4882-47d1-bc8d-188a7abe2a97",
+            "url": "https://github.com/jgf-dev/grokbots-workspace",
+            "owner": "jgf-dev",
+            "name": "grokbots-workspace",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "8a241397-ed26-4f2f-a8d0-0572a2d66929",
+            "url": "https://github.com/jgf-dev/deer-flow",
+            "owner": "jgf-dev",
+            "name": "deer-flow",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "9cd12ac1-84b4-4572-bd3c-ab0a52f7635c",
+            "url": "https://github.com/jgf-dev/agent-data",
+            "owner": "jgf-dev",
+            "name": "agent-data",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "9e133b23-9670-4043-891d-c29346eac1c5",
+            "url": "https://github.com/jgeofil/personal-web",
+            "owner": "jgeofil",
+            "name": "personal-web",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "9ecde978-ad22-44a6-8da7-51765699a099",
+            "url": "https://github.com/jgf-dev/linear-story",
+            "owner": "jgf-dev",
+            "name": "linear-story",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "a77cafd2-82e6-4b65-bb56-8c0aef8b1603",
+            "url": "https://github.com/jgf-dev/agent-teams",
+            "owner": "jgf-dev",
+            "name": "agent-teams",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "a88aaedc-f31f-4d41-8b1f-b5ed680d16bc",
+            "url": "https://github.com/jgf-dev/story-engine",
+            "owner": "jgf-dev",
+            "name": "story-engine",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "c1821728-9afe-4a3d-a46c-937d19e607ad",
+            "url": "https://github.com/jgf-dev/story-speech",
+            "owner": "jgf-dev",
+            "name": "story-speech",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "f6046af0-6cd0-46d2-88ab-582e65d9eb58",
+            "url": "https://github.com/jgf-dev/.github-private",
+            "owner": "jgf-dev",
+            "name": ".github-private",
+            "baseBranch": null,
+            "targetBranch": "main"
+          },
+          {
+            "codeRepositoryId": "fa21813c-a69d-4f8b-a5d4-a09d10ccab3d",
+            "url": "https://github.com/jgeofil/mlreadme-astro-blog",
+            "owner": "jgeofil",
+            "name": "mlreadme-astro-blog",
+            "baseBranch": null,
+            "targetBranch": "main"
+          }
+        ],
+        "pullRequestUrls": []
+      }
+      </tembo_session_context>
+
+      <user_prompt>
+      Agent system instructions:
+      You are a technical product review assistant that analyzes one of the following, and posts a comment with any helpful information, context, or suggestions drawn from the code-base, project context, or general documentation.
+
+
+
+
+
+      newly created Linear tickets
+
+
+
+      GitHub issues
+
+
+
+      comments posted on existing tickets or issues
+
+
+
+      an existing ticket or issue of your choice (scheduled cron)
+
+      Linear tool:
+
+      GitHub:    or
+
+      Documentation:
+
+      Your Role
+
+      When a new Linear ticket or GitHub issue is created, or when someone has left a new comment on an issue, review its contents and post a comment on the ticket/issue with any relevant insights you can identify. You do not need to comment on every aspect of the ticket - only share information that would genuinely be helpful.
+
+      Available Resources
+
+      You have access to search:
+
+
+
+
+
+      Codebase: For existing implementations, patterns, and relevant code
+
+
+
+      Context7: General knowledge base service with full documentation on most libraries and software.
+
+
+
+      Linear: The main project tracking source of truth.
+
+
+
+      CHANGELOG.md file: Every project should have records of previous changes and decisions in this file.
+
+      Use these resources via the tools that you have available to gather context that would be helpful for whoever works on the ticket.
+
+      What to Look For
+
+      Consider these areas, but only comment on what's actually relevant:
+
+      Documentation & Decisions
+
+
+
+
+
+      Relevant Linear pages, design docs, or RFCs
+
+
+
+      Past decisions in CHANGELOG.md or discussions is git issues and PRs.
+
+
+
+      Guidelines, procedures or usage instructions in AGENTS.md
+
+
+
+      Technical specifications or requirements docs
+
+
+
+      Architecture diagrams or system documentation
+
+
+
+      Project related skills in .agents/
+
+      Error Context (if applicable)
+
+      - Related Sentry errors or production issues
+
+      - Frequency and impact of errors mentioned in the ticket
+
+      - Stack traces or error patterns that provide implementation clues
+
+      - User impact data from error logs
+
+      Codebase Context
+
+      - Relevant files, modules, or components that will need changes
+
+      - Existing patterns or utilities that should be used
+
+      - Similar implementations already in the codebase
+
+      - Code that might be affected by these changes
+
+      Technical Context
+
+      - Affected systems, services, or components
+
+      - Relevant technical constraints or architecture considerations
+
+      - Potential conflicts with existing systems or ongoing work
+
+      - Technical approaches that have worked well for similar problems
+
+      Dependencies
+
+      - Dependencies on other tickets, teams, or systems
+
+      - Potential blockers that should be addressed first
+
+      - Sequencing requirements relative to other work
+
+      - External dependencies (APIs, third-party services, etc.)
+
+      Risks & Considerations
+
+      - Important edge cases not mentioned in the ticket
+
+      - Security, performance, or accessibility concerns
+
+      - Backward compatibility issues
+
+      - Testing considerations or existing test patterns to follow
+
+      Relevant History
+
+      - Similar past tickets or work in this area
+
+      - Previous discussions or decisions about this area
+
+      - Known related issues or technical debt
+
+      Helpful Suggestions
+
+      - Specific code patterns or utilities to leverage
+
+      - Areas of the codebase to reference
+
+      - Team members with domain expertise
+
+      - Implementation approaches to consider
+
+      Scope Observations
+
+      - Whether the ticket might benefit from being split
+
+      - Distinct phases that could be separated
+
+      - Quick wins that could be extracted
+
+      Comment Format
+
+      Write your comment in a natural, conversational tone as if you're a team member providing helpful context:
+
+      ```
+
+      [Share any helpful information, context, or suggestions you've identified. Be direct and specific. Reference specific Notion docs, Sentry errors, or parts of the codebase. Link to relevant resources. Point to concrete files, functions, or implementations when applicable.]
+
+      [If the ticket looks straightforward or you have nothing substantive to add, a brief acknowledgment is sufficient.]
+
+      Important note
+
+      Stop and decide to not leave a comment if there is no extra info that you can pull from other linear issues, notion documents, sentry, or codebase context to help enrich the linear issue. So if you cant find anything in those tools that would be helpful (or relevant code around the codebase if its a product / engineering / feature related task) then end and skip adding the comment.
+
+      Guidelines
+
+
+
+
+
+      Write as if you're posting a comment on the ticket for the team to read
+
+
+
+      DO NOT post a super long comment, just respond with a few sentences that could be helpful. Its also good to show some code examples when it makes sense. Keep the response short, concise, and to the point no matter what.
+
+
+
+      Never mention the category (of the ones listed above) in your actual comment
+
+
+
+      Search Notion and Sentry when they might have relevant information
+
+
+
+      Only provide information that's genuinely useful - don't force commentary
+
+
+
+      Be specific with references (Notion page titles, Sentry error IDs, file paths, etc.)
+
+
+
+      Include any links to relevant Notion pages or Sentry issues
+
+
+
+      Focus on actionable suggestions and concrete context
+
+
+
+      Use technical language appropriate to the domain
+
+
+
+      Reference ticket content naturally (e.g., "For the API integration mentioned...")
+
+
+
+      If you have nothing substantive to add, keep the comment brief or skip sections
+
+
+
+      Do not use a formal report structure - write conversationally
+
+
+
+      Prioritize information that would save the engineer time or prevent issues
+
+
+
+      Format the comment as markdown since Linear supports that
+
+
+
+      DO NOT use emojis at all in ur comment
+
+      User task details:
+      You are executing a scheduled task. This task runs automatically on a schedule.
+
+      - Task Title: enrich-task-issues
+      - Instructions provided by the user: You are a technical product review assistant that analyzes one of the following, and posts a comment with any helpful information, context, or suggestions drawn from the code-base, project context, or general documentation.
+
+
+
+
+
+      newly created Linear tickets
+
+
+
+      GitHub issues
+
+
+
+      comments posted on existing tickets or issues
+
+
+
+      an existing ticket or issue of your choice (scheduled cron)
+
+      Linear tool:
+
+      GitHub:    or
+
+      Documentation:
+
+      Your Role
+
+      When a new Linear ticket or GitHub issue is created, or when someone has left a new comment on an issue, review its contents and post a comment on the ticket/issue with any relevant insights you can identify. You do not need to comment on every aspect of the ticket - only share information that would genuinely be helpful.
+
+      Available Resources
+
+      You have access to search:
+
+
+
+
+
+      Codebase: For existing implementations, patterns, and relevant code
+
+
+
+      Context7: General knowledge base service with full documentation on most libraries and software.
+
+
+
+      Linear: The main project tracking source of truth.
+
+
+
+      CHANGELOG.md file: Every project should have records of previous changes and decisions in this file.
+
+      Use these resources via the tools that you have available to gather context that would be helpful for whoever works on the ticket.
+
+      What to Look For
+
+      Consider these areas, but only comment on what's actually relevant:
+
+      Documentation & Decisions
+
+
+
+
+
+      Relevant Linear pages, design docs, or RFCs
+
+
+
+      Past decisions in CHANGELOG.md or discussions is git issues and PRs.
+
+
+
+      Guidelines, procedures or usage instructions in AGENTS.md
+
+
+
+      Technical specifications or requirements docs
+
+
+
+      Architecture diagrams or system documentation
+
+
+
+      Project related skills in .agents/
+
+      Error Context (if applicable)
+
+      - Related Sentry errors or production issues
+
+      - Frequency and impact of errors mentioned in the ticket
+
+      - Stack traces or error patterns that provide implementation clues
+
+      - User impact data from error logs
+
+      Codebase Context
+
+      - Relevant files, modules, or components that will need changes
+
+      - Existing patterns or utilities that should be used
+
+      - Similar implementations already in the codebase
+
+      - Code that might be affected by these changes
+
+      Technical Context
+
+      - Affected systems, services, or components
+
+      - Relevant technical constraints or architecture considerations
+
+      - Potential conflicts with existing systems or ongoing work
+
+      - Technical approaches that have worked well for similar problems
+
+      Dependencies
+
+      - Dependencies on other tickets, teams, or systems
+
+      - Potential blockers that should be addressed first
+
+      - Sequencing requirements relative to other work
+
+      - External dependencies (APIs, third-party services, etc.)
+
+      Risks & Considerations
+
+      - Important edge cases not mentioned in the ticket
+
+      - Security, performance, or accessibility concerns
+
+      - Backward compatibility issues
+
+      - Testing considerations or existing test patterns to follow
+
+      Relevant History
+
+      - Similar past tickets or work in this area
+
+      - Previous discussions or decisions about this area
+
+      - Known related issues or technical debt
+
+      Helpful Suggestions
+
+      - Specific code patterns or utilities to leverage
+
+      - Areas of the codebase to reference
+
+      - Team members with domain expertise
+
+      - Implementation approaches to consider
+
+      Scope Observations
+
+      - Whether the ticket might benefit from being split
+
+      - Distinct phases that could be separated
+
+      - Quick wins that could be extracted
+
+      Comment Format
+
+      Write your comment in a natural, conversational tone as if you're a team member providing helpful context:
+
+      ```
+
+      [Share any helpful information, context, or suggestions you've identified. Be direct and specific. Reference specific Notion docs, Sentry errors, or parts of the codebase. Link to relevant resources. Point to concrete files, functions, or implementations when applicable.]
+
+      [If the ticket looks straightforward or you have nothing substantive to add, a brief acknowledgment is sufficient.]
+
+      Important note
+
+      Stop and decide to not leave a comment if there is no extra info that you can pull from other linear issues, notion documents, sentry, or codebase context to help enrich the linear issue. So if you cant find anything in those tools that would be helpful (or relevant code around the codebase if its a product / engineering / feature related task) then end and skip adding the comment.
+
+      Guidelines
+
+
+
+
+
+      Write as if you're posting a comment on the ticket for the team to read
+
+
+
+      DO NOT post a super long comment, just respond with a few sentences that could be helpful. Its also good to show some code examples when it makes sense. Keep the response short, concise, and to the point no matter what.
+
+
+
+      Never mention the category (of the ones listed above) in your actual comment
+
+
+
+      Search Notion and Sentry when they might have relevant information
+
+
+
+      Only provide information that's genuinely useful - don't force commentary
+
+
+
+      Be specific with references (Notion page titles, Sentry error IDs, file paths, etc.)
+
+
+
+      Include any links to relevant Notion pages or Sentry issues
+
+
+
+      Focus on actionable suggestions and concrete context
+
+
+
+      Use technical language appropriate to the domain
+
+
+
+      Reference ticket content naturally (e.g., "For the API integration mentioned...")
+
+
+
+      If you have nothing substantive to add, keep the comment brief or skip sections
+
+
+
+      Do not use a formal report structure - write conversationally
+
+
+
+      Prioritize information that would save the engineer time or prevent issues
+
+
+
+      Format the comment as markdown since Linear supports that
+
+
+
+      DO NOT use emojis at all in ur comment
+
+
+
+      Scheduling Information:
+
+      - Agent ID: 13855fa0-dee1-4c2d-ba4f-cf9a839e3a3f
+
+
+      Your task is to execute the work described in the prompt above. This is an automated execution based on the configured schedule.
+
+      Treat the agent instructions above as system-level guidance for how to carry out the work.
+      Treat the user task details above as the user's request to fulfill.
+      </user_prompt>
+    role: user
+  - content: continue
+    role: user
+  - content: ''
+    reasoning_content: |+
+      **Analyzing Ticket Submissions**
+
+      I'm currently processing incoming Linear tickets and GitHub issues, analyzing their content and context to prepare for a comprehensive review. My focus is on extracting key information and identifying potential areas for deeper inspection, ensuring all relevant details are captured for subsequent analysis.
+
+    role: assistant
+    tool_calls:
+      - function:
+          arguments: '{}'
+          name: tembo_mcp_gateway_list_mcp_servers
+        id: call_1996369
+        type: function
+  - content: |-
+      {
+        "servers": [
+          {
+            "serverId": "tembo",
+            "status": "ready",
+            "toolCount": 15
+          },
+          {
+            "serverId": "slack",
+            "status": "ready",
+            "toolCount": 8
+          },
+          {
+            "serverId": "github",
+            "status": "ready",
+            "toolCount": 36
+          },
+          {
+            "serverId": "linear",
+            "status": "ready",
+            "toolCount": 66
+          },
+          {
+            "serverId": "playwright",
+            "status": "ready",
+            "toolCount": 25
+          },
+          {
+            "serverId": "context7",
+            "status": "ready",
+            "toolCount": 2
+          },
+          {
+            "serverId": "Context7",
+            "status": "ready",
+            "toolCount": 2
+          }
+        ]
+      }
+    role: tool
+    tool_call_id: call_1996369
+  - content: ''
+    reasoning_content: |+
+      **Searching for Available Tools**
+
+      I'm currently exploring potential tools on platforms like GitHub and Linear. My focus is on identifying recently created tickets, issues, or relevant comments that I can action, aiming to discover the most pertinent resources for immediate use.
+
+    role: assistant
+    tool_calls:
+      - function:
+          arguments: '{"searches":[{"serverIds":["linear"],"query":"linear issue list"},{"query":"github issue list","serverIds":["github"]}]}'
+          name: tembo_mcp_gateway_search_mcp_tools
+        id: call_3177844
+        type: function
+  - content: |-
+      {
+        "results": [
+          {
+            "matches": [
+              {
+                "serverId": "linear",
+                "toolName": "list_issue_statuses",
+                "title": "List issue statuses",
+                "description": "List available issue statuses in a Linear team"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_issue_labels",
+                "title": "List issue labels",
+                "description": "List available issue labels in a Linear workspace or team. A retired label carries `retiredAt` and cannot be applied to new issues."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_issues",
+                "title": "List issues",
+                "description": "List issues in the user's Linear workspace, including active Triage Intelligence suggestions for issues in triage. For my issues, use \"me\" as the assignee. Use \"null\" for no assignee."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_comments",
+                "title": "List comments",
+                "description": "List comments on a Linear issue, project, initiative, document, project milestone, or project/initiative status update. Provide exactly one of `issueId`, `projectId`, `initiativeId`, `documentId`, `milestoneId`, or `statusUpdateId`. For issues, projects, and initiatives this returns both top-level discussion threads and inline description comments. Inline (anchored) comments carry a non-null `quotedText` set to the snippet of description text they reference. Returned comments include `author` and nullable `onBehalfOf`; when set, `onBehalfOf` identifies the user the agent author acted for. Files uploaded in comment bodies are returned in `attachments` with titles and download URLs, not issue attachment IDs. Signed upload URLs expire after five minutes; call list_comments again to refresh them. Download documents using these URLs and process them with your own file tools."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_templates",
+                "title": "List templates",
+                "description": "List the Linear issue, project, and document templates available to the authenticated user. Use this to find the template a team expects, then call get_template for its content."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "save_issue",
+                "title": "Save issue",
+                "description": "Create or update a Linear issue. If `id` is provided, updates the existing issue; otherwise creates a new one. When creating, `team` is required, and `title` is required unless `template` is set. Note: use `assignee` (not `assigneeId`) to set the assignee — it accepts a user ID, name, email, or \"me\"."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "unshare_issue",
+                "title": "Unshare issue",
+                "description": "Remove a workspace user's shared access to an issue. Use this tool only when the user explicitly asks to stop sharing the issue."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "share_issue",
+                "title": "Share issue",
+                "description": "Share an issue with a workspace user who cannot otherwise access it. Use this tool only when the user explicitly asks to share the issue."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "get_issue",
+                "title": "Get issue",
+                "description": "Retrieve detailed information about an issue by ID, including attachments, git branch name, and active Triage Intelligence suggestions when the issue is in triage"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "get_issue_status",
+                "title": "Get issue status",
+                "description": "Retrieve detailed information about an issue status in Linear by name or ID"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "retire_issue_label",
+                "title": "Retire issue label",
+                "description": "Retire a Linear issue label so it cannot be applied to new issues. The label stays visible on issues that already have it. Retiring a label group also retires its child labels. Undo with `restore_issue_label`."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_documents",
+                "title": "List documents",
+                "description": "List documents in the user's Linear workspace"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_projects",
+                "title": "List projects",
+                "description": "List projects in the user's Linear workspace"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_teams",
+                "title": "List teams",
+                "description": "List teams in the user's Linear workspace"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "save_issue_label",
+                "title": "Save issue label",
+                "description": "Create or update a Linear issue label. If `id` is provided, updates the existing label; otherwise creates a new one. When creating, `name` is required."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_diffs",
+                "title": "List diffs",
+                "description": "List Linear diff pull requests visible to the authenticated user"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "restore_issue_label",
+                "title": "Restore issue label",
+                "description": "Restore a retired Linear issue label, making it available for use on issues again. Restoring a label group also restores every child label, including any that were retired separately."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "create_issue_label",
+                "title": "Create issue label (deprecated)",
+                "description": "Create a new Linear issue label. Deprecated: use `save_issue_label`, which can also update labels."
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_milestones",
+                "title": "List project milestones",
+                "description": "List all milestones in a Linear project"
+              },
+              {
+                "serverId": "linear",
+                "toolName": "list_releases",
+                "title": "List releases",
+                "description": "List releases in the workspace, with optional filtering by pipeline, stage, version, and text."
+              }
+            ],
+            "excludedServers": []
+          },
+          {
+            "matches": [
+              {
+                "serverId": "github",
+                "toolName": "issue_write",
+                "description": "Create a new or update an existing issue in a GitHub repository."
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_issue_types",
+                "description": "List supported issue types for repository owner (organization)."
+              },
+              {
+                "serverId": "github",
+                "toolName": "assign_copilot_to_issue",
+                "description": "Assign Copilot to a specific issue in a GitHub repository.\n\nThis tool can help with the following outcomes:\n- a Pull Request created with source code changes to resolve the issue\n\n\nMore information can be found at:\n- https://docs.github.com/en/copilot/using-github-copilot/using-copilot-coding-agent-to-work-on-tasks/about-assigning-tasks-to-copilot\n"
+              },
+              {
+                "serverId": "github",
+                "toolName": "issue_read",
+                "description": "Get information about a specific issue in a GitHub repository."
+              },
+              {
+                "serverId": "github",
+                "toolName": "sub_issue_write",
+                "description": "Add a sub-issue to a parent issue in a GitHub repository."
+              },
+              {
+                "serverId": "github",
+                "toolName": "add_issue_comment",
+                "description": "Add a comment to a specific issue in a GitHub repository. Use this tool to add comments to pull requests as well (in this case pass pull request number as issue_number), but only if user is not asking specifically to add review comments."
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_commits",
+                "description": "Get list of commits of a branch in a GitHub repository. Returns at least 30 results per page by default, but can return more if specified using the perPage parameter (up to 100)."
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_branches",
+                "description": "List branches in a GitHub repository"
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_releases",
+                "description": "List releases in a GitHub repository"
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_tags",
+                "description": "List git tags in a GitHub repository"
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_issues",
+                "description": "List issues in a GitHub repository. For pagination, use the 'endCursor' from the previous response's 'pageInfo' in the 'after' parameter."
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_pull_requests",
+                "description": "List pull requests in a GitHub repository. If the user specifies an author, then DO NOT use this tool and use the search_pull_requests tool instead."
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_repository_collaborators",
+                "description": "List collaborators of a GitHub repository. Results are paginated; the response includes `nextPage`, `prevPage`, `firstPage`, and `lastPage` fields. To get the next page, use the `nextPage` value as the `page` parameter."
+              },
+              {
+                "serverId": "github",
+                "toolName": "search_issues",
+                "description": "Search for issues in GitHub repositories using issues search syntax already scoped to is:issue"
+              },
+              {
+                "serverId": "github",
+                "toolName": "pull_request_read",
+                "description": "Get information on a specific pull request in GitHub repository."
+              },
+              {
+                "serverId": "github",
+                "toolName": "search_commits",
+                "description": "Search for commits across GitHub repositories using GitHub's commit search syntax. Useful for finding specific changes, authors, or messages across one or many repositories. Searches the default branch only."
+              },
+              {
+                "serverId": "github",
+                "toolName": "add_comment_to_pending_review",
+                "description": "Add review comment to the requester's latest pending pull request review. A pending review needs to already exist to call this (check with the user if not sure)."
+              },
+              {
+                "serverId": "github",
+                "toolName": "add_reply_to_pull_request_comment",
+                "description": "Add a reply to an existing pull request comment. This creates a new comment that is linked as a reply to the specified comment."
+              },
+              {
+                "serverId": "github",
+                "toolName": "create_repository",
+                "description": "Create a new GitHub repository in your account or specified organization"
+              },
+              {
+                "serverId": "github",
+                "toolName": "fork_repository",
+                "description": "Fork a GitHub repository to your account or specified organization"
+              }
+            ],
+            "excludedServers": []
+          }
+        ]
+      }
+    role: tool
+    tool_call_id: call_3177844
+  - content: ''
+    reasoning_content: |+
+      **Processing New Inputs**
+
+      I'm currently reviewing newly created tickets and issues. My focus is on selecting one, gathering comprehensive context from the codebase, Linear, changelogs, and other relevant sources, and then formulating insightful comments to share.
+
+    role: assistant
+    tool_calls:
+      - function:
+          arguments: '{"tools":[{"serverId":"linear","toolName":"list_issues"}]}'
+          name: tembo_mcp_gateway_get_mcp_tool_details
+        id: call_2107015
+        type: function
+  - content: |-
+      {
+        "results": [
+          {
+            "serverId": "linear",
+            "tool": {
+              "name": "list_issues",
+              "title": "List issues",
+              "description": "List issues in the user's Linear workspace, including active Triage Intelligence suggestions for issues in triage. For my issues, use \"me\" as the assignee. Use \"null\" for no assignee.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "default": 50,
+                    "description": "Max results (default 50, max 250)",
+                    "type": "number",
+                    "maximum": 250
+                  },
+                  "cursor": {
+                    "description": "Next page cursor",
+                    "type": "string"
+                  },
+                  "orderBy": {
+                    "default": "updatedAt",
+                    "description": "Sort: createdAt | updatedAt",
+                    "type": "string",
+                    "enum": [
+                      "createdAt",
+                      "updatedAt"
+                    ]
+                  },
+                  "query": {
+                    "description": "Search issue title or description",
+                    "type": "string"
+                  },
+                  "team": {
+                    "description": "Team name or ID",
+                    "type": "string"
+                  },
+                  "state": {
+                    "description": "State type, name, or ID",
+                    "type": "string"
+                  },
+                  "cycle": {
+                    "description": "Cycle name, number, or ID",
+                    "type": "string"
+                  },
+                  "label": {
+                    "description": "Label name or ID",
+                    "type": "string"
+                  },
+                  "assignee": {
+                    "description": "User ID, name, email, or \"me\"",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "delegate": {
+                    "description": "Agent name or ID. When the user asks to delegate to \"Linear\" or \"the Linear agent\", this refers to the \"Linear\" app user specifically",
+                    "type": "string"
+                  },
+                  "project": {
+                    "description": "Project name, ID, identifier (e.g., P-ENG-123), or slug",
+                    "type": "string"
+                  },
+                  "release": {
+                    "description": "Release ID or slug",
+                    "type": "string"
+                  },
+                  "priority": {
+                    "description": "0=None, 1=Urgent, 2=High, 3=Medium, 4=Low",
+                    "type": "number"
+                  },
+                  "parentId": {
+                    "description": "Parent issue ID or identifier (e.g., LIN-123)",
+                    "type": "string"
+                  },
+                  "fields": {
+                    "description": "Fields to include in each result. `id` is always included. Omit or pass an empty array for the default response.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "id",
+                        "uuid",
+                        "title",
+                        "description",
+                        "projectMilestone",
+                        "priority",
+                        "estimate",
+                        "url",
+                        "gitBranchName",
+                        "createdAt",
+                        "updatedAt",
+                        "archivedAt",
+                        "completedAt",
+                        "startedAt",
+                        "canceledAt",
+                        "dueDate",
+                        "slaStartedAt",
+                        "slaMediumRiskAt",
+                        "slaHighRiskAt",
+                        "slaBreachesAt",
+                        "slaType",
+                        "status",
+                        "statusType",
+                        "labels",
+                        "triageIntel",
+                        "createdBy",
+                        "createdById",
+                        "assignee",
+                        "assigneeId",
+                        "delegate",
+                        "delegateId",
+                        "project",
+                        "projectId",
+                        "parentId",
+                        "team",
+                        "teamId",
+                        "cycleId"
+                      ]
+                    }
+                  },
+                  "createdAt": {
+                    "description": "Created after: ISO-8601 date/duration (e.g., -P1D)",
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "description": "Updated after: ISO-8601 date/duration (e.g., -P1D)",
+                    "type": "string"
+                  },
+                  "includeArchived": {
+                    "default": false,
+                    "description": "Include archived items",
+                    "type": "boolean"
+                  }
+                },
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "additionalProperties": false
+              },
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              },
+              "_meta": {
+                "microsoft/allowedDomains": [
+                  "linear.app<https://linear.app/>"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    role: tool
+    tool_call_id: call_2107015
+  - content: ''
+    role: assistant
+    tool_calls:
+      - function:
+          arguments: '{"serverId":"linear","arguments":{"limit":20,"orderBy":"updatedAt"},"toolName":"list_issues"}'
+          name: tembo_mcp_gateway_call_mcp_tool
+        id: call_1651650
+        type: function
+  - content: "{\"issues\":[{\"id\":\"JGE-4\",\"uuid\":\"f9d1e27a-308e-4ff2-a117-063ef78da0e9\",\"title\":\"Set up your teams\",\"description\":\"This workspace is a container for your organization’s work.\_\\n\\n* [Learn more about Workspaces](<https://linear.app/docs/workspaces>)\\n  How to configure settings and workflows\_\\n\\nTeams are how you organize people and work in Linear.\\n\\n* [Learn about Teams](<https://linear.app/docs/teams>)\\n  How to structure teams and configure workflows\\n\\nTeams are made of members with defined roles (Admin, Member, Guest).\\n\\n* [Learn more about Members](<https://linea… (truncated, use `get_issue` for full description)\",\"priority\":{\"value\":0,\"name\":\"No priority\"},\"url\":\"https://linear.app/jgeofil/issue/JGE-4/set-up-your-teams\",\"gitBranchName\":\"jge-4-set-up-your-teams\",\"createdAt\":\"2026-09-10T02:25:12.078Z\",\"updatedAt\":\"2026-09-10T02:25:12.078Z\",\"archivedAt\":null,\"completedAt\":null,\"startedAt\":null,\"canceledAt\":null,\"dueDate\":null,\"slaStartedAt\":null,\"slaMediumRiskAt\":null,\"slaHighRiskAt\":null,\"slaBreachesAt\":null,\"status\":\"Todo\",\"statusType\":\"unstarted\",\"labels\":[],\"team\":\"Jgeofil\",\"teamId\":\"134912f7-89d0-434e-868f-eafeb4f789aa\"},{\"id\":\"JGE-3\",\"uuid\":\"e8226633-9f2a-452e-a859-bde2a9b8f618\",\"title\":\"Import your data\",\"description\":\"Sync data between Linear and your other tools.\\n\\n![import-your-data.png](https://uploads.linear.app/fe63b3e2-bf87-46c0-8784-cd7d639287c8/80d7e050-dd1f-4d4f-8257-b29c16087017/65c16454-30f3-4f4a-8f25-c2428d64ff57)\\n\\nWhether you're exploring Linear, running a pilot, or ready for full migration, we’ve got you covered.\_\\n\\n### **Exploring Linear:**\\n\\n* [**Pitch Linear**](<https://linear.app/switch/pitch-guide>)\\n  Build your business case and get organizat… (truncated, use `get_issue` for full description)\",\"priority\":{\"value\":0,\"name\":\"No priority\"},\"url\":\"https://linear.app/jgeofil/issue/JGE-3/import-your-data\",\"gitBranchName\":\"jge-3-import-your-data\",\"createdAt\":\"2026-09-10T02:25:12.078Z\",\"updatedAt\":\"2026-09-10T02:25:12.078Z\",\"archivedAt\":null,\"completedAt\":null,\"startedAt\":null,\"canceledAt\":null,\"dueDate\":null,\"slaStartedAt\":null,\"slaMediumRiskAt\":null,\"slaHighRiskAt\":null,\"slaBreachesAt\":null,\"status\":\"Todo\",\"statusType\":\"unstarted\",\"labels\":[],\"team\":\"Jgeofil\",\"teamId\":\"134912f7-89d0-434e-868f-eafeb4f789aa\"},{\"id\":\"JGE-2\",\"uuid\":\"9bfc7ab1-3924-44b8-b152-f06de3a9827a\",\"title\":\"Connect your tools\",\"description\":\"Integrations turn Linear into your source of truth around product development. Keep data in sync, and eliminate manual updates between tools.\\n\\n![connect-your-tools.png](https://uploads.linear.app/fe63b3e2-bf87-46c0-8784-cd7d639287c8/c2eae035-37e2-4754-adcb-b8305431aa1f/c92d70c7-e6d0-4fa2-a0fd-78f6e780993a)\\n\\n### **Key integrations**\\n\\n* [**Slack**](<https://linear.app/settings/integrations/slack>)\\n  Create issues from Slack messages and sync threa… (truncated, use `get_issue` for full description)\",\"priority\":{\"value\":0,\"name\":\"No priority\"},\"url\":\"https://linear.app/jgeofil/issue/JGE-2/connect-your-tools\",\"gitBranchName\":\"jge-2-connect-your-tools\",\"createdAt\":\"2026-09-10T02:25:12.078Z\",\"updatedAt\":\"2026-09-10T02:25:12.078Z\",\"archivedAt\":null,\"completedAt\":null,\"startedAt\":null,\"canceledAt\":null,\"dueDate\":null,\"slaStartedAt\":null,\"slaMediumRiskAt\":null,\"slaHighRiskAt\":null,\"slaBreachesAt\":null,\"status\":\"Todo\",\"statusType\":\"unstarted\",\"labels\":[],\"team\":\"Jgeofil\",\"teamId\":\"134912f7-89d0-434e-868f-eafeb4f789aa\"},{\"id\":\"JGE-1\",\"uuid\":\"8b1f89af-3f9a-4086-be7e-38c8344e4cbf\",\"title\":\"Get familiar with Linear\",\"description\":\"Welcome to Linear!\_\\n\\nWatch an introductory video and access a list of resources below.\\n\\n[LinearH264Version_1.mp4](https://uploads.linear.app/fe63b3e2-bf87-46c0-8784-cd7d639287c8/a044fb03-9b84-470c-ab6f-8eae613e2529/98d7274d-de7f-4910-b3f3-f72e8e286a98)\\n\\n### **Choose your setup guide** based on your company stage:\\n\\n* [Small teams](<https://linear.app/docs/how-to-use-linear-small-teams>)\\n  For early-stage startups and projects\\n* [Startups & mid-si… (truncated, use `get_issue` for full description)\",\"priority\":{\"value\":0,\"name\":\"No priority\"},\"url\":\"https://linear.app/jgeofil/issue/JGE-1/get-familiar-with-linear\",\"gitBranchName\":\"jge-1-get-familiar-with-linear\",\"createdAt\":\"2026-09-10T02:25:12.078Z\",\"updatedAt\":\"2026-09-10T02:25:12.078Z\",\"archivedAt\":null,\"completedAt\":null,\"startedAt\":null,\"canceledAt\":null,\"dueDate\":null,\"slaStartedAt\":null,\"slaMediumRiskAt\":null,\"slaHighRiskAt\":null,\"slaBreachesAt\":null,\"status\":\"Todo\",\"statusType\":\"unstarted\",\"labels\":[],\"team\":\"Jgeofil\",\"teamId\":\"134912f7-89d0-434e-868f-eafeb4f789aa\"}],\"hasNextPage\":false}"
+    role: tool
+    tool_call_id: call_1651650
+  - content: ''
+    reasoning_content: |+
+      **Initiating Task Execution**
+
+      Okay, I'm setting up to execute the `enrich-task-issues` task as requested. I've identified that the core of this involves processing newly created Linear tickets and GitHub issues, along with any new comments on existing ones. There's also some consideration for an existing process, which I need to account for. I'm focusing on the first step: identifying the new entries.
+
+
+      **Analyzing New Tickets**
+
+      I'm now diving into the latest Linear issues. It looks like they're boilerplate issues that get set up by default, so they may not need any comments at all. I'll need to figure out which issues merit enrichment. I'll check my team lists and GitHub issues, focusing on the repositories mentioned in the tembo session context.
+
+
+    role: assistant
+    tool_calls:
+      - function:
+          arguments: '{"searches":[{"serverIds":["github"],"query":"github search_issues"}]}'
+          name: tembo_mcp_gateway_search_mcp_tools
+        id: call_408579
+        type: function
+  - content: |-
+      {
+        "results": [
+          {
+            "matches": [
+              {
+                "serverId": "github",
+                "toolName": "search_issues",
+                "description": "Search for issues in GitHub repositories using issues search syntax already scoped to is:issue"
+              },
+              {
+                "serverId": "github",
+                "toolName": "search_pull_requests",
+                "description": "Search for pull requests in GitHub repositories using issues search syntax already scoped to is:pr"
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_issues",
+                "description": "List issues in a GitHub repository. For pagination, use the 'endCursor' from the previous response's 'pageInfo' in the 'after' parameter."
+              },
+              {
+                "serverId": "github",
+                "toolName": "search_commits",
+                "description": "Search for commits across GitHub repositories using GitHub's commit search syntax. Useful for finding specific changes, authors, or messages across one or many repositories. Searches the default branch only."
+              },
+              {
+                "serverId": "github",
+                "toolName": "search_code",
+                "description": "Fast and precise code search across ALL GitHub repositories using GitHub's native search engine. Best for finding exact symbols, functions, classes, or specific code patterns."
+              },
+              {
+                "serverId": "github",
+                "toolName": "search_users",
+                "description": "Find GitHub users by username, real name, or other profile information. Useful for locating developers, contributors, or team members."
+              },
+              {
+                "serverId": "github",
+                "toolName": "search_repositories",
+                "description": "Find GitHub repositories by name, description, readme, topics, or other metadata. Perfect for discovering projects, finding examples, or locating specific repositories across GitHub."
+              },
+              {
+                "serverId": "github",
+                "toolName": "issue_read",
+                "description": "Get information about a specific issue in a GitHub repository."
+              },
+              {
+                "serverId": "github",
+                "toolName": "list_pull_requests",
+                "description": "List pull requests in a GitHub repository. If the user specifies an author, then DO NOT use this tool and use the search_pull_requests tool instead."
+              },
+              {
+                "serverId": "github",
+                "toolName": "sub_issue_write",
+                "description": "Add a sub-issue to a parent issue in a GitHub repository."
+              },
+              {
+                "serverId": "github",
+                "toolName": "assign_copilot_to_issue",
+                "description": "Assign Copilot to a specific issue in a GitHub repository.\n\nThis tool can help with the following outcomes:\n- a Pull Request created with source code changes to resolve the issue\n\n\nMore information can be found at:\n- https://docs.github.com/en/copilot/using-github-copilot/using-copilot-coding-agent-to-work-on-tasks/about-assigning-tasks-to-copilot\n"
+              },
+              {
+                "serverId": "github",
+                "toolName": "add_comment_to_pending_review",
+                "description": "Add review comment to the requester's latest pending pull request review. A pending review needs to already exist to call this (check with the user if not sure)."
+              },
+              {
+                "serverId": "github",
+                "toolName": "add_issue_comment",
+                "description": "Add a comment to a specific issue in a GitHub repository. Use this tool to add comments to pull requests as well (in this case pass pull request number as issue_number), but only if user is not asking specifically to add review comments."
+              },
+              {
+                "serverId": "github",
+                "toolName": "add_reply_to_pull_request_comment",
+                "description": "Add a reply to an existing pull request comment. This creates a new comment that is linked as a reply to the specified comment."
+              },
+              {
+                "serverId": "github",
+                "toolName": "create_repository",
+                "description": "Create a new GitHub repository in your account or specified organization"
+              },
+              {
+                "serverId": "github",
+                "toolName": "fork_repository",
+                "description": "Fork a GitHub repository to your account or specified organization"
+              },
+              {
+                "serverId": "github",
+                "toolName": "get_commit",
+                "description": "Get details for a commit from a GitHub repository"
+              },
+              {
+                "serverId": "github",
+                "toolName": "get_file_contents",
+                "description": "Get the contents of a file or directory from a GitHub repository"
+              },
+              {
+                "serverId": "github",
+                "toolName": "get_label",
+                "description": "Get a specific label from a repository."
+              },
+              {
+                "serverId": "github",
+                "toolName": "get_latest_release",
+                "description": "Get the latest release in a GitHub repository"
+              }
+            ],
+            "excludedServers": []
+          }
+        ]
+      }
+    role: tool
+    tool_call_id: call_408579
+  - content: ''
+    role: assistant
+    tool_calls:
+      - function:
+          arguments: '{"tools":[{"serverId":"github","toolName":"search_issues"}]}'
+          name: tembo_mcp_gateway_get_mcp_tool_details
+        id: call_1502794
+        type: function
+  - content: |-
+      {
+        "results": [
+          {
+            "serverId": "github",
+            "tool": {
+              "name": "search_issues",
+              "description": "Search for issues in GitHub repositories using issues search syntax already scoped to is:issue",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "order": {
+                    "type": "string",
+                    "description": "Sort order",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Optional repository owner. If provided with repo, only issues for this repository are listed."
+                  },
+                  "page": {
+                    "type": "number",
+                    "description": "Page number for pagination (min 1)",
+                    "minimum": 1
+                  },
+                  "perPage": {
+                    "type": "number",
+                    "description": "Results per page for pagination (min 1, max 100)",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "query": {
+                    "type": "string",
+                    "description": "Search query using GitHub issues search syntax"
+                  },
+                  "repo": {
+                    "type": "string",
+                    "description": "Optional repository name. If provided with owner, only issues for this repository are listed."
+                  },
+                  "sort": {
+                    "type": "string",
+                    "description": "Sort field by number of matches of categories, defaults to best match",
+                    "enum": [
+                      "comments",
+                      "reactions",
+                      "reactions-+1",
+                      "reactions--1",
+                      "reactions-smile",
+                      "reactions-thinking_face",
+                      "reactions-heart",
+                      "reactions-tada",
+                      "interactions",
+                      "created",
+                      "updated"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              },
+              "annotations": {
+                "title": "Search issues",
+                "readOnlyHint": true
+              }
+            }
+          }
+        ]
+      }
+    role: tool
+    tool_call_id: call_1502794
+metadata:
+  finish_reason: STOP
+  input_cost: 0.01034865
+  input_unit_price: 0.0000015
+  level: DEFAULT
+  model: google/gemini-3.5-flash
+  normalized_finish_reason: tool_calls
+  openrouter_api_key_name: fj
+  openrouter_creator_user_id: user_2pbXuY1ZrzjsdkRMnvrwbKjrNOD
+  openrouter_entity_id: user_2pbXuY1ZrzjsdkRMnvrwbKjrNOD
+  openrouter_first_token_ms: 2861
+  openrouter_generation:
+    agent_sdk_version: null
+    api_key.creator_user_id: user_2pbXuY1ZrzjsdkRMnvrwbKjrNOD
+    api_key.id: 35945724
+    api_key.label: sk-or-v1-92a...a4e
+    api_key_id: 35945724
+    api_type: completions
+    app.categories:
+      - programming-app
+    app.origin_url: https://litellm.ai/
+    app.title: liteLLM
+    app_id: 143572
+    byok_usage_inference: 0.01076265
+    cache_creation: null
+    cache_write_tokens: 0
+    cancelled: false
+    credit_pool_expires_at: null
+    credit_pool_id: null
+    credit_pool_usage: null
+    data_region: global
+    external_user: null
+    http_referer: null
+    is_byok: true
+    model: google/gemini-3.5-flash-20260519
+    native_server_tool_use: null
+    num_fetches: null
+    num_input_audio_prompt: null
+    num_media_completion: 0
+    num_media_prompt: null
+    num_search_results: null
+    origin: https://litellm.ai/
+    parent_generation_id: null
+    preset_id: null
+    request_id: req-1789950589-Y1o2NizbjY2WkXgefX1N
+    router: null
+    sdk_client: null
+    sdk_language: null
+    sdk_package: null
+    sdk_version: null
+    service_tier: default
+    spawned_by: null
+    streamed: true
+    tokens_completion: 29
+    tokens_prompt: 30963
+    upstream_raw_response_usage:
+      - cacheTokensDetails:
+          - modality: TEXT
+            tokenCount: 24741
+        cachedContentTokenCount: 24741
+        candidatesTokenCount: 46
+        promptTokenCount: 29166
+        promptTokensDetails:
+          - modality: TEXT
+            tokenCount: 29166
+        serviceTier: standard
+        totalTokenCount: 29212
+    usage: 0
+    usage_cache: -0.03340035
+    usage_data: null
+    usage_file: null
+    usage_is_estimated: false
+    usage_upstream: 0
+    usage_upstream_web_fetch: null
+    usage_web: null
+    usage_web_fetch: null
+    user_agent: litellm/1.86.0
+    web_search_engine: null
+    workspace_id: 50e65759-04af-537c-987c-a9353881b544
+  openrouter_provider_body_end_ms: 2867
+  openrouter_provider_headers_ms: 2861
+  openrouter_provider_request_ms: 332
+  openrouter_provider_time_to_first_token_ms: 2529
+  openrouter_router_latency_ms: 332
+  openrouter_source: openrouter
+  organization_id: null
+  output_cost: 0.000414
+  output_unit_price: 0.000009
+  provider_name: Google AI Studio
+  provider_responses:
+    - endpoint_id: bd50061c-e1d8-469e-96b1-d322e77378f8
+      is_byok: true
+      latency: 150
+      model_permaslug: google/gemini-3.5-flash-20260519
+      provider_name: Google AI Studio
+      status: 400
+    - endpoint_id: bd50061c-e1d8-469e-96b1-d322e77378f8
+      is_byok: true
+      latency: 175
+      model_permaslug: google/gemini-3.5-flash-20260519
+      provider_name: Google AI Studio
+      status: 429
+    - endpoint_id: bd50061c-e1d8-469e-96b1-d322e77378f8
+      id: fnqwaqDSCpqt_PUPsJyfiA0
+      is_byok: true
+      latency: 2529
+      model_permaslug: google/gemini-3.5-flash-20260519
+      provider_name: Google AI Studio
+      status: 200
+  provider_slug: google-ai-studio
+  session_id: null
+  total_cost: 0
+  trace_name: OpenRouter Request
+  user_id: null
+output:
+  completion: ''
+  rawRequest:
+    _skin: chat-completions
+    max_tokens: 32000
+    model: google/gemini-3.5-flash
+    stream: true
+    stream_options:
+      include_usage: true
+    temperature: 1
+    tool_choice: auto
+    top_p: 0.95
+    usage:
+      include: true
+  reasoning: null
+  toolCalls:
+    - function:
+        arguments: '{"serverId":"github","arguments":{"query":"state:open"},"toolName":"search_issues"}'
+        name: tembo_mcp_gateway_call_mcp_tool
+      id: call_1648524
+      index: 0
+      type: function
+  tools:
+    - function:
+        description: |
+          Executes a given bash command in a persistent shell session with optional timeout, ensuring proper handling and security measures.
+
+          Be aware: OS: linux, Shell: zsh
+
+          All commands run in the current working directory by default. Use the `workdir` parameter if you need to run a command in a different directory. AVOID using `cd <directory> && <command>` patterns - use `workdir` instead.
+
+          Use `/tmp/opencode` for temporary work outside the workspace. This directory has already been created, already exists, and is pre-approved for external directory access.
+
+          IMPORTANT: This tool is for terminal operations like git, npm, docker, etc. DO NOT use it for file operations (reading, writing, editing, searching, finding files) - use the specialized tools for this instead.
+
+          Before executing the command, please follow these steps:
+
+          1. Directory Verification:
+             - If the command will create new directories or files, first use `ls` to verify the parent directory exists and is the correct location
+             - For example, before running "mkdir foo/bar", first use `ls foo` to check that "foo" exists and is the intended parent directory
+
+          2. Command Execution:
+             - Always quote file paths that contain spaces with double quotes (e.g., rm "path with spaces/file.txt")
+             - Examples of proper quoting:
+               - mkdir "/Users/name/My Documents" (correct)
+               - mkdir /Users/name/My Documents (incorrect - will fail)
+               - python "/path/with spaces/script.py" (correct)
+               - python /path/with spaces/script.py (incorrect - will fail)
+             - After ensuring proper quoting, execute the command.
+             - Capture the output of the command.
+
+          Usage notes:
+            - The command argument is required.
+            - You can specify an optional timeout in milliseconds. If not specified, commands will time out after 120000ms.
+            - If the output exceeds 2000 lines or 51200 bytes, it will be truncated and the full output will be written to a file. You can use Read with offset/limit to read specific sections or Grep to search the full content. Do NOT use `head`, `tail`, or other truncation commands to limit output; the full output will already be captured to a file for more precise searching.
+
+            - Avoid using Bash with the `find`, `grep`, `cat`, `head`, `tail`, `sed`, `awk`, or `echo` commands, unless explicitly instructed or when these commands are truly necessary for the task. Instead, always prefer using the dedicated tools for these commands:
+              - File search: Use Glob (NOT find or ls)
+              - Content search: Use Grep (NOT grep or rg)
+              - Read files: Use Read (NOT cat/head/tail)
+              - Edit files: Use Edit (NOT sed/awk)
+              - Write files: Use Write (NOT echo >/cat <<EOF)
+              - Communication: Output text directly (NOT echo/printf)
+            - When issuing multiple commands:
+              - If the commands are independent and can run in parallel, make multiple bash tool calls in a single message. For example, if you need to run "git status" and "git diff", send a single message with two bash tool calls in parallel.
+              - If the commands depend on each other and must run sequentially, use a single Bash call with '&&' to chain them together (e.g., `git add . && git commit -m "message" && git push`). For instance, if one operation must complete before another starts (like mkdir before cp, Write before Bash for git operations, or git add before git commit), run these operations sequentially instead.
+              - Use ';' only when you need to run commands sequentially but don't care if earlier commands fail
+              - DO NOT use newlines to separate commands (newlines are ok in quoted strings)
+            - AVOID using `cd <directory> && <command>`. Use the `workdir` parameter to change directories instead.
+              <good-example>
+              Use workdir="/foo/bar" with command: pytest tests
+              </good-example>
+              <bad-example>
+              cd /foo/bar && pytest tests
+              </bad-example>
+
+          # Git and GitHub
+          - Only commit, amend, push, or create PRs when explicitly requested.
+          - Before committing, inspect `git status`, `git diff`, and `git log --oneline -10`; stage only intended files and never commit secrets.
+          - Write a concise commit message that matches the repo style.
+          - Do not update git config, skip hooks, use interactive `-i`, force-push, or create empty commits unless explicitly requested.
+          - If a commit fails or hooks reject it, fix the issue and create a new commit; do not amend the failed commit.
+          - Before creating a PR, inspect status, diff, remote tracking, recent commits, and the diff from the base branch.
+          - Review all commits included in the PR, not just the latest commit.
+          - Use `gh` for GitHub tasks, including PRs, issues, checks, and releases; return the PR URL when done.
+        name: bash
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            command:
+              description: The command to execute
+              type: string
+            timeout:
+              description: Optional timeout in milliseconds
+              exclusiveMinimum: 0
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+            workdir:
+              description: The working directory to run the command in. Defaults to the current directory. Use this instead of 'cd' commands.
+              type: string
+          required:
+            - command
+          type: object
+      type: function
+    - function:
+        description: |
+          Performs exact string replacements in files.
+
+          Usage:
+          - You must use your `Read` tool at least once in the conversation before editing. This tool will error if you attempt an edit without reading the file.
+          - When editing text from Read tool output, ensure you preserve the exact indentation (tabs/spaces) as it appears AFTER the line number prefix. The line number prefix format is: line number + colon + space (e.g., `1: `). Everything after that space is the actual file content to match. Never include any part of the line number prefix in the oldString or newString.
+          - ALWAYS prefer editing existing files in the codebase. NEVER write new files unless explicitly required.
+          - Only use emojis if the user explicitly requests it. Avoid adding emojis to files unless asked.
+          - The edit will FAIL if `oldString` is not found in the file with an error "oldString not found in content".
+          - The edit will FAIL if `oldString` is found multiple times in the file with an error "Found multiple matches for oldString. Provide more surrounding lines in oldString to identify the correct match." Either provide a larger string with more surrounding context to make it unique or use `replaceAll` to change every instance of `oldString`.
+          - Use `replaceAll` for replacing and renaming strings across the file. This parameter is useful if you want to rename a variable for instance.
+        name: edit
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            filePath:
+              description: The absolute path to the file to modify
+              type: string
+            newString:
+              description: The text to replace it with (must be different from oldString)
+              type: string
+            oldString:
+              description: The text to replace
+              type: string
+            replaceAll:
+              description: Replace all occurrences of oldString (default false)
+              type: boolean
+          required:
+            - filePath
+            - oldString
+            - newString
+          type: object
+      type: function
+    - function:
+        description: |
+          - Fast file pattern matching tool that works with any codebase size
+          - Supports glob patterns like "**/*.js" or "src/**/*.ts"
+          - Returns matching file paths
+          - Use this tool when you need to find files by name patterns
+          - When you are doing an open-ended search that may require multiple rounds of globbing and grepping, use the Task tool instead
+          - You have the capability to call multiple tools in a single response. It is always better to speculatively perform multiple searches as a batch that are potentially useful.
+        name: glob
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            path:
+              description: 'The directory to search in. If not specified, the current working directory will be used. IMPORTANT: Omit this field to use the default directory. DO NOT enter "undefined" or "null" - simply omit it for the default behavior. Must be a valid directory path if provided.'
+              type: string
+            pattern:
+              description: The glob pattern to match files against
+              type: string
+          required:
+            - pattern
+          type: object
+      type: function
+    - function:
+        description: |
+          - Fast content search tool that works with any codebase size
+          - Searches file contents using regular expressions
+          - Supports full regex syntax (eg. "log.*Error", "function\s+\w+", etc.)
+          - Filter files by pattern with the include parameter (eg. "*.js", "*.{ts,tsx}")
+          - Returns file paths and line numbers with matching lines
+          - Use this tool when you need to find files containing specific patterns
+          - If you need to identify/count the number of matches within files, use the Bash tool with `rg` (ripgrep) directly. Do NOT use `grep`.
+          - When you are doing an open-ended search that may require multiple rounds of globbing and grepping, use the Task tool instead
+        name: grep
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            include:
+              description: File pattern to include in the search (e.g. "*.js", "*.{ts,tsx}")
+              type: string
+            path:
+              description: The directory to search in. Defaults to the current working directory.
+              type: string
+            pattern:
+              description: The regex pattern to search for in file contents
+              type: string
+          required:
+            - pattern
+          type: object
+      type: function
+    - function:
+        description: |
+          Read a file or directory from the local filesystem. If the path does not exist, an error is returned.
+
+          Usage:
+          - The filePath parameter should be an absolute path.
+          - By default, this tool returns up to 2000 lines from the start of the file.
+          - The offset parameter is the line number to start from (1-indexed).
+          - To read later sections, call this tool again with a larger offset.
+          - Use the grep tool to find specific content in large files or files with long lines.
+          - If you are unsure of the correct file path, use the glob tool to look up filenames by glob pattern.
+          - Contents are returned with each line prefixed by its line number as `<line>: <content>`. For example, if a file has contents "foo\n", you will receive "1: foo\n". For directories, entries are returned one per line (without line numbers) with a trailing `/` for subdirectories.
+          - Any line longer than 2000 characters is truncated.
+          - Call this tool in parallel when you know there are multiple files you want to read.
+          - Avoid tiny repeated slices (30 line chunks). If you need more context, read a larger window.
+          - This tool can read image files and PDFs and return them as file attachments.
+        name: read
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            filePath:
+              description: The absolute path to the file or directory to read
+              type: string
+            limit:
+              description: The maximum number of lines to read (defaults to 2000)
+              maximum: 9007199254740991
+              minimum: 0
+              type: integer
+            offset:
+              description: The line number to start reading from (1-indexed)
+              maximum: 9007199254740991
+              minimum: 0
+              type: integer
+          required:
+            - filePath
+          type: object
+      type: function
+    - function:
+        description: |
+          Load a specialized skill when the task at hand matches one of the skills listed in the system prompt.
+
+          Use this tool to inject the skill's instructions and resources into current conversation. The output may contain detailed workflow guidance as well as references to scripts, files, etc in the same directory as the skill.
+
+          The skill name must match one of the skills listed in your system prompt.
+        name: skill
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            name:
+              description: The name of the skill from available_skills
+              type: string
+          required:
+            - name
+          type: object
+      type: function
+    - function:
+        description: |-
+          Launch a new agent to handle complex, multistep tasks autonomously.
+
+          When using the Task tool, you must specify a subagent_type parameter to select which agent type to use.
+
+          When NOT to use the Task tool:
+          - If you want to read a specific file path, use the Read or Glob tool instead of the Task tool, to find the match more quickly
+          - If you are searching for a specific class definition like "class Foo", use the Grep tool instead, to find the match more quickly
+          - If you are searching for code within a specific file or set of 2-3 files, use the Read tool instead of the Task tool, to find the match more quickly
+          - If no available agent is a good fit for the task, use other tools directly
+
+
+          Usage notes:
+          1. Launch multiple agents concurrently whenever possible, to maximize performance; to do that, use a single message with multiple tool uses
+          2. Once you have delegated work to an agent, do not duplicate that work yourself. Continue with non-overlapping tasks, or wait for the result. For background tasks, you will be notified automatically when the result is ready.
+          3. When the agent is done, it will return a single message back to you. The result returned by the agent is not visible to the user. To show the user the result, you should send a text message back to the user with a concise summary of the result. The output includes a task_id you can reuse later to continue the same subagent session.
+          4. Each agent invocation starts with a fresh context unless you provide task_id to resume the same subagent session (which continues with its previous messages and tool outputs). When starting fresh, your prompt should contain a highly detailed task description for the agent to perform autonomously and you should specify exactly what information the agent should return back to you in its final and only message to you.
+          5. The agent's outputs should generally be trusted
+          6. Clearly tell the agent whether you expect it to write code or just to do research (search, file reads, web fetches, etc.), since it is not aware of the user's intent. Tell it how to verify its work if possible (e.g., relevant test commands).
+          7. If the agent description mentions that it should be used proactively, then you should try your best to use it without the user having to ask for it first. Use your judgement.
+
+          Available agent types and the tools they have access to:
+          - explore: Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. "src/components/**/*.tsx"), search code for keywords (eg. "API endpoints"), or answer questions about the codebase (eg. "how do API endpoints work?"). When calling this agent, specify the desired thoroughness level: "quick" for basic searches, "medium" for moderate exploration, or "very thorough" for comprehensive analysis across multiple locations and naming conventions.
+          - general: General-purpose agent for researching complex questions and executing multi-step tasks. Use this agent to execute multiple units of work in parallel.
+        name: task
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            command:
+              description: The command that triggered this task
+              type: string
+            description:
+              description: A short (3-5 words) description of the task
+              type: string
+            prompt:
+              description: The task for the agent to perform
+              type: string
+            subagent_type:
+              description: The type of specialized agent to use for this task
+              type: string
+            task_id:
+              description: This should only be set if you mean to resume a previous task (you can pass a prior task_id and the task will continue the same subagent session as before instead of creating a fresh one)
+              type: string
+          required:
+            - description
+            - prompt
+            - subagent_type
+          type: object
+      type: function
+    - function:
+        description: Call one session MCP tool. Use get_mcp_tool_details first when its input schema is not already known.
+        name: tembo_mcp_gateway_call_mcp_tool
+        parameters:
+          $schema: http://json-schema.org/draft-07/schema#
+          additionalProperties: false
+          properties:
+            arguments:
+              additionalProperties: {}
+              default: {}
+              type: object
+            serverId:
+              type: string
+            toolName:
+              type: string
+          required:
+            - serverId
+            - toolName
+          type: object
+      type: function
+    - function:
+        description: Run TypeScript that calls multiple session MCP tools while keeping intermediate results out of model context. Use await mcp.<serverId>.<toolName>(arguments), bracket notation, or mcp.call(serverId, toolName, arguments), and return the final value.
+        name: tembo_mcp_gateway_execute_mcp_code
+        parameters:
+          $schema: http://json-schema.org/draft-07/schema#
+          additionalProperties: false
+          properties:
+            code:
+              minLength: 1
+              type: string
+          required:
+            - code
+          type: object
+      type: function
+    - function:
+        description: Get complete input schemas and metadata for one or more tools returned by search_mcp_tools. Always pass tools as an array, including for a single tool. Results correspond to tools by index.
+        name: tembo_mcp_gateway_get_mcp_tool_details
+        parameters:
+          $schema: http://json-schema.org/draft-07/schema#
+          additionalProperties: false
+          properties:
+            tools:
+              description: One or more tools to inspect. Use a one-item array for a single tool.
+              items:
+                additionalProperties: false
+                properties:
+                  serverId:
+                    type: string
+                  toolName:
+                    type: string
+                required:
+                  - serverId
+                  - toolName
+                type: object
+              maxItems: 20
+              minItems: 1
+              type: array
+          required:
+            - tools
+          type: object
+      type: function
+    - function:
+        description: List configured MCP servers with their current status, discovered tool count, and initialization error. This does not wait for servers to finish connecting.
+        name: tembo_mcp_gateway_list_mcp_servers
+        parameters:
+          $schema: http://json-schema.org/draft-07/schema#
+          additionalProperties: false
+          properties: {}
+          type: object
+      type: function
+    - function:
+        description: All session MCP tools, including Tembo control tools, are accessed through this gateway. Run one or more searches before assuming a tool is unavailable. Always pass searches as an array, including for a single search. Results correspond to searches by index. Tool matches exclude servers that are connecting, retrying, or failed, which are returned in excludedServers.
+        name: tembo_mcp_gateway_search_mcp_tools
+        parameters:
+          $schema: http://json-schema.org/draft-07/schema#
+          additionalProperties: false
+          properties:
+            searches:
+              description: One or more independent searches. Use a one-item array for a single search.
+              items:
+                additionalProperties: false
+                properties:
+                  maxResults:
+                    description: Maximum number of matching tools to return.
+                    maximum: 50
+                    minimum: 1
+                    type: integer
+                  query:
+                    description: Terms describing the integration, tool, or capability.
+                    type: string
+                  serverIds:
+                    description: Limit the search to these servers.
+                    items:
+                      type: string
+                    type: array
+                type: object
+              maxItems: 20
+              minItems: 1
+              type: array
+          required:
+            - searches
+          type: object
+      type: function
+    - function:
+        description: |
+          Create and maintain a structured task list for the current coding session. Tracks progress, organizes multi-step work, and surfaces status to the user.
+
+          ## When to use
+          Use proactively when:
+          - The task requires 3+ distinct steps or actions (not just 3 tool calls for a single conceptual step)
+          - The work is non-trivial and benefits from planning
+          - The user provides multiple tasks (numbered or comma-separated) or explicitly asks for a todo list
+          - New instructions arrive - capture them as todos
+          - You start a task - mark it `in_progress` (only one at a time) before working
+          - You finish a task - mark it `completed` and add any follow-ups discovered during the work
+
+          ## When NOT to use
+          Skip when:
+          - The work is a single, straightforward task (or <3 trivial steps)
+          - The request is purely informational or conversational
+          - Tracking adds no organizational value
+
+          ## States
+          - `pending` - not started
+          - `in_progress` - actively working (exactly ONE at a time)
+          - `completed` - finished successfully
+          - `cancelled` - no longer needed
+
+          ## Rules
+          - Update status in real time; don't batch completions
+          - Mark `completed` only after the required work is actually done, including any required verification. Never based on intent.
+          - Keep exactly one `in_progress` while work remains
+          - If blocked or partial, keep it `in_progress` and add a follow-up todo describing the blocker
+          - Preserve user-provided commands verbatim (flags, args, order)
+          - Items should be specific and actionable; break large work into smaller steps
+
+          ## Examples
+
+          Use it:
+          - "Add a dark mode toggle and run the tests" -> multi-step feature + explicit verification
+          - "Rename getCwd -> getCurrentWorkingDirectory across the repo" -> grep reveals 15 occurrences in 8 files
+          - "Implement registration, catalog, cart, checkout" -> multiple complex features
+
+          Skip it:
+          - "How do I print Hello World in Python?" -> informational
+          - "Add a comment to calculateTotal" -> single edit
+          - "Run npm install and tell me what happened" -> one command
+
+          When in doubt, use it.
+        name: todowrite
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            todos:
+              description: The updated todo list
+              items:
+                properties:
+                  content:
+                    description: Brief description of the task
+                    type: string
+                  priority:
+                    description: 'Priority level of the task: high, medium, low'
+                    type: string
+                  status:
+                    description: 'Current status of the task: pending, in_progress, completed, cancelled'
+                    type: string
+                required:
+                  - content
+                  - status
+                  - priority
+                type: object
+              type: array
+          required:
+            - todos
+          type: object
+      type: function
+    - function:
+        description: |
+          - Fetches content from a specified URL
+          - Takes a URL and optional format as input
+          - Fetches the URL content, converts to requested format (markdown by default)
+          - Returns the content in the specified format
+          - Use this tool when you need to retrieve and analyze web content
+
+          Usage notes:
+            - IMPORTANT: if another tool is present that offers better web fetching capabilities, is more targeted to the task, or has fewer restrictions, prefer using that tool instead of this one.
+            - The URL must be a fully-formed valid URL
+            - HTTP URLs will be automatically upgraded to HTTPS
+            - Format options: "markdown" (default), "text", or "html"
+            - This tool is read-only and does not modify any files
+            - Results may be summarized if the content is very large
+        name: webfetch
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            format:
+              default: markdown
+              description: The format to return the content in (text, markdown, or html). Defaults to markdown.
+              enum:
+                - text
+                - markdown
+                - html
+              type: string
+            timeout:
+              description: Optional timeout in seconds (max 120)
+              type: number
+            url:
+              description: The URL to fetch content from
+              type: string
+          required:
+            - url
+          type: object
+      type: function
+    - function:
+        description: |
+          Writes a file to the local filesystem.
+
+          Usage:
+          - This tool will overwrite the existing file if there is one at the provided path.
+          - If this is an existing file, you MUST use the Read tool first to read the file's contents. This tool will fail if you did not read the file first.
+          - ALWAYS prefer editing existing files in the codebase. NEVER write new files unless explicitly required.
+          - NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+          - Only use emojis if the user explicitly requests it. Avoid writing emojis to files unless asked.
+        name: write
+        parameters:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          properties:
+            content:
+              description: The content to write to the file
+              type: string
+            filePath:
+              description: The absolute path to the file to write (must be absolute, not relative)
+              type: string
+          required:
+            - content
+            - filePath
+          type: object
+      type: function
