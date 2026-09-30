@@ -1,0 +1,874 @@
+{
+  "$schema": "https://github.com/AmadeusITGroup/prompt-registry/schemas/lockfile.schema.json",
+  "version": "2.0.0",
+  "generatedAt": "2026-09-30T07:42:36.538Z",
+  "generatedBy": "prompt-registry@0.0.0",
+  "bundles": {
+    "AmadeusITGroup-community-collections-skill-eval-1.0.0": {
+      "version": "1.0.0",
+      "sourceId": "github-19ad484d359b",
+      "sourceType": "github",
+      "installedAt": "2026-09-30T07:27:56.012Z",
+      "files": [
+        {
+          "path": ".github/skills/skill-eval-generator/SKILL.md",
+          "checksum": "16095a7777f08fc453faff792bccf1397abe41bfb4cde4d87ca768d860d139d5"
+        },
+        {
+          "path": ".github/skills/skill-eval-generator/references/schemas.md",
+          "checksum": "afdc4ace225c1d9a281a8f6814b43175da5da8f8dcdd88b9e6ef15d2ea1d2768"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/SKILL.md",
+          "checksum": "6189ab1d5bc26be092f82e554ccdca7944948d4eef273618a627723ae151dcf5"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/__pycache__/generate_review.cpython-314.pyc",
+          "checksum": "a7e2f5b32f60bfa411a928a07603167e4343300640b45d6cd2567aa4a58aab20"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/generate_review.py",
+          "checksum": "a13e9b42ef393d2a396af6b15fa245259466675de58ee7bb6fa78befc1563f5d"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/review-template.html",
+          "checksum": "b85d3180b5c001faf9161f1458256fd5128ff6c99824f6a4db0c46949439aff5"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/.gitkeep",
+          "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/00-utils.js",
+          "checksum": "a8e3e6b267e58ac5d50398f900a3e956e4bf2b390a662011ac52db915bf17522"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/00-vendor-marked.min.js",
+          "checksum": "5adea7d8ee41a700fccc14bb9d503104f0470cc17a84ad3e167d3f5251eae0da"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/.gitkeep",
+          "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/chart-tooltip.js",
+          "checksum": "1ff7a848354b69da7aca16b71759cd1f48e940c89e1f8b0cc9b852d40c326e52"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/data-accessors.js",
+          "checksum": "0c92b064e1803dbedcdb6611a1a34e0d56fe413066c7c0d3098b577847371826"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/expectations-data.js",
+          "checksum": "5a23d83de1202e1d2b816c68952a0f3eb85e62d1a7dc9459ff638da853773160"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/feedback.js",
+          "checksum": "00029a7f0f83257f2aab9f2292013b4672c6f8657fbd34c152daca656df52e21"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/format.js",
+          "checksum": "c3dbbf8016366a6478c645e40d7a704d918b8cc8949f1b2144aeaa0ce63d62b5"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/markdown.js",
+          "checksum": "b0ea83f9e4fef5586838321dd980b04a5b26e2b76a97e85175f3aa213b8b4041"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/notes.js",
+          "checksum": "b793ab67f8b4a943697caed6ff7adf2be3fe01dffc54c9fb4f2593bc1096badb"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/output-tabs.js",
+          "checksum": "f29df1df9b36322e65face9f3d25c1490c690125d5c3ee719503b1b313d9d3bd"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/page-router.js",
+          "checksum": "c6b976784920186a1c82ff48cfe4dd1d273718042988829444c16102f693d42b"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/scroll-progress.js",
+          "checksum": "37e472e3896d4fa634780749e6bee6e546a7b2d18e42bda3dbccf24a173f5641"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/section-heading.js",
+          "checksum": "971c5da33744d212bd7802357ae7e6d76fc2f4c6f8fe08322a79047546c1d61c"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/sf-helpers.js",
+          "checksum": "b576db8d111de4419d6f9325aed649f79dfabc3708d2c781ebbb6ce4e846ed07"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/sidebar.js",
+          "checksum": "fa65969c85ecd01c70266ce04fcfff8d192864d8d6d4cbe149b22327c7342ce4"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/theme.js",
+          "checksum": "a14cffdf9d7502b4dd868bf8ef3d1315e4e99f603449a18f64f3ebe7d4d43695"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/timeline.js",
+          "checksum": "09cfcf12234946ac0600bdf7080fd07e74b235081903b086a59abb00a7534526"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/10-components/variant-labels.js",
+          "checksum": "7a7d1cb727092ae04994eb14bd373ba2ab0206160069d50a1c573b6b31e0f3f1"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/.gitkeep",
+          "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark-contradictions.js",
+          "checksum": "1a0d8462b48208144f99abbd8cd7a243f029a7ded244771599461cba92de95ed"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark-cost.js",
+          "checksum": "9ccb43100c7b15eb406fe7a9ed59b722888a28f90f2784facd491d1d3119d56e"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark-headline.js",
+          "checksum": "dbdcb20d6f82e940cc20925bdd39dcb40de88e1ec6b588f394993c68ebc20cef"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark-insights.js",
+          "checksum": "dcb3a9b8a139711fae459ccb2dbc4702d2c7ff3478b1df886ed31576cb5d6489"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark-quality-scores.js",
+          "checksum": "9c471396bf0a5f8e69eab4deffd2b6d29fa5ff37bbd3ba5e0aad7a17524db379"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark-scorecard.js",
+          "checksum": "f28e5dd616d70683b725740b4d435a73874e97dd526bbf4bf433e88edda4e9e3"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark-skill-feedback.js",
+          "checksum": "b85bdb0280ca5f66812a91adb7f0efda950c0a4bdb01ed36205715313a598032"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/benchmark.js",
+          "checksum": "fa6a346891a7d81ca71b8a975a9561b04e6961ab62f2f13ec3c8ba3b388510af"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/nav-icons.js",
+          "checksum": "611ba2d7740031681b0f725789fdc4ceb337a90e6517730a7adb02f479ed2812"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/progression-heatmap.js",
+          "checksum": "5af6954bb29c0a22103c5cb6f8e4cea18f7c84dddf607df51ac693062fbc990c"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/progression-resources.js",
+          "checksum": "8d3e9df59c497d9012b958d1dc7396d202898c2e50b1fad21967a95f90d0f1e7"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/progression-sf-trend.js",
+          "checksum": "5ef64ee42a3c01e7278af902a8a2d87cd6731d4cd899500c375497f7853855c4"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/progression.js",
+          "checksum": "58a0e6e66363b436fbbc6307a3bf08d22f345c3460d4092f4bafd0844b867a34"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-ab-comparison.js",
+          "checksum": "7f6ddec52b0798af1cfcb2cac960efa5c436da61346eae2c79c1fd2ba6c1530d"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-dumbbell.js",
+          "checksum": "fc80e2068de36a727f23c6694d0add9b5de04c88ce4037189fc75901adf20172"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-eval-groups.js",
+          "checksum": "a93db58966374229843a3414da7711d1fffa092b0f24c0e8442b292101c19a88"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-expectations.js",
+          "checksum": "12ce4bb127944b5ca0039726b0792032fe8f1c2fedb0611308d44e30330dc686"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-fetch.js",
+          "checksum": "10097f90f901e6205bbf1699c9a975dd1cf991b03b45cd5d3323094a2b0cad86"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-header-bar.js",
+          "checksum": "2afeab6df7425ceb5d83829ec357f4d8b43729a59cb38fbeb18c79163466a3df"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-page.js",
+          "checksum": "954cacf2267f31f76712ac56eee065fad4388b5d14d0da7365daef7505665104"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-per-eval.js",
+          "checksum": "51397512c221c899e90209633b5d471f3eb5ccb296d4687da930137c674b5b50"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-radar.js",
+          "checksum": "1f5139bccb4fb5d16ad46328e26466b53fe7e16aace1959e635e278c1cdccff8"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/review-sidebar.js",
+          "checksum": "86d091336839254de0a5e195ca919c502c27d7e49a763872762275b6016cd71d"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/scripts/20-tabs/trend-chart.js",
+          "checksum": "19bdf0b6c6925fad53d62671e3892b8fa1edd508a1b6f09f5adac3d3fa5ad206"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/00-palette.css",
+          "checksum": "cfc64ce81b95cd37e00ab1d2669266fe22869e9afa293070ee3b99d84c271de5"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/01-theme.css",
+          "checksum": "e07d5ea47e2b8fb1400113ad17dbcd176ef05f1c420fd5131d8875618ae665cd"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/02-base.css",
+          "checksum": "63def2b491ff3a15d992eeef17b9cb5136e646bb677593f0e7be98ee9e043513"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/back-to-top.css",
+          "checksum": "60f925d21f3a83194ba495aadcdc3f52642046840b35205ae52944c9c3eb348f"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/cards.css",
+          "checksum": "9fe5327418814036a9c0afcf8cdb3dcba268d09926941d3634c02dc478eb1a95"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/charts.css",
+          "checksum": "be4fdcb3c40a66c158ce12c324e35b08f41fe731729c0636484afd075584ef7b"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/chrome.css",
+          "checksum": "b29ee3457568ba884b9cd1d450967559ad855e005fff82ee5d9b191774b15ef9"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/delta-chip.css",
+          "checksum": "3754ae7323e42eec8c4de5b19b6d7a7c782f332fc8e2c0c4b8126af1e4e2d909"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/dumbbell.css",
+          "checksum": "009bcaded22bd43b660e798b10468ccb2f29a68128f8c1cc63f9a993e9348288"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/eval-chip.css",
+          "checksum": "422730703ad72871c7cedbdedf85a4303dd53fd8d1e1e8db6197864ce3b0047a"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/expectations.css",
+          "checksum": "cd9b9e40113f6b137555bc21ef04ed7bdb0397452272ad54986c6fbad5b5c241"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/filter-chip.css",
+          "checksum": "6f80cd4d0c796146609b3e9649530575e89c7457393a780edb21164214070ec8"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/flip-chip.css",
+          "checksum": "4de53c64e00a86cbe75e92d4b8af83d5f0eb78dad560c9bb87d08f1a2fa90c82"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/layout.css",
+          "checksum": "684780c0dbe98119f5fa5f2b3fccd5c2edd6ae78fa0cd608fa15c752a35b2b72"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/markdown.css",
+          "checksum": "7eab292194cebf9ea203bb19d2f46fd618f86a008a65ebd9799ec933b7bd0f94"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/metrics-inline.css",
+          "checksum": "917a6ecb13545369ec05e83f5ba78e350fd60002836a27363f94d997a11d8ed5"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/output-preview.css",
+          "checksum": "99a5353b85945607981e2e5387253546735fe3d7b603700aac491062dbcdd14c"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/radar.css",
+          "checksum": "ac34ceaf8fc4b03c1a2af19fa78766bd57b0add7e2d78050cbcfa5e44a0906ea"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/review-header-bar.css",
+          "checksum": "9e4ac2fb2a21292d21717104c775a7c26008f131950efdb661e49fe4e2951975"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/scroll-progress.css",
+          "checksum": "ecd6e4ee6c4f23c6bfbf16cc38304f5161ebaef8d6d18ee7f32e852d2419e1b8"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/section-card.css",
+          "checksum": "22b6b3a2d1c9b3ff58aea2061ac3f5ea3b879bdec575af4686e75c527a92ed0f"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/sidebar.css",
+          "checksum": "fb6c40c72c1d14a33820377312ca641c37b830839b8aac9c64f9cf2cd34c1ae5"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/tables.css",
+          "checksum": "8656f90173b9bc6bb06161fb81dd9a8134783300bb9de8f00763aa79be959b7d"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/variant-card.css",
+          "checksum": "f62631334f4d8150f30036c474963676a2e34d4428102565781ce3beb3899801"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/variant-pill.css",
+          "checksum": "ac8b8469daacf37104b821aa985e4f4602007ccee5bc09060f2955693a8ea6dd"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/10-components/variant-tag.css",
+          "checksum": "707dbdddc257d43f24ef5bb2cee1eed5ab5de438149c1b72a20ac095b9dbdcf9"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/20-tabs/benchmark.css",
+          "checksum": "bd7462c3ace281ad825031cc95092a0fb307564a4191f31b4613fb065c7a0222"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/20-tabs/progression.css",
+          "checksum": "7ee1aa29faf50a47eca13c55fe588fea97f2fe6f4acd7c8ba85fef9ba11cdf36"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/eval-viewer/src/styles/20-tabs/review.css",
+          "checksum": "bdfb084966066084c9288664f58e3f2df7afd4c0d52f5a582f835f08cf43f1e8"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/references/schemas.md",
+          "checksum": "f42fd3e55fd8364b58a64e58b6055398b8ac6f9758259348c9cb6231f1ead91a"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/__pycache__/_sandbox.cpython-314.pyc",
+          "checksum": "82c450d80c33194c2c7f9c5fdd1163c879f75d41b1bc37bb3523661146abb175"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/__pycache__/aggregate_benchmark.cpython-314.pyc",
+          "checksum": "01b7557c6d6287d9c50ff96586c87bd856380795254ee50ef802cfc39e6ca13f"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/__pycache__/assign_ab.cpython-314.pyc",
+          "checksum": "d06ddedef51e3e39d804a003ef4d43b04bbcdaf031ced570b00ea40a25432dbc"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/__pycache__/eval_paths.cpython-314.pyc",
+          "checksum": "2a54f8d222b5cb80cdf7434b9e949174fcfdc5ebf76f6ebcbc4bfc81af2abae6"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/__pycache__/finalize_metrics.cpython-314.pyc",
+          "checksum": "e8c1bba2200e1567a4acd3a0e1b04d1658372b9cb7aa3e10729f33acd4703148"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/__pycache__/prepare_workspace.cpython-314.pyc",
+          "checksum": "f54ef3d2da52a884c0f757b36a0b3fdf4602c5af800f4b60c1ee6bb21563f7b5"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/_sandbox.py",
+          "checksum": "7fb0408eafed4e07e5721965b3526e73de83a18193a12146da588c49c1775f92"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/aggregate_benchmark.py",
+          "checksum": "8e5ebd1d75b072b3c327f5745610813698350680ab82c4f52aa6283ea770f746"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/assign_ab.py",
+          "checksum": "d3b919a765904ae9f9acd8584c19ee8cc698baced256918fdb3043edcc19f4f2"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/eval_paths.py",
+          "checksum": "0f0ff926019af4404f9c07fc56f79f8873208273d2fe5ed486911b0a0441266f"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/finalize_metrics.py",
+          "checksum": "c3e4ea148fcb012ed0d1e3f0f7d37500482c968421f3d556bb760becda95cbf0"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/list_evals.py",
+          "checksum": "55e7e4a9bf2d4e5b4e86aa828857ae2accd1605378737a7c58cbdba5704f9f7b"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/prepare_workspace.py",
+          "checksum": "a33c95ff32e0950546eca1fa6ea4f5bf7df3ad7ea0ed5aebb22d60e196c90cc7"
+        },
+        {
+          "path": ".github/skills/skill-eval-runner/scripts/resolve_comparisons.py",
+          "checksum": "d789a94343b67d5103acfaed033b7db2827bd63745a1d21650bbce8e96f47a0e"
+        },
+        {
+          "path": ".github/agents/skill-eval-runner-agent.agent.md",
+          "checksum": "4bf9a424c31ebbcbd82ba6cdc8a29fec49f53b6d6b2c23dcabf215b47bd277b9"
+        },
+        {
+          "path": ".github/agents/skill-eval-executor-agent.agent.md",
+          "checksum": "a8f9322fae4a78ae09fa7bd658a5194787f040dcbba36a9980324d3ad1ec2dd8"
+        },
+        {
+          "path": ".github/agents/skill-eval-grader-agent.agent.md",
+          "checksum": "8556239f03ac00b060e1be0e9e1549f42fa526ef2d36404037591f0fc6ce9f29"
+        },
+        {
+          "path": ".github/agents/skill-eval-comparator-agent.agent.md",
+          "checksum": "07c2634fa38d7225ef26cb299078985996e56b62994de88059b0b1f30e4ad9b4"
+        },
+        {
+          "path": ".github/agents/skill-eval-analyzer-agent.agent.md",
+          "checksum": "0a5df63d26ef82b98bbf3d18a503677197f9acdf723f9a4988a1479a380543b5"
+        }
+      ]
+    },
+    "AmadeusITGroup-community-collections-foursight-code-review-1.0.3": {
+      "version": "1.0.3",
+      "sourceId": "github-19ad484d359b",
+      "sourceType": "github",
+      "installedAt": "2026-09-30T07:28:23.608Z",
+      "files": [
+        {
+          "path": ".github/skills/foursight-code-review/SKILL.md",
+          "checksum": "ad84e9689dea834ada6bdddef679a4994845e98dc4d286ca5cb6e0968c4b9388"
+        },
+        {
+          "path": ".github/skills/foursight-code-review/assets/report-template.md",
+          "checksum": "ace53987f9249f480cbd5fd853d54553c6db21e0a709f6267ba80d5a590aa711"
+        },
+        {
+          "path": ".github/skills/foursight-code-review/references/criticality-guide.md",
+          "checksum": "9f45dd37a71ea857163753a8de4ce0424223193a7091c127a71cc67ce9dcd0f2"
+        },
+        {
+          "path": ".github/skills/foursight-code-review/references/external-repo-review.md",
+          "checksum": "12efca692b35af3252c379790b66f82eaae86d81c02b51b8dcf4bec1cf0a4ac3"
+        },
+        {
+          "path": ".github/skills/foursight-code-review/references/path-a-mcp.md",
+          "checksum": "c22df7686e5689fab11ccb115ca95e00e85a8c668a628ee06c0d581c5c9c9573"
+        },
+        {
+          "path": ".github/skills/foursight-code-review/references/path-b-gh-cli.md",
+          "checksum": "663357275f01a38e626318004690d342e2c13e42a7f9e7ba7e38e4e9c4e36bc4"
+        },
+        {
+          "path": ".github/skills/foursight-code-review/references/path-c-git-only.md",
+          "checksum": "98a78b61fd0e6e3280cc05743159c7c0465294a5615ff08b24e53e682f3ffabf"
+        },
+        {
+          "path": ".github/skills/foursight-code-review/scripts/detect-repo-state.sh",
+          "checksum": "05e5bd4b4843ab7e7b2e9978fbd3333d1d796c76692192a8755df91f6118e8fe"
+        },
+        {
+          "path": ".github/agents/agents-foursight-code-review-agent.agent.md",
+          "checksum": "6ede57fcd9fe32f20d067a23daf5de07a8552b58af09cba77cc8d76cdbf23eef"
+        },
+        {
+          "path": ".github/agents/code-review-qa-agent.agent.md",
+          "checksum": "fc2f767d9d2c8c4aa3397991246b1fe0d0e1af3724042aba357c4ad565f16fdd"
+        },
+        {
+          "path": ".github/agents/code-review-tech-debt-agent.agent.md",
+          "checksum": "c0fbb25012a1b3c5c55308299b4427ced6404be45c6bba0acc16f08d77b3cb3c"
+        },
+        {
+          "path": ".github/agents/code-review-functional-agent.agent.md",
+          "checksum": "d2f0fbaa87c1b02dc63f65624f50722c93165b5e77da71a75356b86b2f568ba7"
+        },
+        {
+          "path": ".github/agents/code-review-architecture-agent.agent.md",
+          "checksum": "1e62213ebe16cb2bbf2050e048e02b8f631d236bfed370cb12b2a9fe6f77ee1f"
+        }
+      ]
+    },
+    "AmadeusITGroup-community-collections-foursight-code-assessment-1.0.2": {
+      "version": "1.0.2",
+      "sourceId": "github-19ad484d359b",
+      "sourceType": "github",
+      "installedAt": "2026-09-30T07:28:36.045Z",
+      "files": [
+        {
+          "path": ".github/skills/foursight-code-assessment/SKILL.md",
+          "checksum": "ef0cfb510d1e2630232a02adbfac61939f1178f70bbf0ee0cb3e33bf80460154"
+        },
+        {
+          "path": ".github/skills/foursight-code-assessment/assets/report-template.md",
+          "checksum": "7e619033ed6f05f5a2b6e063af77a0b1853976311485c7c2a3134f89158a2668"
+        },
+        {
+          "path": ".github/agents/code-review-qa-agent.agent.md",
+          "checksum": "fc2f767d9d2c8c4aa3397991246b1fe0d0e1af3724042aba357c4ad565f16fdd"
+        },
+        {
+          "path": ".github/agents/code-review-tech-debt-agent.agent.md",
+          "checksum": "c0fbb25012a1b3c5c55308299b4427ced6404be45c6bba0acc16f08d77b3cb3c"
+        },
+        {
+          "path": ".github/agents/code-review-functional-agent.agent.md",
+          "checksum": "d2f0fbaa87c1b02dc63f65624f50722c93165b5e77da71a75356b86b2f568ba7"
+        },
+        {
+          "path": ".github/agents/code-review-architecture-agent.agent.md",
+          "checksum": "1e62213ebe16cb2bbf2050e048e02b8f631d236bfed370cb12b2a9fe6f77ee1f"
+        }
+      ]
+    },
+    "skills-anthropics-skills-canvas-design": {
+      "version": "hash:3b086d8894e53e906d079057a1ef73251c870306746b18f2737b600791eeeedc",
+      "sourceId": "https-github-com-anthropics-skills",
+      "sourceType": "skills",
+      "installedAt": "2026-09-30T07:41:48.145Z",
+      "files": [
+        {
+          "path": ".github/skills/canvas-design/LICENSE.txt",
+          "checksum": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+        },
+        {
+          "path": ".github/skills/canvas-design/SKILL.md",
+          "checksum": "a1f288079624402f30682753c1d43920b6664785698d21d3e7aa197450a6448b"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/ArsenalSC-OFL.txt",
+          "checksum": "8ddd61b18ba2c0d0dbe4a691cf5f1a0673f473d02fa0546e67ee88c006aeff6e"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/ArsenalSC-Regular.ttf",
+          "checksum": "65e6f89df58f68fd905b3add34a79dd6106aa3b3044df0dad9676fff53d504b9"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/BigShoulders-Bold.ttf",
+          "checksum": "b43bcd198b9fdf717dd42aa61a34dba32e01aceaeae659d689afd0ca52c37ea2"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/BigShoulders-OFL.txt",
+          "checksum": "fbc746aabf0eb1847dfd92e2efc4596d79fa897d60b8e64062a22f585508fb3f"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/BigShoulders-Regular.ttf",
+          "checksum": "18a879fc71978a4447150705caf880a9da3860083c259fd29e6dc03057b6842a"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Boldonse-OFL.txt",
+          "checksum": "45cc82ab4032273c0924025ffcf8f0665a68e1a5955e3f7247e5daf1deeb1326"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Boldonse-Regular.ttf",
+          "checksum": "cc2e540604565c0f90a7d8d46194a2f42fc9c45512cd2e39bf03b50eb68c35a4"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/BricolageGrotesque-Bold.ttf",
+          "checksum": "a737b146fe0d77ffe8a86e3cd16700dd431d3b1e420d4fd80e142cd68a1cb50d"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/BricolageGrotesque-OFL.txt",
+          "checksum": "0e4f4eb8534bc66a76aca13dd19c1f9731b2008866b29ccff182b764649df9b4"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/BricolageGrotesque-Regular.ttf",
+          "checksum": "972a6d098c9867ae131d0ea99e221e63976b11a19d4b931c2c7ace525674e4f6"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/CrimsonPro-Bold.ttf",
+          "checksum": "48f191e38355c8db100eb3ce157c20f9302a3b9a37b44a660f77ecfce3986609"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/CrimsonPro-Italic.ttf",
+          "checksum": "52318db3526b644e6efa60be0b3ca5a50e40fbe8bd026c261e0aa206f0772267"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/CrimsonPro-OFL.txt",
+          "checksum": "35680d14547b6748b6f362a052a46d22764ce5eccf96e18b74f567bb2ee58114"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/CrimsonPro-Regular.ttf",
+          "checksum": "48fad08cb1917a7b2f2c6fe5135d6c07743a6663cf7631ec4481108aaf081422"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/DMMono-OFL.txt",
+          "checksum": "bfe7842fcb88323e2981e24710c25202677385a8c75fb6a87217b275a0247ae3"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/DMMono-Regular.ttf",
+          "checksum": "f98ada968dc3b6b2c08d3f5caaf266977df0bfe0929372b93df5a06cf2ace450"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/EricaOne-OFL.txt",
+          "checksum": "e0de629968b52255548d5fafcf30b24ff9edae0eda362380755a75816404d0fa"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/EricaOne-Regular.ttf",
+          "checksum": "db1d89e80e33a8a01beaaac7a85df582857d24a43f1e181461aa7ff5d701476a"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/GeistMono-Bold.ttf",
+          "checksum": "75c0828d5c1ee44b9ef9f4df577bf41595ec362e2ea3f1e558590c9e92c7949d"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/GeistMono-OFL.txt",
+          "checksum": "6a873c900f584109b13ae0aaf81d6e3cf0a68751a216b03f7b6c68d547057bb4"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/GeistMono-Regular.ttf",
+          "checksum": "a55c1b51cda4afeab9e471e7947b85a20f7c8831d7e6b1470c1b7fbdc0f0f15e"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Gloock-OFL.txt",
+          "checksum": "c0a3f3125ac491ef3d1f09f401be4834c646562f647e44f2bcbc49f0466c656d"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Gloock-Regular.ttf",
+          "checksum": "e86b4ce66dbd3f1f83eee8db99ec96e0da1128c3f53df0e9b3b7472025dfe960"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/IBMPlexMono-Bold.ttf",
+          "checksum": "dbd2a2fb024579438d6400a84e57579bfd2dbe67c306c8fd9fde92a61e4f2eea"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/IBMPlexMono-OFL.txt",
+          "checksum": "5294ce778857e1eb02e830b6ab06435537d38f43055327e73d03a2d4d57d5123"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/IBMPlexMono-Regular.ttf",
+          "checksum": "ab08018ccd276b79fb2c636bb95b9c543598f9d50505fe92506fcb4dae7810cd"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/IBMPlexSerif-Bold.ttf",
+          "checksum": "b8d294e9b5c5a0940f167c3ced0f7ef2e3f57082ca3ff096ef30e86e26c1c159"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/IBMPlexSerif-BoldItalic.ttf",
+          "checksum": "da64b75f4284f53e7b5c71fa190a35b8bf3494fe19f1804c81c3a53340bca570"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/IBMPlexSerif-Italic.ttf",
+          "checksum": "b11f1048745e715a55c9d837b3f10226ca3d78867b7db7251ddad8f98dcf0f38"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/IBMPlexSerif-Regular.ttf",
+          "checksum": "77cd233a2af8dc6b1022faea3bb3b01f3c75af68bcf530cb6aeb15982ff3dbb7"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/InstrumentSans-Bold.ttf",
+          "checksum": "444f85bf1c4b0e1ce1ca624f6be54bcd832207714ccaf4ea99ee531341683bdf"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/InstrumentSans-BoldItalic.ttf",
+          "checksum": "3762f6cef95d6039489ad5ba5787d4c30f17a1ad01e9ac3c816ed69692722a68"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/InstrumentSans-Italic.ttf",
+          "checksum": "78e85858e371b2cb4e18f617c10f0f937c0e12a0887ffee98555b24ed305b3a7"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/InstrumentSans-OFL.txt",
+          "checksum": "bf4dc6d13a8cccd4807133c77a1ee9619a16b92cb23322258725ab6731c2f6e5"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/InstrumentSans-Regular.ttf",
+          "checksum": "a22cb26e48fd79bcb01bf2fc92d36785474dce36d9c544ab0a8868c2657c4a87"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/InstrumentSerif-Italic.ttf",
+          "checksum": "9c86e4d5a47b50224a2463a9eca8535835257c8e85c470c2c6b454b1af6f046e"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/InstrumentSerif-Regular.ttf",
+          "checksum": "56ac3be03ac3ba283196b3e77850ab2ffcf56cfb6fd3212c5620109a972f8c99"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Italiana-OFL.txt",
+          "checksum": "8373b11312ace78c4cec2e8f9f6aa9f2330601107dac7bcf899c6f2dbd40c5a5"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Italiana-Regular.ttf",
+          "checksum": "15c4dd6ab8cf4a29ba8826f65edcbe2f6c266c557d34d081f25072dfd5605fd2"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/JetBrainsMono-Bold.ttf",
+          "checksum": "a2349098b9e45419e7bf0e2958d6c4937a049dded37387b08be725be4c7615f3"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/JetBrainsMono-OFL.txt",
+          "checksum": "a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/JetBrainsMono-Regular.ttf",
+          "checksum": "b6b1ff4ddefe36d7f2a6174e1d001cab374e594519ee9049af028d577b64c5f5"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Jura-Light.ttf",
+          "checksum": "c891a381df056b2c4dfe85841e911bf45da0890fa21a7b2692cbe5ea1f505e1e"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Jura-Medium.ttf",
+          "checksum": "c72965cb732a92872643819fd1734128238583cc36b116313859137a51d3368a"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Jura-OFL.txt",
+          "checksum": "eaf9bdb675f6d87e5feb88199ab3ea581d3bd2082f426e384fa9c394576d7260"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/LibreBaskerville-OFL.txt",
+          "checksum": "55959eef5b0c3b2e3c1c7631b8ff0f9447d75de20f29cfa7db5bcfb026763343"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/LibreBaskerville-Regular.ttf",
+          "checksum": "2101302538d9e88adb679031c04623e4578b5745e89566284fd2c508d79acae0"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Lora-Bold.ttf",
+          "checksum": "7d74015e950c2fb66519c7295b8155621d22200ae2ca2a4c6b43ce3c490cac87"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Lora-BoldItalic.ttf",
+          "checksum": "152f87e71f5ddb60d5c57ecd9132807c947e65c42977193c9164e7c5a6690081"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Lora-Italic.ttf",
+          "checksum": "be627e595184e8afe521f08da0607eee613f1997d423bc8dadc5798995581377"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Lora-OFL.txt",
+          "checksum": "62e37a82d3f1ef2a70712885fa8b3144b65fd144d8e748d6196b690a354d792c"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Lora-Regular.ttf",
+          "checksum": "7ed00e7c9cdf16ab7e2fd2361fe45d4f0b61263cd60aae398b27b7ee08108827"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/NationalPark-Bold.ttf",
+          "checksum": "69ac4c301c4a7233c6e602d12a92c54d7967b575f4449951c45ce773f7acff53"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/NationalPark-OFL.txt",
+          "checksum": "81c6c71d83b5b45d7344f96df12bb4a2477a5b092a9144757ee1d0f50f855175"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/NationalPark-Regular.ttf",
+          "checksum": "a477338b7e18308d476650dfe31235ef86a883572665e56ffb5fb80f82009b58"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/NothingYouCouldDo-OFL.txt",
+          "checksum": "7c2a6970584ddad04919816163746f83b378078015899b18468b40f05e9ce128"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/NothingYouCouldDo-Regular.ttf",
+          "checksum": "d866f985896d3280f4fce72db7e17302c24a0c1fdb0699b6b5ed3af14f944d57"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Outfit-Bold.ttf",
+          "checksum": "6654b93d21301ec61887d3cedd6c11d9df1b1dfb63f9cf45ac7995f6e2235ab1"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Outfit-OFL.txt",
+          "checksum": "1945b62cd76da9a3051a1660dde72afaa64ffc2666d30e7a78356d651653ba2f"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Outfit-Regular.ttf",
+          "checksum": "f24945365147c9e783e91d8649959b59be6b00c9ee4ecd2f6b33afbb2dd871fe"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/PixelifySans-Medium.ttf",
+          "checksum": "38397504f71c122b03d234ea6f55118e3d5bdbddffd82bedddbd7755d3b3be82"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/PixelifySans-OFL.txt",
+          "checksum": "7f54d1d9f1ae1ba9f2722f978145f90324fea34ca3c2304b3a29cfa96ac6037e"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/PoiretOne-OFL.txt",
+          "checksum": "2eaf541f7eb8b512e4c757a5212060abf5b6edfef230e9d7640bf736b315c33a"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/PoiretOne-Regular.ttf",
+          "checksum": "9cf265b139648b36b6c0afdfeb0bf27f7e66db9a16094bc40f644d8da05bc318"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/RedHatMono-Bold.ttf",
+          "checksum": "7ef48353f4be5ddb90f000f6fad48f2b62b3e8c27d9818d8d45ff46c201065e0"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/RedHatMono-OFL.txt",
+          "checksum": "435fbfb7e66988b2a06686a4cb966faec733f35d8fe100a1601573c27f3e0bb8"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/RedHatMono-Regular.ttf",
+          "checksum": "452fe826871b37539f5212b20c87cf30f82f58dd2741f1c96edd1dcbdc0db6b4"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Silkscreen-OFL.txt",
+          "checksum": "6b849745119bbe85ec01fd080c9cd50234da9f52ac6e48b55d1a424a0c4d7ca9"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Silkscreen-Regular.ttf",
+          "checksum": "49567408600809e25147e9225ac4f37f410e2df45a750696c45027531fb65f1b"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/SmoochSans-Medium.ttf",
+          "checksum": "dd76e6e77cce82f827a8654cd906e9ce58f3aaf78adda63c4a7f655b8ecb41f0"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/SmoochSans-OFL.txt",
+          "checksum": "74c9c4eb88e891483e1b7bc54780b452cbf4f4df66d4e71881d7569aa2130749"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Tektur-Medium.ttf",
+          "checksum": "52bbe8c9b057b3d2da4eeace31a524b1ea26a1375ae34319cf6900ccc57a4c82"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Tektur-OFL.txt",
+          "checksum": "3f1466cb5438f31782eeb6e895f3a655bc4d090e24263e331f555357d1cb734e"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/Tektur-Regular.ttf",
+          "checksum": "162e1b36c4718c5b051b36c971ad7e50d341944f35618f480422ebbe72988f98"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/WorkSans-Bold.ttf",
+          "checksum": "240d125fc9f8561363dc1ea3f513501253bd70942f41468f48f0b0cafb0c82e2"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/WorkSans-BoldItalic.ttf",
+          "checksum": "a5b2cad813df0aaa7d16621f2e93b5117c25e9bc788bc9a3ad218e9d6348ce34"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/WorkSans-Italic.ttf",
+          "checksum": "6b7f7002e0b0c8b261fe878658ef5551e3e59d9f6b609b04efb90dde1e2c1ada"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/WorkSans-OFL.txt",
+          "checksum": "ace8c22a3326318b54e67c3691857929634205533f454a70ef5a3473ddb2e2ba"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/WorkSans-Regular.ttf",
+          "checksum": "e67985a843df0d3cdee51a3d0f329eb1774a344ad9ff0c9ab923751f1577e2a4"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/YoungSerif-OFL.txt",
+          "checksum": "cdcb8039606b40a027a6d24586ec62d5fe29c701343d82a048c829cb28a3dd28"
+        },
+        {
+          "path": ".github/skills/canvas-design/canvas-fonts/YoungSerif-Regular.ttf",
+          "checksum": "f8dc08f77abad753a00670af70756a8ace938e5c3f0b770f4f4c2071c4bd8fc6"
+        }
+      ]
+    },
+    "skills-anthropics-skills-brand-guidelines": {
+      "version": "hash:8acd12fbde704bc76b981f1734ebb4f56edb6b1b206a30ca5b2e9a0041251533",
+      "sourceId": "https-github-com-anthropics-skills",
+      "sourceType": "skills",
+      "installedAt": "2026-09-30T07:42:36.538Z",
+      "files": [
+        {
+          "path": ".github/skills/brand-guidelines/LICENSE.txt",
+          "checksum": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+        },
+        {
+          "path": ".github/skills/brand-guidelines/SKILL.md",
+          "checksum": "1120b3769e2985cefb3d25be981b1f914abeba57ae079b83c20c666c164fa9fe"
+        }
+      ]
+    }
+  },
+  "sources": {
+    "github-19ad484d359b": {
+      "type": "github",
+      "url": "https://api.github.com/repos/AmadeusITGroup/community-collections/releases/assets/468806751"
+    },
+    "https-github-com-anthropics-skills": {
+      "type": "skills",
+      "url": "https://github.com/anthropics/skills/archive/refs/heads/main.zip"
+    }
+  }
+}
