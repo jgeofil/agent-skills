@@ -1,4 +1,5 @@
 ---
+name: app-architecture
 title: app-architecture
 description: Plan your system architecture before you start building. Covers data model, API design, auth, integrations, and deployment — everything an AI coding agent needs to scaffold your app correctly from the start.
 ---
