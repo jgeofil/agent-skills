@@ -1,5 +1,5 @@
 ---
-title: app-architecture
+name: app-architecture
 description: Plan your system architecture before you start building. Covers data model, API design, auth, integrations, and deployment — everything an AI coding agent needs to scaffold your app correctly from the start.
 ---
 
@@ -117,7 +117,7 @@ List every external service the app depends on.
 
 - **Payments**: Stripe, Lemon Squeezy, etc.
 - **Email**: Resend, SendGrid, Postmark
-- **File storage**: S3, Cloudflare R2, Uploadthing
+- **File storage**: S3, Cloudflare R2, UploadThing
 - **AI/ML**: OpenAI, Anthropic, Replicate
 - **Analytics**: PostHog, Mixpanel, Segment
 - **Monitoring**: Sentry, LogRocket
@@ -133,7 +133,9 @@ List every external service the app depends on.
 - **Styling**: Tailwind CSS, CSS Modules, styled-components
 - **State management**: React Query, Zustand, Redux, etc.
 
-### Page Structure List every page/route with its path and purpose
+### Page Structure
+
+List every page/route with its purpose.
 
 - `/` — Landing or dashboard
 - `/app` — Main application
@@ -142,7 +144,7 @@ List every external service the app depends on.
 ### Data Fetching Strategy
 
 - Server components vs. client components
-- Caching and revalidation approach
+- Caching and invalidation approach
 - Global loading and error state handling
 
 ---
@@ -170,4 +172,4 @@ List every external service the app depends on.
 ### Environment Variables
 
 List all required env vars by category (auth, database, services, feature flags).
-Note which are secret vs. public
+Note which are secret vs. public.
