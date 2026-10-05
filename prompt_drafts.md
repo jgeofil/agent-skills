@@ -4,4 +4,4 @@ Write your raw prompt below, hit **`Alt+Shift+R`** (or **`Cmd+Alt+Shift+R`** on 
 
 That's it — start typing! ⬇️
 
-Help me login in.
+Help me log in.
