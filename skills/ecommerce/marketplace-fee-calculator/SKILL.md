@@ -1,6 +1,6 @@
 ---
 name: marketplace-fee-calculator
-description: [TODO: Complete and informative explanation of what the skill does and when to use it. Include WHEN to use this skill - specific scenarios, file types, or tasks that trigger it.]
+description: Calculate eBay fees, seller payouts, and profitability for a listing. Use this skill when pricing items, comparing marketplace fees, or estimating net profit after final value fees, promotions, and store costs.
 ---
 
 # Marketplace Fee Calculator
@@ -82,4 +82,4 @@ Files not intended to be loaded into context, but rather used within the output 
 
 ---
 
-**Not every skill requires all three types of resources.**
+**Note:** Not every skill requires all three types of resources.
