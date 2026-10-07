@@ -206,11 +206,14 @@
   },
   "active": "5901d04aecb328a4",
   "lastOpenFiles": [
+<<<<<<< Updated upstream
     "skills/information/free-dev-resources/tests/__pycache__/test_search_resources.cpython-314-pytest-9.0.2.pyc",
     "skills/information/free-dev-resources/tests/__pycache__",
     "skills/information/free-dev-resources/scripts/__pycache__/search_resources.cpython-314.pyc",
     "skills/information/free-dev-resources/scripts/__pycache__",
     "prompt_drafts.md",
+=======
+>>>>>>> Stashed changes
     "merge-conflict-resolver-workspace.tar.gz",
     "Webwright.tar.gz",
     "Archive.tar.gz",
