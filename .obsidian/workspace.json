@@ -11,10 +11,10 @@
             "id": "faa9ed3ef85d97b8",
             "type": "leaf",
             "state": {
-              "type": "empty",
+              "type": "agentfiles-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "icon": "cpu",
+              "title": "Agentfiles"
             }
           }
         ]
@@ -79,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "1c889c8efaf44be4",
@@ -162,13 +162,33 @@
               "icon": "lucide-list",
               "title": "Outline"
             }
+          },
+          {
+            "id": "e93366edf938ed53",
+            "type": "leaf",
+            "state": {
+              "type": "obsidian-agent-sidebar",
+              "state": {},
+              "icon": "square-slash",
+              "title": "Vault Operator"
+            }
+          },
+          {
+            "id": "042ac22153385aa8",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 873.3984375
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -178,9 +198,59 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false,
+      "agentfiles:Agentfiles": false,
+      "vault-operator:Vault Operator": false
     }
   },
-  "active": "faa9ed3ef85d97b8",
-  "lastOpenFiles": []
+  "active": "5901d04aecb328a4",
+  "lastOpenFiles": [
+    "skills/information/free-dev-resources/tests/__pycache__/test_search_resources.cpython-314-pytest-9.0.2.pyc",
+    "skills/information/free-dev-resources/tests/__pycache__",
+    "skills/information/free-dev-resources/scripts/__pycache__/search_resources.cpython-314.pyc",
+    "skills/information/free-dev-resources/scripts/__pycache__",
+    "prompt_drafts.md",
+    "merge-conflict-resolver-workspace.tar.gz",
+    "Webwright.tar.gz",
+    "Archive.tar.gz",
+    "skills-repo/gcp-agent-two/agent_pattern.webp",
+    "Templates/Source Template.md",
+    "Templates/Note Template.md",
+    "Templates/Meeting Note Template.md",
+    "Templates",
+    "Webwright/assets/task_showcase/tasks/slickdeals/report.json",
+    "Webwright/assets/task_showcase/tasks/slickdeals/task.json",
+    "Webwright/assets/task_showcase/tasks/pokemon_tcg/task.json",
+    "skills/development/webwright/reference/workflow.md",
+    "skills/development/webwright/reference/playwright_patterns.md",
+    "skills/development/webwright/reference/cli_tool_mode.md",
+    "skills/development/webwright/commands/run.md",
+    "skills/development/webwright/commands/craft.md",
+    "skills/development/webwright/SKILL.md",
+    "Webwright/assets/task_showcase/README.md",
+    "Webwright/assets/webwright_logo.svg",
+    "Webwright/assets/trajectory-compare.png",
+    "Webwright/assets/om2w_autoeval_step100.png",
+    "Webwright/assets/odysseys_eval_step100.png",
+    "Webwright/SUPPORT.md",
+    "Webwright/SECURITY.md",
+    "Webwright/README.md",
+    "Webwright/CODE_OF_CONDUCT.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-work-iq.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-web-search.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-openapi.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-memory.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-mcp.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-function-calling.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-file-search.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-fabric-iq.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-code-interpreter.md",
+    "skills/skills/agentic-sdks/microsoft-foundry-agent/create/references/tools/prompt-agent/tool-bing-grounding.md",
+    "skills/skills/skills-create-find/skill-installer/assets/skill-installer.png",
+    "skills/skills/skills-create-find/skill-installer/assets/skill-installer-small.svg",
+    "skills/skills/skills-create-find/skill-creator/assets/skill-creator.png",
+    "skills/skills/skills-create-find/skill-creator/assets/skill-creator-small.svg",
+    "skills/skills/git-github-review/gh-address-comments/assets/github.png"
+  ]
 }
