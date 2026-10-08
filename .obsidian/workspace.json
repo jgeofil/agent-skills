@@ -164,17 +164,7 @@
             }
           },
           {
-            "id": "e93366edf938ed53",
-            "type": "leaf",
-            "state": {
-              "type": "obsidian-agent-sidebar",
-              "state": {},
-              "icon": "square-slash",
-              "title": "Vault Operator"
-            }
-          },
-          {
-            "id": "042ac22153385aa8",
+            "id": "08b2637948850dfb",
             "type": "leaf",
             "state": {
               "type": "git-view",
@@ -184,7 +174,7 @@
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -200,11 +190,10 @@
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
       "obsidian-git:Open Git source control": false,
-      "agentfiles:Agentfiles": false,
-      "vault-operator:Vault Operator": false
+      "agentfiles:Agentfiles": false
     }
   },
-  "active": "5901d04aecb328a4",
+  "active": "d74fffad786f5e5e",
   "lastOpenFiles": [
     "skills/other/art-creative-production/nanobanana/mcp-server/node_modules",
     "skills/other/art-creative-production/nanobanana/mcp-server",
