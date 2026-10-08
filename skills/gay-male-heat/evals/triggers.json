@@ -1,0 +1,29 @@
+{
+  "skill": "gay-male-heat",
+  "test_cases": [
+    {
+      "input": "Write a filthy gay sex scene for gay male readers, not romance-novel MM",
+      "should_trigger": true
+    },
+    {
+      "input": "Rewrite this M/M scene so it doesn't sound like it was written for straight women",
+      "should_trigger": true
+    },
+    {
+      "input": "Make me a Sudowrite plugin that generates cock-forward gay male sex scenes",
+      "should_trigger": true
+    },
+    {
+      "input": "Continue this scene from where he pushes in",
+      "should_trigger": true
+    },
+    {
+      "input": "Write a soft non-explicit first-love Instagram series between two college men",
+      "should_trigger": false
+    },
+    {
+      "input": "Outline a straight romance novel with a slow-burn kiss",
+      "should_trigger": false
+    }
+  ]
+}
