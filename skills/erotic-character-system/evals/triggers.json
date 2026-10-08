@@ -1,0 +1,29 @@
+{
+  "skill": "erotic-character-system",
+  "test_cases": [
+    {
+      "input": "Build two erotic characters whose psychologies clash, with system prompts and scene seeds",
+      "should_trigger": true
+    },
+    {
+      "input": "I need a conflicted avoidant erotic roleplay character, not a pleasure-forward one",
+      "should_trigger": true
+    },
+    {
+      "input": "Make a hybrid character who is filthy until intimacy shows up, with mode-switch rules",
+      "should_trigger": true
+    },
+    {
+      "input": "Design a hedonistic low-shame partner who escalates taboo as play",
+      "should_trigger": true
+    },
+    {
+      "input": "Write the explicit sex scene between these two men",
+      "should_trigger": false
+    },
+    {
+      "input": "Outline a non-explicit Instagram first-love series",
+      "should_trigger": false
+    }
+  ]
+}
