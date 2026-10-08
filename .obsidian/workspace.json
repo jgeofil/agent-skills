@@ -11,10 +11,10 @@
             "id": "faa9ed3ef85d97b8",
             "type": "leaf",
             "state": {
-              "type": "empty",
+              "type": "agentfiles-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "icon": "cpu",
+              "title": "Agentfiles"
             }
           }
         ]
@@ -79,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 315.40059661865234
   },
   "right": {
     "id": "1c889c8efaf44be4",
@@ -162,13 +162,23 @@
               "icon": "lucide-list",
               "title": "Outline"
             }
+          },
+          {
+            "id": "08b2637948850dfb",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 873.3984375
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -178,9 +188,58 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false,
+      "agentfiles:Agentfiles": false
     }
   },
-  "active": "faa9ed3ef85d97b8",
-  "lastOpenFiles": []
+  "active": "08b2637948850dfb",
+  "lastOpenFiles": [
+    "skills/development/merge-conflict-resolver-workspace/test-repos/simple-content-conflict/tests/__pycache__/test_handler.cpython-314-pytest-9.0.2.pyc",
+    "skills/development/merge-conflict-resolver-workspace/test-repos/simple-content-conflict/tests/__pycache__",
+    "skills/development/merge-conflict-resolver-workspace/test-repos/feature-merge-ordering/tests/__pycache__/test_processor.cpython-314-pytest-9.0.2.pyc",
+    "skills/development/merge-conflict-resolver-workspace/test-repos/feature-merge-ordering/tests/__pycache__",
+    "skills/development/merge-conflict-resolver-workspace/test-repos/changelog-context-conflict/tests/__pycache__/test_validator.cpython-314-pytest-9.0.2.pyc",
+    "skills/development/merge-conflict-resolver-workspace/test-repos/changelog-context-conflict/tests/__pycache__",
+    "skills/development/merge-conflict-resolver-workspace/iteration-1/simple-content-conflict/without_skill/repo/tests/__pycache__/test_handler.cpython-314-pytest-9.0.2.pyc",
+    "skills/development/merge-conflict-resolver-workspace/iteration-1/simple-content-conflict/without_skill/repo/tests/__pycache__",
+    "skills/development/merge-conflict-resolver-workspace/iteration-1/simple-content-conflict/with_skill/repo/tests/__pycache__/test_handler.cpython-314-pytest-9.0.2.pyc",
+    "skills/development/merge-conflict-resolver-workspace/iteration-1/feature-merge-ordering/without_skill/repo/tests/__pycache__/test_processor.cpython-314-pytest-9.0.2.pyc",
+    "skills/development/merge-conflict-resolver-workspace/iteration-1/feature-merge-ordering/without_skill/repo/tests/__pycache__",
+    "skills/information/free-dev-resources/SKILL.md",
+    "skills/gay-male-heat/references/sudowrite-plugin.md",
+    "skills/gay-male-heat/SKILL.md",
+    "skills/gay-male-heat/CHANGELOG.md",
+    "skills/erotic-character-system/references/scene-evaluation.md",
+    "skills/erotic-character-system/references/pairing.md",
+    "skills/erotic-character-system/references/kink-integration.md",
+    "skills/erotic-character-system/references/hybrid.md",
+    "skills/erotic-character-system/references/hedonic.md",
+    "skills/erotic-character-system/references/frameworks.md",
+    "skills/erotic-character-system/references/fifteen-dimensions.md",
+    "skills/erotic-character-system/references/conflicted.md",
+    "skills/erotic-character-system/references/INDEX.md",
+    "skills/erotic-character-system/SKILL.md",
+    "skills/erotic-character-system/CHANGELOG.md",
+    "prompts/prompt_drafts.md",
+    "skills/trading/alpaca-cli/SKILL.md",
+    "skills/erotic-character-system/erotic-character-system/references/scene-evaluation.md",
+    "skills/erotic-character-system/erotic-character-system/references/pairing.md",
+    "skills/erotic-character-system/erotic-character-system/references/kink-integration.md",
+    "skills/erotic-character-system/erotic-character-system/references/hybrid.md",
+    "skills/erotic-character-system/erotic-character-system/references/hedonic.md",
+    "skills/erotic-character-system/erotic-character-system/references/frameworks.md",
+    "skills/erotic-character-system/erotic-character-system/references/fifteen-dimensions.md",
+    "skills/erotic-character-system/erotic-character-system/references/conflicted.md",
+    "skills-repo/gcp-agent-two/agent_pattern.webp",
+    "Webwright/assets/webwright_logo.svg",
+    "Webwright/assets/trajectory-compare.png",
+    "Webwright/assets/om2w_autoeval_step100.png",
+    "Webwright/assets/odysseys_eval_step100.png",
+    "skills/skills/skills-create-find/skill-installer/assets/skill-installer.png",
+    "skills/skills/skills-create-find/skill-installer/assets/skill-installer-small.svg",
+    "skills/skills/skills-create-find/skill-creator/assets/skill-creator.png",
+    "skills/skills/skills-create-find/skill-creator/assets/skill-creator-small.svg",
+    "skills/skills/git-github-review/gh-address-comments/assets/github.png"
+  ]
 }
