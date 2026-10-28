@@ -1,191 +1,335 @@
 #!/usr/bin/env python3
 """
 Scaffold a Spec-First, Disposable Code (Regenerative Architecture) repository
-for Python or TypeScript, including the 4-layer directory tree, AGENTS.md,
-boundary auditing script, and starter module artifacts.
+for Python or TypeScript, including the 5-layer committed dist/ topology,
+3-Wave ARCHITECTURE.md, regen_guard.py provenance engine, and starter cell artifacts.
 
 Usage:
-    python3 init_spec_project.py --name my-service --lang py --module example
-    python3 init_spec_project.py --name my-app --lang ts --module parser
+    python3 init_spec_project.py --name my-service --lang py --cell core
+    python3 init_spec_project.py --name my-app --lang ts --cell parser
 """
 
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
+import subprocess
 import sys
+from pathlib import Path
 
 DIRS = [
     "contracts",
+    "contracts/migrations",
     "specs",
     "tests/contract",
     "tests/property",
     "tests/benchmarks",
-    "src",
+    "dist",
+    "deploy",
     "scratch",
     "scripts",
 ]
 
-AUDIT_SCRIPT = '''#!/usr/bin/env python3
-"""Audit Spec-First module size, token budget estimates, and boundary isolation."""
-from __future__ import annotations
-import sys
-from pathlib import Path
 
-MAX_LOC = 350
-MAX_EST_TOKENS = 4500
-
-
-def count_code_lines(path: Path) -> int:
-    lines = path.read_text(encoding="utf-8").splitlines()
-    return sum(
-        1 for line in lines
-        if line.strip() and not line.strip().startswith(("#", "//", "/*", "*"))
-    )
-
-
-def estimate_tokens(path: Path) -> int:
-    # Clinical heuristic: ~4 characters per token for source code
-    return len(path.read_text(encoding="utf-8")) // 4
-
-
-def main() -> int:
-    src_root = Path("src")
-    if not src_root.exists():
-        print("OK: src/ directory does not exist yet.")
-        return 0
-
-    violations: list[str] = []
-    for mod_dir in sorted(p for p in src_root.iterdir() if p.is_dir()):
-        mod_loc = 0
-        mod_tokens = 0
-        for code_file in mod_dir.rglob("*"):
-            if code_file.suffix in {".py", ".ts", ".tsx", ".js"}:
-                mod_loc += count_code_lines(code_file)
-                mod_tokens += estimate_tokens(code_file)
-                content = code_file.read_text(encoding="utf-8")
-                for other_mod in src_root.iterdir():
-                    if other_mod.is_dir() and other_mod.name != mod_dir.name:
-                        if f"src.{other_mod.name}." in content or f"../{other_mod.name}/" in content:
-                            violations.append(
-                                f"[COUPLING] {code_file} imports directly from sibling module '{other_mod.name}'"
-                            )
-
-        print(f"Module '{mod_dir.name}': {mod_loc} LOC | ~{mod_tokens} tokens")
-        if mod_loc > MAX_LOC:
-            violations.append(
-                f"[LOC_CEILING] Module '{mod_dir.name}' has {mod_loc} LOC (max {MAX_LOC}). Split contract."
-            )
-        if mod_tokens > MAX_EST_TOKENS:
-            violations.append(
-                f"[TOKEN_BUDGET] Module '{mod_dir.name}' estimates ~{mod_tokens} tokens (max {MAX_EST_TOKENS})."
-            )
-
-    if violations:
-        print("\\nBOUNDARY VIOLATIONS DETECTED:", file=sys.stderr)
-        for v in violations:
-            print(f"  - {v}", file=sys.stderr)
-        return 1
-
-    print("\\nAll modules within Spec-First regeneration budgets.")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-'''
-
-
-def write_file(path: Path, content: str) -> None:
+def write_file(path: Path, content: str, mode: int | None = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content.lstrip(), encoding="utf-8")
+    if mode is not None:
+        path.chmod(mode)
 
 
-def scaffold_python(root: Path, module: str) -> None:
+def install_regen_guard(root: Path) -> None:
+    target = root / "scripts" / "regen_guard.py"
+    sibling = Path(__file__).parent / "regen_guard.py"
+    if sibling.exists():
+        content = sibling.read_text(encoding="utf-8")
+    else:
+        raise FileNotFoundError(
+            "scripts/regen_guard.py not found alongside init_spec_project.py"
+        )
+    write_file(target, content, mode=0o755)
+
+
+def scaffold_architecture_md(root: Path, cell: str) -> None:
+    content = f"""# System Architecture & 3-Wave Execution Plan
+
+Autonomous, Spec-First Regenerative Architecture DAG for `{root.name}`.
+
+---
+
+## 1. Cellular Topology DAG
+
+```mermaid
+graph TD
+    CR["dist/main (Composition Root)"] --> CELL["dist/{cell} (Pure Domain)"]
+    CR --> ADAPT["(External Adapters / Envs)"]
+```
+
+### Cell Registry
+| Cell ID | Classification | Contract Path | Specification Path | Implementation Path |
+| :--- | :--- | :--- | :--- | :--- |
+| `{cell}` | `domain` | `contracts/{cell}_contract.*` | `specs/{cell}.spec.md` | `dist/{cell}/` |
+| `main` | `entrypoint` | `contracts/main_contract.*` | `specs/main.spec.md` | `dist/main/` |
+
+---
+
+## 2. 3-Wave Completion Checklist
+
+### Wave 1: Architecture DAG, Contracts & Specifications
+- [x] Initial `ARCHITECTURE.md` topology codified
+- [x] `contracts/{cell}_contract.*` authored
+- [x] `contracts/main_contract.*` authored
+- [x] `specs/{cell}.spec.md` authored
+- [x] `specs/main.spec.md` authored
+- [ ] Static type check gate passed
+
+### Wave 2: Hermetic Cell-by-Cell Compilation
+- [x] `tests/property/` fuzzer for `{cell}` authored
+- [x] `dist/{cell}/` synthesized and sealed (`.spec-lock.json` committed)
+
+### Wave 3: Composition Root & Operational Envelope
+- [x] `dist/main/` synthesized and sealed with `--entrypoint`
+- [x] `deploy/Dockerfile` and `deploy/docker-compose.yml` authored
+- [x] Root `README.md` operational runbook written
+- [ ] End-to-end smoke test passed (`--dry-run --once`)
+"""
+    write_file(root / "ARCHITECTURE.md", content)
+
+
+def scaffold_deployment(root: Path, lang: str) -> None:
+    if lang == "py":
+        dockerfile = """FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+WORKDIR /app
+
+COPY pyproject.toml uv.lock* ./
+RUN uv sync --frozen --no-dev
+
+COPY contracts/ ./contracts/
+COPY dist/ ./dist/
+
+USER 1000:1000
+ENTRYPOINT ["uv", "run", "python", "-m", "dist.main"]
+"""
+    else:
+        dockerfile = """FROM oven/bun:1-slim
+WORKDIR /app
+
+COPY package.json bun.lock* ./
+RUN bun install --frozen-lockfile --production
+
+COPY contracts/ ./contracts/
+COPY dist/ ./dist/
+
+USER 1000:1000
+ENTRYPOINT ["bun", "dist/main/index.js"]
+"""
+    write_file(root / "deploy" / "Dockerfile", dockerfile)
+
+    compose = f"""services:
+  {root.name}:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    environment:
+      ENFORCEMENT_MODE: "${{ENFORCEMENT_MODE:-DRY_RUN}}"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.25"
+"""
+    write_file(root / "deploy" / "docker-compose.yml", compose)
+
+
+def scaffold_readme(root: Path, lang: str, cell: str) -> None:
+    run_cmd = (
+        "uv run python -m dist.main --dry-run --once"
+        if lang == "py"
+        else "bun dist/main/index.js --dry-run --once"
+    )
+    test_cmd = "uv run pytest" if lang == "py" else "bun test"
+    content = f"""# {root.name}
+
+Spec-First, Disposable Code service with committed `dist/` provenance locks (`.spec-lock.json`).
+
+---
+
+## 1. Pipeline Architecture
+Data flow wires through the `dist/main` Composition Root into sealed component cells:
+```text
+Host Environment -> dist/main (CLI/Entrypoint) -> dist/{cell}
+```
+
+---
+
+## 2. Environment Variables
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `ENFORCEMENT_MODE` | `string` | `DRY_RUN` | Operation mode (`DRY_RUN` or `ENFORCE`) |
+
+---
+
+## 3. Local Verification & Runbook
+
+### Run Tests & Verify Provenance Locks
+```bash
+{test_cmd}
+python3 scripts/regen_guard.py verify
+```
+
+### Local Dry-Run Invocation
+```bash
+{run_cmd}
+```
+
+### Regenerate a Cell Cleanly
+```bash
+python3 scripts/regen_guard.py prepare {cell}
+# Synthesize dist/{cell}/ from scratch/context_{cell}.md
+{test_cmd}
+python3 scripts/regen_guard.py seal {cell}
+```
+
+### Deploy
+```bash
+docker compose -f deploy/docker-compose.yml up -d --build
+```
+"""
+    write_file(root / "README.md", content)
+
+
+def scaffold_python(root: Path, cell: str) -> None:
     write_file(
         root / "pyproject.toml",
-        f"""
-[project]
+        f"""[project]
 name = "{root.name}"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = ["pydantic>=2.9.0"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.3.0", "hypothesis>=6.112.0", "mypy>=1.11.0", "ruff>=0.6.0"]
+dev = ["pytest>=8.3.0", "hypothesis>=6.112.0", "pyright>=1.1.380", "ruff>=0.6.0"]
 
-[tool.mypy]
-strict = true
+[tool.pyright]
+include = ["contracts", "dist", "tests"]
 """,
     )
+    cap = cell.capitalize()
     write_file(
-        root / "contracts" / f"{module}_contract.py",
-        f"""
-from __future__ import annotations
+        root / "contracts" / f"{cell}_contract.py",
+        f"""from __future__ import annotations
 from typing import Protocol
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class {module.capitalize()}Input(BaseModel):
+class {cap}Input(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
     values: list[float] = Field(default_factory=list)
 
 
-class {module.capitalize()}Output(BaseModel):
+class {cap}Output(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
     count: int
     total: float
 
 
-class {module.capitalize()}Error(Exception):
-    \"\"\"Base domain error emitted by {module}.\"\"\"
-
-
-class {module.capitalize()}Processor(Protocol):
-    def execute(self, payload: {module.capitalize()}Input) -> {module.capitalize()}Output:
+class {cap}Processor(Protocol):
+    def execute(self, payload: {cap}Input) -> {cap}Output:
         ...
 """,
     )
+
     write_file(
-        root / "tests" / "property" / f"test_{module}_properties.py",
-        f"""
-from hypothesis import given, strategies as st
-from contracts.{module}_contract import {module.capitalize()}Input
-from src.{module} import process_{module}
+        root / "contracts" / "main_contract.py",
+        """from __future__ import annotations
+from typing import Literal
+from pydantic import BaseModel, ConfigDict, Field
+
+
+class RuntimeConfig(BaseModel):
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    enforcement_mode: Literal["DRY_RUN", "ENFORCE"] = "DRY_RUN"
+""",
+    )
+
+    write_file(
+        root / "tests" / "property" / f"test_{cell}_properties.py",
+        f"""from hypothesis import given, strategies as st
+from contracts.{cell}_contract import {cap}Input
+from dist.{cell} import process_{cell}
 
 
 @given(st.lists(st.floats(allow_nan=False, allow_infinity=False, min_value=-1e6, max_value=1e6)))
-def test_{module}_count_invariant(values: list[float]) -> None:
-    payload = {module.capitalize()}Input(values=values)
-    result = process_{module}(payload)
+def test_{cell}_count_invariant(values: list[float]) -> None:
+    payload = {cap}Input(values=values)
+    result = process_{cell}(payload)
     assert result.count == len(values)
 """,
     )
+
     write_file(
-        root / "src" / module / "__init__.py",
-        f"""
-from __future__ import annotations
-from contracts.{module}_contract import {module.capitalize()}Input, {module.capitalize()}Output
+        root / "dist" / cell / "__init__.py",
+        f"""from __future__ import annotations
+from contracts.{cell}_contract import {cap}Input, {cap}Output
 
 
-def process_{module}(payload: {module.capitalize()}Input) -> {module.capitalize()}Output:
-    return {module.capitalize()}Output(count=len(payload.values), total= float(sum(payload.values)))
+def process_{cell}(payload: {cap}Input) -> {cap}Output:
+    return {cap}Output(count=len(payload.values), total=float(sum(payload.values)))
 """,
     )
 
+    write_file(
+        root / "dist" / "main" / "__main__.py",
+        f"""from __future__ import annotations
+import argparse
+import json
+import os
+from contracts.main_contract import RuntimeConfig
+from contracts.{cell}_contract import {cap}Input
+from dist.{cell} import process_{cell}
 
-def scaffold_typescript(root: Path, module: str) -> None:
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Runner")
+    parser.add_argument("--dry-run", action="store_true", help="Audit mode")
+    parser.add_argument("--once", action="store_true", help="Single run")
+    args = parser.parse_args()
+
+    mode = "DRY_RUN" if args.dry_run else os.environ.get("ENFORCEMENT_MODE", "DRY_RUN")
+    cfg = RuntimeConfig(enforcement_mode=mode)  # type: ignore[arg-type]
+
+    result = process_{cell}({cap}Input(values=[1.0, 2.0, 3.0]))
+    output = {{"config": cfg.model_dump(), "result": result.model_dump()}}
+    print(json.dumps(output, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+""",
+    )
+
+    # Seal cells using regen_guard
+    guard = root / "scripts" / "regen_guard.py"
+    subprocess.run([sys.executable, str(guard), "seal", cell], cwd=root, check=True)
+    subprocess.run(
+        [sys.executable, str(guard), "seal", "main", "--entrypoint"],
+        cwd=root,
+        check=True,
+    )
+
+
+def scaffold_typescript(root: Path, cell: str) -> None:
     write_file(
         root / "package.json",
-        f"""
-{{
+        f"""{{
   "name": "{root.name}",
   "version": "0.1.0",
   "type": "module",
   "scripts": {{
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "audit": "python3 scripts/audit_boundaries.py"
+    "verify": "python3 scripts/regen_guard.py verify"
   }},
   "dependencies": {{
     "zod": "^3.23.8"
@@ -200,8 +344,7 @@ def scaffold_typescript(root: Path, module: str) -> None:
     )
     write_file(
         root / "tsconfig.json",
-        """
-{
+        """{
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
@@ -211,15 +354,14 @@ def scaffold_typescript(root: Path, module: str) -> None:
     "exactOptionalPropertyTypes": true,
     "noEmit": true
   },
-  "include": ["contracts/**/*", "src/**/*", "tests/**/*"]
+  "include": ["contracts/**/*", "dist/**/*", "tests/**/*"]
 }
 """,
     )
-    cap = module.capitalize()
+    cap = cell.capitalize()
     write_file(
-        root / "contracts" / f"{module}.contract.ts",
-        f"""
-import {{ z }} from "zod";
+        root / "contracts" / f"{cell}.contract.ts",
+        f"""import {{ z }} from "zod";
 
 export const {cap}InputSchema = z.object({{
   values: z.array(z.number().finite()).readonly(),
@@ -232,21 +374,29 @@ export const {cap}OutputSchema = z.object({{
 
 export type {cap}Input = z.infer<typeof {cap}InputSchema>;
 export type {cap}Output = z.infer<typeof {cap}OutputSchema>;
-
-export interface {cap}Service {{
-  execute(input: {cap}Input): {cap}Output;
-}}
 """,
     )
-    write_file(
-        root / "tests" / "property" / f"{module}.property.test.ts",
-        f"""
-import {{ describe, it, expect }} from "vitest";
-import fc from "fast-check";
-import {{ {cap}InputSchema }} from "../../contracts/{module}.contract";
-import {{ execute{cap} }} from "../../src/{module}/index";
 
-describe("{module} property invariants", () => {{
+    write_file(
+        root / "contracts" / "main.contract.ts",
+        """import { z } from "zod";
+
+export const RuntimeConfigSchema = z.object({
+  enforcementMode: z.enum(["DRY_RUN", "ENFORCE"]).default("DRY_RUN"),
+}).strict();
+
+export type RuntimeConfig = z.infer<typeof RuntimeConfigSchema>;
+""",
+    )
+
+    write_file(
+        root / "tests" / "property" / f"{cell}.property.test.ts",
+        f"""import {{ describe, it, expect }} from "vitest";
+import fc from "fast-check";
+import {{ {cap}InputSchema }} from "../../contracts/{cell}.contract";
+import {{ execute{cap} }} from "../../dist/{cell}/index";
+
+describe("{cell} property invariants", () => {{
   it("preserves exact element count across arbitrary finite number arrays", () => {{
     fc.assert(
       fc.property(fc.array(fc.double({{ noNaN: true, noDefaultInfinity: true, min: -1e6, max: 1e6 }})), (values) => {{
@@ -259,10 +409,10 @@ describe("{module} property invariants", () => {{
 }});
 """,
     )
+
     write_file(
-        root / "src" / module / "index.ts",
-        f"""
-import {{ type {cap}Input, type {cap}Output, {cap}OutputSchema }} from "../../contracts/{module}.contract";
+        root / "dist" / cell / "index.ts",
+        f"""import {{ type {cap}Input, type {cap}Output, {cap}OutputSchema }} from "../../contracts/{cell}.contract";
 
 export function execute{cap}(input: {cap}Input): {cap}Output {{
   const total = input.values.reduce((acc, v) => acc + v, 0);
@@ -274,37 +424,84 @@ export function execute{cap}(input: {cap}Input): {cap}Output {{
 """,
     )
 
+    write_file(
+        root / "dist" / "main" / "index.ts",
+        f"""import {{ RuntimeConfigSchema }} from "../../contracts/main.contract";
+import {{ execute{cap} }} from "../{cell}/index";
+
+export function run(): void {{
+  const mode = process.argv.includes("--dry-run") ? "DRY_RUN" : (process.env.ENFORCEMENT_MODE || "DRY_RUN");
+  const cfg = RuntimeConfigSchema.parse({{ enforcementMode: mode }});
+  const res = execute{cap}({{ values: [1, 2, 3] }});
+  console.log(JSON.stringify({{ config: cfg, result: res }}, null, 2));
+}}
+
+run();
+""",
+    )
+
+    # Seal cells using regen_guard
+    guard = root / "scripts" / "regen_guard.py"
+    subprocess.run([sys.executable, str(guard), "seal", cell], cwd=root, check=True)
+    subprocess.run(
+        [sys.executable, str(guard), "seal", "main", "--entrypoint"],
+        cwd=root,
+        check=True,
+    )
+
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Initialize a Spec-First Disposable Code repository.")
-    parser.add_argument("--name", required=True, help="Target project directory name or path")
-    parser.add_argument("--lang", choices=["py", "ts"], required=True, help="Primary language stack (py or ts)")
-    parser.add_argument("--module", default="core", help="Initial starter module name (default: core)")
+    parser = argparse.ArgumentParser(
+        description="Initialize a Spec-First Disposable Code repository."
+    )
+    parser.add_argument(
+        "--name", required=True, help="Target project directory name or path"
+    )
+    parser.add_argument(
+        "--lang",
+        choices=["py", "ts"],
+        required=True,
+        help="Primary language stack (py or ts)",
+    )
+    parser.add_argument(
+        "--cell", default="core", help="Initial starter cell name (default: core)"
+    )
     args = parser.parse_args()
 
     root = Path(args.name).resolve()
     for d in DIRS:
         (root / d).mkdir(parents=True, exist_ok=True)
 
-    write_file(root / ".gitignore", "scratch/*\n!scratch/.gitkeep\n__pycache__/\nnode_modules/\n.venv/\ndist/\n")
+    # Note: dist/ is committed, not ignored!
+    write_file(
+        root / ".gitignore",
+        """scratch/*
+!scratch/.gitkeep
+__pycache__/
+*.py[oc]
+node_modules/
+.venv/
+.DS_Store
+""",
+    )
     write_file(root / "scratch" / ".gitkeep", "")
-    write_file(root / "scripts" / "audit_boundaries.py", AUDIT_SCRIPT)
-    (root / "scripts" / "audit_boundaries.py").chmod(0o755)
+
+    install_regen_guard(root)
 
     ext = "py" if args.lang == "py" else "ts"
     write_file(
-        root / "specs" / f"{args.module}.spec.md",
-        f"""
-# SPEC: {args.module}
+        root / "specs" / f"{args.cell}.spec.md",
+        f"""# SPEC: {args.cell}
 
-## 1. Module Metadata & Regeneration Budget
+## 1. Cell Metadata & Regeneration Budget
 | Attribute | Constraint |
 | :--- | :--- |
-| **Module ID** | `{args.module}` |
-| **Contract Path** | `contracts/{args.module}_contract.{ext}` |
-| **Implementation Path** | `src/{args.module}/` |
+| **Cell ID** | `{args.cell}` |
+| **Cell Classification** | `Pure Domain Cell` |
+| **Contract Path** | `contracts/{args.cell}_contract.{ext}` |
+| **Committed Artifact Path** | `dist/{args.cell}/` (Sealed via `.spec-lock.json`) |
 | **Max Implementation Size** | 250 LOC (Hard Ceiling: 350 LOC) |
-| **Max Regeneration Budget** | 2,500 Output Tokens / 25s Wall-Clock |
+| **Max Inbound Context** | 8,000 Tokens |
 
 ## 2. Core Invariants
 1. Output `count` must equal exact length of input `values`.
@@ -312,13 +509,35 @@ def main() -> int:
 3. No external network or disk side-effects permitted.
 """,
     )
+    write_file(
+        root / "specs" / "main.spec.md",
+        f"""# SPEC: main (Composition Root & CLI Entrypoint)
+
+## 1. Cell Metadata & Regeneration Budget
+| Attribute | Constraint |
+| :--- | :--- |
+| **Cell ID** | `main` (`--entrypoint`) |
+| **Contract Path** | `contracts/main_contract.{ext}` |
+| **Committed Artifact Path** | `dist/main/` |
+| **Max Implementation Size** | 200 LOC / 2,500 Tokens |
+
+## 2. Pipeline Orchestration Sequence
+1. Parse environment options into validated `RuntimeConfig`.
+2. `--dry-run` flag forces `DRY_RUN` mode.
+3. Wire and execute `dist.{args.cell}` cell.
+""",
+    )
+
+    scaffold_architecture_md(root, args.cell)
+    scaffold_deployment(root, args.lang)
+    scaffold_readme(root, args.lang, args.cell)
 
     if args.lang == "py":
-        scaffold_python(root, args.module)
+        scaffold_python(root, args.cell)
     else:
-        scaffold_typescript(root, args.module)
+        scaffold_typescript(root, args.cell)
 
-    print(f"Initialized Spec-First ({args.lang.upper()}) repository at: {root}")
+    print(f"Initialized Spec-First 5-Layer ({args.lang.upper()}) repository at: {root}")
     return 0
 
 
