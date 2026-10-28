@@ -1,0 +1,11 @@
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+WORKDIR /app
+
+COPY pyproject.toml uv.lock* ./
+RUN uv sync --frozen --no-dev
+
+COPY contracts/ ./contracts/
+COPY dist/ ./dist/
+
+USER 1000:1000
+ENTRYPOINT ["uv", "run", "python", "-m", "dist.main"]
