@@ -1,6 +1,11 @@
 ---
 name: llm-debugger
-description: Diagnoses LLM output failures including hallucinations, constraint violations, format errors, and reasoning issues. Provides root cause classification, prompt fixes, tool improvements, and new test cases. Use for "debugging AI", "fixing prompts", "quality issues", or "output errors".
+description: >-
+  Diagnoses LLM output failures including hallucinations, constraint violations, format errors, and reasoning issues. Provides root cause classification, prompt fixes, tool improvements, and new test cases. Use for "debugging AI", "fixing prompts", "quality issues", or "output errors".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ai-engineering-swe
 ---
 
 # LLM Debugger

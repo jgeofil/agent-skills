@@ -1,6 +1,11 @@
 ---
 name: domain-model-boundaries-mapper
-description: Identifies domain modules, ownership boundaries, dependencies, and interfaces using Domain-Driven Design principles. Provides domain maps, bounded contexts, refactor recommendations. Use for "DDD", "domain modeling", "bounded contexts", or "service boundaries".
+description: >-
+  Identifies domain modules, ownership boundaries, dependencies, and interfaces using Domain-Driven Design principles. Provides domain maps, bounded contexts, refactor recommendations. Use for "DDD", "domain modeling", "bounded contexts", or "service boundaries".
+license: MIT
+metadata:
+  version: "1.0"
+  category: architecture-swe
 ---
 
 # Domain Model & Boundaries Mapper

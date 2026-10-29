@@ -1,6 +1,11 @@
 ---
 name: caching-strategist
-description: Defines caching strategies with cache keys, TTL values, invalidation triggers, consistency patterns, and correctness checklist. Provides code examples for Redis, CDN, and application-level caching. Use when implementing "caching", "performance optimization", "cache strategy", or "Redis caching".
+description: >-
+  Defines caching strategies with cache keys, TTL values, invalidation triggers, consistency patterns, and correctness checklist. Provides code examples for Redis, CDN, and application-level caching. Use when implementing "caching", "performance optimization", "cache strategy", or "Redis caching".
+license: MIT
+metadata:
+  version: "1.0"
+  category: backend-swe
 ---
 
 # Caching Strategist

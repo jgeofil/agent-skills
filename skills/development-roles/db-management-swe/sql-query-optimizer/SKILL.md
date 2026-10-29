@@ -1,6 +1,11 @@
 ---
 name: sql-query-optimizer
-description: Analyzes and optimizes SQL queries using EXPLAIN plans, index recommendations, query rewrites, and performance benchmarking. Use for "query optimization", "slow queries", "database performance", or "EXPLAIN analysis".
+description: >-
+  Analyzes and optimizes SQL queries using EXPLAIN plans, index recommendations, query rewrites, and performance benchmarking. Use for "query optimization", "slow queries", "database performance", or "EXPLAIN analysis".
+license: MIT
+metadata:
+  version: "1.0"
+  category: db-management-swe
 ---
 
 # SQL Query Optimizer

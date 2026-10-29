@@ -1,6 +1,11 @@
 ---
 name: auth-module-builder
-description: Implements secure authentication patterns including login/registration, session management, JWT tokens, password hashing, cookie settings, and CSRF protection. Provides auth routes, middleware, security configurations, and threat model documentation. Use when building "authentication", "login system", "JWT auth", or "session management".
+description: >-
+  Implements secure authentication patterns including login/registration, session management, JWT tokens, password hashing, cookie settings, and CSRF protection. Provides auth routes, middleware, security configurations, and threat model documentation. Use when building "authentication", "login system", "JWT auth", or "session management".
+license: MIT
+metadata:
+  version: "1.0"
+  category: backend-swe
 ---
 
 # Auth Module Builder

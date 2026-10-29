@@ -1,6 +1,11 @@
 ---
 name: prompt-regression-tester
-description: Compares old vs new prompts across test cases with diff summaries, stability metrics, breakage analysis, and fix suggestions. Use for "prompt testing", "A/B testing prompts", "prompt versioning", or "quality regression".
+description: >-
+  Compares old vs new prompts across test cases with diff summaries, stability metrics, breakage analysis, and fix suggestions. Use for "prompt testing", "A/B testing prompts", "prompt versioning", or "quality regression".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ai-engineering-swe
 ---
 
 # Prompt Regression Tester

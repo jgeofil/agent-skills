@@ -1,6 +1,11 @@
 ---
 name: preview-environments-builder
-description: Creates ephemeral preview deployments for each pull request with automatic deployment, unique URLs, and cleanup on PR close. Use for "preview deployments", "PR environments", "ephemeral environments", or "review apps".
+description: >-
+  Creates ephemeral preview deployments for each pull request with automatic deployment, unique URLs, and cleanup on PR close. Use for "preview deployments", "PR environments", "ephemeral environments", or "review apps".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ci-cd-swe
 ---
 
 # Preview Environments Builder

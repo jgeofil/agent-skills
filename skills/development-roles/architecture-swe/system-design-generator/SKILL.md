@@ -1,6 +1,11 @@
 ---
 name: system-design-generator
-description: Produces comprehensive system architecture plans for features and products including component breakdown, data flow diagrams, system boundaries, API contracts, and scaling considerations. Use for "system design", "architecture planning", "feature design", or "technical specs".
+description: >-
+  Produces comprehensive system architecture plans for features and products including component breakdown, data flow diagrams, system boundaries, API contracts, and scaling considerations. Use for "system design", "architecture planning", "feature design", or "technical specs".
+license: MIT
+metadata:
+  version: "1.0"
+  category: architecture-swe
 ---
 
 # System Design Generator

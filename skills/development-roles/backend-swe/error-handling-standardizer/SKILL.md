@@ -1,6 +1,11 @@
 ---
 name: error-handling-standardizer
-description: Creates consistent error handling with custom error classes, HTTP status mapping, structured logging, safe client messages, and error taxonomy. Use when standardizing "error handling", "logging", "error responses", or "exception management".
+description: >-
+  Creates consistent error handling with custom error classes, HTTP status mapping, structured logging, safe client messages, and error taxonomy. Use when standardizing "error handling", "logging", "error responses", or "exception management".
+license: MIT
+metadata:
+  version: "1.0"
+  category: backend-swe
 ---
 
 # Error Handling Standardizer
@@ -172,3 +177,20 @@ router.get(
 - [ ] Async error wrapper
 - [ ] Error monitoring/alerts
 - [ ] Documentation of error codes
+
+## Discriminated Unions & Result Types (Spec-First Alignment)
+
+> [!TIP]
+> In **Spec-First Architectures (`spec-first-architect-v2`)** and pure domain / adapter boundaries, prefer explicit **Discriminated Union Return Types** over thrown exceptions:
+> ```typescript
+> export type AdapterResult<T, E = AdapterError> =
+>   | { ok: true; value: T }
+>   | { ok: false; error: E };
+> ```
+> Adapters must catch all upstream HTTP/transport errors (`429`, timeouts) and map them into the discriminated union. This prevents raw runtime exceptions from leaking into domain cells and makes error states exhaustively verifiable in black-box contract tests.
+
+## Related Skills
+
+- `spec-first-architect-v2` — Enforces total error mapping into discriminated unions across Layer 1 contracts and adapter cells
+- `api-contract-normalizer` — Consistent response and error envelopes
+- `python-error-handling` — Python-specific exception hierarchies and error handling patterns

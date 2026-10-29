@@ -1,6 +1,11 @@
 ---
 name: doc-to-vector-dataset-generator
-description: Converts documents into clean, chunked datasets suitable for embeddings and vector search. Produces chunked JSONL files with metadata, deduplication logic, and quality checks. Use when preparing "training data", "vector datasets", "document processing", or "embedding data".
+description: >-
+  Converts documents into clean, chunked datasets suitable for embeddings and vector search. Produces chunked JSONL files with metadata, deduplication logic, and quality checks. Use when preparing "training data", "vector datasets", "document processing", or "embedding data".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ai-engineering-swe
 ---
 
 # Doc-to-Vector Dataset Generator

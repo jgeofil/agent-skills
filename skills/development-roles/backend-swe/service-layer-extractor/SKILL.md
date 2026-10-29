@@ -1,6 +1,11 @@
 ---
 name: service-layer-extractor
-description: Refactors route handlers into service layer with clean boundaries, dependency injection, testability, and separation of concerns. Provides service interfaces, folder structure, testing strategy, and migration plan. Use when refactoring "fat controllers", "business logic", "service layer", or "architecture cleanup".
+description: >-
+  Refactors route handlers into service layer with clean boundaries, dependency injection, testability, and separation of concerns. Provides service interfaces, folder structure, testing strategy, and migration plan. Use when refactoring "fat controllers", "business logic", "service layer", or "architecture cleanup".
+license: MIT
+metadata:
+  version: "1.0"
+  category: backend-swe
 ---
 
 # Service Layer Extractor
@@ -267,3 +272,17 @@ src/
 - [ ] Folder structure reorganized
 - [ ] Migration plan documented
 - [ ] Team trained on new patterns
+
+## Spec-First & Regenerative Architecture Alternative
+
+> [!NOTE]
+> When operating in repositories governed by **Spec-First, Disposable Code** (`spec-first-architect-v2`):
+> 1. **Cellular Separation over Fat Services:** Replace monolithic multi-thousand-line service classes with focused, pure **Domain Cells** (`dist/<cell>/`, <= 350 LOC, zero I/O) and quarantined **Adapter Cells** (`dist/<adapter>/`, <= 150 LOC).
+> 2. **Zero-Patch Synthesis:** Do not manually refactor code across weeks. Author Layer 1 schemas in `contracts/`, behavioral specifications in `specs/`, and black-box verification in `tests/`, then cleanly compile disposable cells.
+> 3. **Black-Box Testing over Mocks:** Replace brittle function-mock tests (`jest.mocked`) with contract tests, property fuzzing (`Hypothesis` / `fast-check`), and ephemeral `:memory:` database twin fixtures.
+
+## Related Skills
+
+- `spec-first-architect-v2` — Autonomous scaffolding of disposable code cells with 5-layer topology, sealed provenance locks, and hermetic synthesis
+- `api-contract-normalizer` — Standardizing request and response contracts
+- `error-handling-standardizer` — Consistent error taxonomy and response envelopes

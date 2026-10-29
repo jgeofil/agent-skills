@@ -1,6 +1,11 @@
 ---
 name: caching-strategy-optimizer
-description: Optimizes CI/CD pipeline speed by implementing effective caching for dependencies, Docker layers, build outputs, and test results. Provides before/after performance metrics and best practices. Use for "CI caching", "pipeline optimization", "build speed", or "cache strategy".
+description: >-
+  Optimizes CI/CD pipeline speed by implementing effective caching for dependencies, Docker layers, build outputs, and test results. Provides before/after performance metrics and best practices. Use for "CI caching", "pipeline optimization", "build speed", or "cache strategy".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ci-cd-swe
 ---
 
 # Caching Strategy Optimizer

@@ -1,6 +1,11 @@
 ---
 name: git-hygiene-enforcer
-description: Establishes git workflow guardrails including conventional commits, commit message hooks, branch naming conventions, PR templates, and code review processes. Provides hook configurations, workflow templates, and emergency bypass instructions. Use when users request "setup git hooks", "enforce commit conventions", "add PR templates", or "standardize git workflow".
+description: >-
+  Establishes git workflow guardrails including conventional commits, commit message hooks, branch naming conventions, PR templates, and code review processes. Provides hook configurations, workflow templates, and emergency bypass instructions. Use when users request "setup git hooks", "enforce commit conventions", "add PR templates", or "standardize git workflow".
+license: MIT
+metadata:
+  version: "1.0"
+  category: maintenance-swe
 ---
 
 # Git Hygiene Enforcer
@@ -100,55 +105,6 @@ repos:
       - id: conventional-pre-commit
         stages: [commit-msg]
 ```
-
-## Branch Naming Conventions
-
-**Pattern:** `<type>/<ticket-id>-<description>`
-
-**Examples:**
-
-```
-feature/AUTH-123-oauth-login
-bugfix/API-456-user-race-condition
-hotfix/PROD-789-payment-error
-refactor/DB-321-optimize-queries
-```
-
-**Branch Protection Rules:**
-
-- Require PR reviews (1-2 reviewers)
-- Require status checks to pass
-- Require branches to be up to date
-- Enforce linear history (no merge commits)
-- Require signed commits (optional)
-
-## Pull Request Templates
-
-### .github/pull_request_template.md
-
-```markdown
-## Description
-
-<!-- Describe your changes in detail -->
-
-## Type of Change
-
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
-
-## Related Issue
-
-Closes #<!-- issue number -->
-
-## How Has This Been Tested?
-
-<!-- Describe the tests you ran to verify your changes -->
-
-- [ ] Unit tests
-- [ ] Integration tests
-- [ ] Manual testing
 
 ## Checklist
 
@@ -453,3 +409,9 @@ Always create a follow-up PR to fix any bypassed checks.
 7. **Delete merged branches**: Keep repository tidy
 8. **Use draft PRs**: For work-in-progress changes
 ```
+
+
+## Reference Documentation
+
+- [Implementation Guide](references/implementation-guide.md)
+

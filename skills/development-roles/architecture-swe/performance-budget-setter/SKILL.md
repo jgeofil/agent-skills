@@ -1,6 +1,11 @@
 ---
 name: performance-budget-setter
-description: Defines measurable performance budgets for bundle size, API latency, database queries, and render times. Provides enforcement strategies and monitoring plans. Use for "performance budgets", "performance monitoring", "web vitals", or "optimization targets".
+description: >-
+  Defines measurable performance budgets for bundle size, API latency, database queries, and render times. Provides enforcement strategies and monitoring plans. Use for "performance budgets", "performance monitoring", "web vitals", or "optimization targets".
+license: MIT
+metadata:
+  version: "1.0"
+  category: architecture-swe
 ---
 
 # Performance Budget Setter

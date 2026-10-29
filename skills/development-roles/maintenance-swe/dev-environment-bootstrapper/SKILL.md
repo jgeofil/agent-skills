@@ -1,6 +1,11 @@
 ---
 name: dev-environment-bootstrapper
-description: Standardizes development environment setup across machines by generating tool version configs (Node, Python, Ruby), package manager configs (pnpm, Volta, asdf, mise), environment variable templates, and setup scripts with onboarding documentation. Use when users need to "setup dev environment", "standardize tooling", "configure version managers", or "create onboarding scripts".
+description: >-
+  Standardizes development environment setup across machines by generating tool version configs (Node, Python, Ruby), package manager configs (pnpm, Volta, asdf, mise), environment variable templates, and setup scripts with onboarding documentation. Use when users need to "setup dev environment", "standardize tooling", "configure version managers", or "create onboarding scripts".
+license: MIT
+metadata:
+  version: "1.0"
+  category: maintenance-swe
 ---
 
 # Dev Environment Bootstrapper
