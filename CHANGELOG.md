@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2026-10-29
+## [PR-9](https://github.com/jgeofil/agent-skills/pull/9) - 2026-10-29
 
 ### Summary
 Audited all 8 agent roles in `skills/development-roles/` to eliminate duplicate and overlapping skills, flattened nested plugin containers into standardized skill directories, unswapped inverted API definitions, and optimized progressive disclosure across all skills.
