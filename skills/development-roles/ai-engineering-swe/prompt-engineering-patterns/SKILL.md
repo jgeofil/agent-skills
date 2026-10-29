@@ -1,10 +1,11 @@
 ---
 name: prompt-engineering-patterns
 description: >-
-  This skill should be used when the user asks to "optimize a prompt", "improve prompt
-  performance", "design a prompt template", "write better prompts", "debug prompt issues", "use
-  chain-of-thought", "structured prompting", "few-shot prompting", or wants to apply advanced
-  prompt engineering patterns for production LLM applications.
+  >- This skill should be used when the user asks to "optimize a prompt", "improve prompt performance", "design a prompt template", "write better prompts", "debug prompt issues", "use chain-of-thought", "structured prompting", "few-shot prompting", or wants to apply advanced prompt engineering patterns for production LLM applications.
+license: MIT
+metadata:
+  version: "1.0"
+  category: ai-engineering-swe
 ---
 
 # Prompt Engineering Patterns

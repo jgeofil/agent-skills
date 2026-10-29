@@ -1,6 +1,11 @@
 ---
 name: cost-latency-optimizer
-description: Reduces LLM costs and improves response times through caching, model selection, batching, and prompt optimization. Provides cost breakdowns, latency hotspots, and configuration recommendations. Use for "cost reduction", "performance optimization", "latency improvement", or "efficiency".
+description: >-
+  Reduces LLM costs and improves response times through caching, model selection, batching, and prompt optimization. Provides cost breakdowns, latency hotspots, and configuration recommendations. Use for "cost reduction", "performance optimization", "latency improvement", or "efficiency".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ai-engineering-swe
 ---
 
 # Cost & Latency Optimizer

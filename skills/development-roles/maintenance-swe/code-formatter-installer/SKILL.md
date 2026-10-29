@@ -1,6 +1,11 @@
 ---
 name: code-formatter-installer
-description: Installs and configures Prettier, ESLint, EditorConfig, and other code quality tools to enforce consistent code style across the team. Generates config files, npm scripts, editor settings recommendations, and CI integration suggestions. Use when users request "setup prettier", "add eslint", "configure code formatting", or "enforce code style".
+description: >-
+  Installs and configures Prettier, ESLint, EditorConfig, and other code quality tools to enforce consistent code style across the team. Generates config files, npm scripts, editor settings recommendations, and CI integration suggestions. Use when users request "setup prettier", "add eslint", "configure code formatting", or "enforce code style".
+license: MIT
+metadata:
+  version: "1.0"
+  category: maintenance-swe
 ---
 
 # Code Formatter & Linter Installer

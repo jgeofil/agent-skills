@@ -1,6 +1,11 @@
 ---
 name: secrets-env-manager
-description: Validates environment variables in CI, prevents secret leaks, enforces masking, and provides fail-fast validation with clear documentation. Use for "secrets management", "env var validation", "credential security", or "secret masking".
+description: >-
+  Validates environment variables in CI, prevents secret leaks, enforces masking, and provides fail-fast validation with clear documentation. Use for "secrets management", "env var validation", "credential security", or "secret masking".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ci-cd-swe
 ---
 
 # Secrets & Env Manager

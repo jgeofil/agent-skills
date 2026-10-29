@@ -1,6 +1,11 @@
 ---
 name: error-handling-standardizer
-description: Creates consistent error handling with custom error classes, HTTP status mapping, structured logging, safe client messages, and error taxonomy. Use when standardizing "error handling", "logging", "error responses", or "exception management".
+description: >-
+  Creates consistent error handling with custom error classes, HTTP status mapping, structured logging, safe client messages, and error taxonomy. Use when standardizing "error handling", "logging", "error responses", or "exception management".
+license: MIT
+metadata:
+  version: "1.0"
+  category: backend-swe
 ---
 
 # Error Handling Standardizer

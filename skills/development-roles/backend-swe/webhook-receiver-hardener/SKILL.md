@@ -1,6 +1,11 @@
 ---
 name: webhook-receiver-hardener
-description: Secures webhook receivers with signature verification, retry handling, deduplication, idempotency keys, and error responses. Provides verification code, dedupe storage strategy, runbook for incidents. Use when implementing "webhooks", "webhook security", "event receivers", or "third-party integrations".
+description: >-
+  Secures webhook receivers with signature verification, retry handling, deduplication, idempotency keys, and error responses. Provides verification code, dedupe storage strategy, runbook for incidents. Use when implementing "webhooks", "webhook security", "event receivers", or "third-party integrations".
+license: MIT
+metadata:
+  version: "1.0"
+  category: backend-swe
 ---
 
 # Webhook Receiver Hardener

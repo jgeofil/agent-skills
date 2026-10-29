@@ -1,6 +1,11 @@
 ---
 name: trace-to-training-data
-description: Convert evaluation traces and production logs into SFT examples and preference pairs. Use when graded traces or failure examples exist and need to become training data, when applying rejection sampling to model outputs, or when building DPO pairs from passing and failing runs.
+description: >-
+  Convert evaluation traces and production logs into SFT examples and preference pairs. Use when graded traces or failure examples exist and need to become training data, when applying rejection sampling to model outputs, or when building DPO pairs from passing and failing runs.
+license: MIT
+metadata:
+  version: "1.0"
+  category: data-scientist
 ---
 
 # Trace To Training Data

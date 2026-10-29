@@ -1,6 +1,11 @@
 ---
 name: service-layer-extractor
-description: Refactors route handlers into service layer with clean boundaries, dependency injection, testability, and separation of concerns. Provides service interfaces, folder structure, testing strategy, and migration plan. Use when refactoring "fat controllers", "business logic", "service layer", or "architecture cleanup".
+description: >-
+  Refactors route handlers into service layer with clean boundaries, dependency injection, testability, and separation of concerns. Provides service interfaces, folder structure, testing strategy, and migration plan. Use when refactoring "fat controllers", "business logic", "service layer", or "architecture cleanup".
+license: MIT
+metadata:
+  version: "1.0"
+  category: backend-swe
 ---
 
 # Service Layer Extractor

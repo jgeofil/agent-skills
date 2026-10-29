@@ -1,6 +1,11 @@
 ---
 name: release-automation-builder
-description: Automates releases and package publishing with changesets or semantic-release. Handles versioning, changelog generation, git tags, and release notes. Use for "release automation", "semantic versioning", "package publishing", or "changelog generation".
+description: >-
+  Automates releases and package publishing with changesets or semantic-release. Handles versioning, changelog generation, git tags, and release notes. Use for "release automation", "semantic versioning", "package publishing", or "changelog generation".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ci-cd-swe
 ---
 
 # Release Automation Builder

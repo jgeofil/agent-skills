@@ -1,6 +1,11 @@
 ---
 name: tool-function-schema-designer
-description: Designs robust function/tool calling schemas for LLMs with JSON schemas, validation strategies, typed interfaces, and example calls. Use when implementing "function calling", "tool use", "LLM tools", or "agent actions".
+description: >-
+  Designs robust function/tool calling schemas for LLMs with JSON schemas, validation strategies, typed interfaces, and example calls. Use when implementing "function calling", "tool use", "LLM tools", or "agent actions".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ai-engineering-swe
 ---
 
 # Tool/Function Schema Designer

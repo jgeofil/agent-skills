@@ -1,6 +1,11 @@
 ---
 name: adr-writer
-description: Creates Architecture Decision Records documenting key technical decisions with context, alternatives considered, tradeoffs, consequences, and decision owners. Use when documenting "architecture decisions", "technical choices", "design decisions", or "ADRs".
+description: >-
+  Creates Architecture Decision Records documenting key technical decisions with context, alternatives considered, tradeoffs, consequences, and decision owners. Use when documenting "architecture decisions", "technical choices", "design decisions", or "ADRs".
+license: MIT
+metadata:
+  version: "1.0"
+  category: architecture-swe
 ---
 
 # ADR Writer

@@ -1,6 +1,11 @@
 ---
 name: quality-gates-enforcer
-description: Enforces minimum quality thresholds in CI including code coverage, linting, type checking, and security scanning. Provides required checks, PR rules, and automated enforcement. Use for "quality gates", "CI checks", "code quality", or "PR requirements".
+description: >-
+  Enforces minimum quality thresholds in CI including code coverage, linting, type checking, and security scanning. Provides required checks, PR rules, and automated enforcement. Use for "quality gates", "CI checks", "code quality", or "PR requirements".
+license: MIT
+metadata:
+  version: "1.0"
+  category: ci-cd-swe
 ---
 
 # Quality Gates Enforcer

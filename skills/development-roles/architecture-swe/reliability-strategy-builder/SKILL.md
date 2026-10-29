@@ -1,6 +1,11 @@
 ---
 name: reliability-strategy-builder
-description: Implements reliability patterns including circuit breakers, retries, fallbacks, bulkheads, and SLO definitions. Provides failure mode analysis and incident response plans. Use for "SRE", "reliability", "resilience", or "failure handling".
+description: >-
+  Implements reliability patterns including circuit breakers, retries, fallbacks, bulkheads, and SLO definitions. Provides failure mode analysis and incident response plans. Use for "SRE", "reliability", "resilience", or "failure handling".
+license: MIT
+metadata:
+  version: "1.0"
+  category: architecture-swe
 ---
 
 # Reliability Strategy Builder
