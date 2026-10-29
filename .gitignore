@@ -3,3 +3,4 @@ node_modules/
 .repo_memory/
 .pytest_cache
 .ruff_cache/
+.mypy_cache/
