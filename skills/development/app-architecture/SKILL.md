@@ -1,6 +1,10 @@
 ---
 name: app-architecture
 description: Plan your system architecture before you start building. Covers data model, API design, auth, integrations, and deployment — everything an AI coding agent needs to scaffold your app correctly from the start.
+license: MIT
+metadata:
+  version: "1.0"
+  category: architecture-swe
 ---
 
 # Instructions
@@ -173,3 +177,17 @@ List every page/route with its purpose.
 
 List all required env vars by category (auth, database, services, feature flags).
 Note which are secret vs. public.
+
+---
+
+## Spec-First & Regenerative Architecture (`spec-first-architect-v2`)
+
+When designing systems intended for autonomous agent implementation and zero-patch regeneration, translate this blueprint directly into the **5-Layer Spec-First Topology**:
+
+- **Data Models & APIs** ➔ Layer 1 `contracts/` (Pydantic / Zod schemas, append-only SQL migrations).
+- **Component Boundaries & Invariants** ➔ Layer 2 `specs/` (tabular failure matrices, complexity bounds).
+- **Validation Gates** ➔ Layer 3 `tests/` (Hypothesis property tests, mock-free contract replay).
+- **Implementation Code** ➔ Layer 4 `dist/` (disposable, pure domain cells and quarantined I/O adapters, `chmod 0444`).
+- **Deployment & Runbook** ➔ Layer 5 `deploy/` and `README.md` (Composition Root, `--dry-run`, env table, IAM).
+
+Refer to [`spec-first-architect-v2`](../spec-first-architect-v2/SKILL.md) for the cellular execution protocol.

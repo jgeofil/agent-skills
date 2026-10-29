@@ -1,6 +1,10 @@
 ---
 name: spec-first-architect-v2
 description: Initialize, scaffold, and govern Spec-First, Disposable Code (Regenerative Architecture) repositories in Python (uv) or TypeScript (bun/vp). Enforces a 5-layer committed dist/ topology, 3-Wave Execution Protocol, hermetic context packing (prepare), pre-synthesis test freezing, AST/ESM transitive contract dependency hashing, topological staleness detection (stale), stateful/I/O boundary isolation, and mandatory Composition Root (dist/main/), deploy/ manifests, and operational README runbooks. Use when the user asks to initialize a spec-driven codebase, scaffold disposable code cells, extract a spec from exploratory code, audit staleness, or enforce zero-patch regeneration rules.
+license: MIT
+metadata:
+  version: "2.0"
+  category: architecture-swe
 ---
 
 # Spec-First Architect v2 (`spec-first-architect-v2`)

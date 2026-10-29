@@ -60,3 +60,18 @@ Phase 4: Optimize & Verify (Perf Benchmarking & Accessibility)
 - [ ] No regression in Core Web Vitals (INP, LCP, CLS)
 - [ ] Accessibility score >= 95 with zero critical AXE violations
 - [ ] TypeScript strict mode passes with zero `any` casts
+
+## Spec-First Alignment (Reverse Ratcheting)
+
+> [!TIP]
+> In **Spec-First codebases (`spec-first-architect-v2`)**, legacy frontend decomposition avoids endless in-place patching. Instead, use **Reverse Ratcheting**:
+> 1. Prototype component interactions in a timeboxed `scratch/` spike.
+> 2. Extract types into Layer 1 `contracts/` and interaction invariants into Layer 2 `specs/`.
+> 3. Freeze visual/behavioral fixtures in Layer 3 `tests/`.
+> 4. Synthesize clean, disposable UI cells into `dist/` and lock them via `regen_guard.py seal`.
+
+## Related Skills
+
+- `spec-first-architect-v2` — Cellular disposable code generation and reverse ratcheting workflow
+- `component-scaffold-generator` — Scaffolding standardized frontend components
+- `page-layout-builder` — Structuring page-level UI hierarchies

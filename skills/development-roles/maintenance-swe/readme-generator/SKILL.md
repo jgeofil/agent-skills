@@ -110,6 +110,21 @@ Every README should include:
 - [ ] License information
 - [ ] Support/contact info
 
+## Operational Runbook Variant (Spec-First Alignment)
+
+> [!NOTE]
+> For backend services, CLI utilities, and repositories governed by **Spec-First Architecture (`spec-first-architect-v2`)**, `README.md` serves as a **Layer 5 Operational Runbook** rather than a consumer library page. Ensure it includes:
+> - **Architecture Diagram:** Visual representation of cellular dependencies and I/O boundaries.
+> - **Environment Variable Table:** Exhaustive list matching Layer 1 `contracts/main_contract` (variable name, type, default, required, and secret classification).
+> - **Minimum IAM Permissions:** Exact cloud roles and permissions needed at runtime.
+> - **Verification Commands:** Explicit CLI examples including `--dry-run` and `--once` execution.
+> - **Zero-Inference Deployment:** Dockerfile and `docker-compose.yml` run instructions.
+
+## Related Skills
+
+- `spec-first-architect-v2` — Mandates Layer 5 Operational Runbook READMEs aligned with the Composition Root (`dist/main/`)
+- `changelog-writer` — Maintaining structured release notes alongside README documentation
+
 
 ## Reference Documentation
 

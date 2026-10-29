@@ -56,6 +56,9 @@ Master proven backend architecture patterns including Clean Architecture, Hexago
 - Use in-memory adapters in tests — no Docker required
 - Technology decisions deferred to the edges
 
+> [!TIP]
+> **Spec-First Alignment (`spec-first-architect-v2`)**: Hexagonal ports and adapters map directly to **Boundary Bifurcation** in Regenerative Architecture. Pure domain cells are 100% logic with zero I/O; I/O adapter cells accept injected connection handles or transport ports (`fetch`/`httpx`), keeping implementation code in `dist/` disposable.
+
 ### 3. Domain-Driven Design (DDD)
 
 **Strategic Patterns:**
@@ -163,6 +166,7 @@ For detailed DDD bounded context mapping, full multi-service project trees, Anti
 
 ## Related Skills
 
+- `spec-first-architect-v2` — Enforces a 5-layer regenerative architecture where domain cells are pure, adapters are quarantined, and code in `dist/` is disposable (`chmod 0444`) with zero hand-patching
 - `microservices-patterns` — Apply these architecture patterns when decomposing a monolith into services
 - `cqrs-implementation` — Use Clean Architecture as the structural foundation for CQRS command/query separation
 - `saga-orchestration` — Sagas require well-defined aggregate boundaries, which DDD tactical patterns provide

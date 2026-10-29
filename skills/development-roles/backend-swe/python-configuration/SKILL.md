@@ -96,18 +96,26 @@ except ValidationError as e:
     sys.exit(1)
 ```
 
-Import `settings` throughout your application:
+Pass or inject settings at the application entrypoint (Composition Root):
 
 ```python
-from myapp.config import settings
+# app/main.py (Composition Root / Entrypoint)
+from myapp.config import Settings
+from myapp.adapters.db import create_database_connection
 
-def get_database_connection():
-    return connect(
+def build_app():
+    settings = Settings()
+    # Inject typed config or handles into adapters; do not import settings inside pure logic
+    conn = create_database_connection(
         host=settings.db_host,
         port=settings.db_port,
         database=settings.db_name,
     )
+    return conn
 ```
+
+> [!NOTE]
+> **Spec-First Architecture Alignment (`spec-first-architect-v2`)**: Pure domain cells and I/O adapters are strictly forbidden from reading `os.environ` or importing global configuration singletons. All environment and configuration resolution must occur exclusively within the **Composition Root** (`dist/main/`), which passes typed configuration sub-schemas or connection handles into dependent cells.
 
 ### Pattern 2: Fail Fast on Missing Configuration
 
@@ -210,7 +218,13 @@ Detailed sections (starting with `## Advanced Patterns`) live in `references/det
 4. **Provide dev defaults** - Make local development easy
 5. **Never commit secrets** - Use `.env` files (gitignored) or secret managers
 6. **Namespace variables** - `DB_HOST`, `REDIS_URL` for clarity
-7. **Import settings singleton** - Don't call `os.getenv()` throughout code
+7. **Inject settings from Composition Root** - Instantiate settings at application startup and inject typed values into adapters/services; avoid importing global config singletons inside domain logic (see `spec-first-architect-v2`)
 8. **Document all variables** - README should list required env vars
 9. **Validate early** - Check config correctness at boot time
 10. **Use secrets_dir** - Support mounted secrets in containers
+
+## Related Skills
+
+- `spec-first-architect-v2` — Enforces Layer 1 `contracts/main_contract.py` schemas and Layer 5 Composition Root (`dist/main/`) isolation with zero env reads in domain cells
+- `secrets-env-manager` — Managing environment variables, dotenv patterns, and secrets safely
+- `python-observability` — Correlating configuration with application telemetry

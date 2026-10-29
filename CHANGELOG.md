@@ -27,6 +27,12 @@ Audited all 8 agent roles in `skills/development-roles/` to eliminate duplicate 
 - Promoted 3 shell scripting skills from `skills/development-roles/ci-cd-swe/shell-scripting/skills/` directly to `skills/development-roles/ci-cd-swe/`.
 - Promoted `skills/development-roles/db-management-swe/database-design/skills/postgresql-table-design/` to `skills/development-roles/db-management-swe/postgresql-table-design/`.
 - Promoted `api-design-principles`, `architecture-patterns`, and `microservices-patterns` from `system-architecture/skills/` to top-level `skills/development-roles/architecture-swe/`.
+- Aligned configuration, error handling, refactoring, and documentation skills with `spec-first-architect-v2` as the authoritative source of truth:
+  - Standardized `python-configuration` to enforce Composition Root injection instead of global config imports deep in domain logic.
+  - Aligned `error-handling-standardizer` to emphasize typed discriminated error unions (`Result[T, E]`) across cellular boundaries.
+  - Aligned `service-layer-extractor` and `frontend-refactor-planner` to specify cellular disposable code generation and reverse ratcheting.
+  - Added Operational Runbook guidelines (architecture DAG, env table, IAM, `--dry-run`) to `readme-generator`.
+  - Added standardized license and metadata to `spec-first-architect-v2` and `app-architecture`, achieving clean validation pass across `skills/development/`.
 
 ### Removed
 - Removed empty directory `skills/development-roles/ci-cd-swe/cicd-automation/`.
