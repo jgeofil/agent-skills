@@ -1,0 +1,17 @@
+{
+  "cell": "cost_actuator",
+  "cell_type": "adapter",
+  "sealed_at_utc": "2026-10-28T04:20:00+00:00",
+  "metrics": {
+    "loc": 14,
+    "estimated_tokens": 112
+  },
+  "upstream_files": [
+    "contracts/cost_actuator.contract.ts",
+    "contracts/cost_policy.contract.ts",
+    "specs/cost_actuator.spec.md",
+    "tests/contract/cost_actuator.contract.test.ts"
+  ],
+  "upstream_sha256": "8f9c2e41b6d04a1e...",
+  "dist_sha256": "3a71d9e04c8b112f..."
+}

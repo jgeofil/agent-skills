@@ -1,0 +1,20 @@
+services:
+  gcp-cost-controller:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    environment:
+      GCP_PROJECT_ID: "${GCP_PROJECT_ID}"
+      MONTHLY_BUDGET_USD: "${MONTHLY_BUDGET_USD:-100.0}"
+      HARD_CAP_USD: "${HARD_CAP_USD:-150.0}"
+      ENFORCEMENT_MODE: "${ENFORCEMENT_MODE:-DRY_RUN}"
+      POLL_INTERVAL_SECONDS: "300"
+      GOOGLE_APPLICATION_CREDENTIALS: "/run/secrets/gcp_sa_key.json"
+    volumes:
+      - ./secrets/gcp_sa_key.json:/run/secrets/gcp_sa_key.json:ro
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.25"
