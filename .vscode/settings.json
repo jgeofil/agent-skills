@@ -1,4 +1,5 @@
 {
 	"markdown.validate.enabled": false,
-	"diffEditor.renderSideBySide": true
+	"diffEditor.renderSideBySide": true,
+	"python.analysis.diagnosticsSource": "Pylance"
 }
