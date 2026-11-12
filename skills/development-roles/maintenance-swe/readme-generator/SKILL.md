@@ -1,7 +1,6 @@
 ---
 name: readme-generator
-description: >-
-  Generates comprehensive README files with badges, installation, usage, API docs, and contribution guidelines. Use when users request "README", "project documentation", "readme template", "documentation generator", or "project setup docs".
+description: Generates comprehensive README files with badges, installation, usage, API docs, and contribution guidelines. Use when users request "README", "project documentation", "readme template", "documentation generator", or "project setup docs".
 license: MIT
 metadata:
   version: "1.0"
